@@ -1,0 +1,10 @@
+title: Hubstry Protocolo de Tecnologia Geral
+description: Framework de Governança por Camada de Segurança, Camada de Dados e Pilares de Domínio para Tecnologia com IA
+baseurl: "/protocolo-geral-tecnologia"
+url: "https://hubstry-deeptech.github.io"
+theme: null
+plugins: []
+exclude:
+  - README.md
+  - Gemfile
+  - Gemfile.lock
