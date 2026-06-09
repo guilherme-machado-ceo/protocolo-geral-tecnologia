@@ -1,0 +1,1676 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hubstry Protocolo de Tecnologia Geral — v.04.1</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap');
+
+  :root {
+    --bg: #0a0a0a;
+    --surface: #111111;
+    --surface2: #161616;
+    --border: #222222;
+    --border2: #2a2a2a;
+    --cyan: #00d4d4;
+    --cyan-dim: #007a7a;
+    --orange: #e06c00;
+    --orange-dim: #7a3a00;
+    --gold: #c8a000;
+    --green: #00b884;
+    --red: #e05050;
+    --text: #d0d0d0;
+    --text-dim: #888888;
+    --text-muted: #555555;
+    --mono: 'IBM Plex Mono', monospace;
+    --sans: 'IBM Plex Sans', sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 15px;
+    line-height: 1.75;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 3rem 2rem 6rem;
+  }
+
+  /* HEADER */
+  .doc-header {
+    text-align: center;
+    padding: 4rem 0 3rem;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 4rem;
+  }
+
+  .doc-brand {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    color: var(--cyan);
+    text-transform: uppercase;
+    border: 1px solid var(--cyan-dim);
+    display: inline-block;
+    padding: 0.3rem 0.8rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .doc-title {
+    font-family: var(--sans);
+    font-size: 1.9rem;
+    font-weight: 300;
+    color: var(--text);
+    line-height: 1.4;
+    margin-bottom: 1rem;
+  }
+
+  .doc-meta {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    color: var(--text-dim);
+    letter-spacing: 0.08em;
+  }
+
+  .doc-meta span { margin: 0 0.5rem; color: var(--text-muted); }
+
+  /* NAVIGATION */
+  .toc-nav {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 1.5rem 2rem;
+    margin-bottom: 3rem;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+  }
+
+  .toc-nav h4 {
+    color: var(--orange);
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  .toc-nav ol {
+    columns: 2;
+    column-gap: 2rem;
+    list-style: none;
+    counter-reset: toc;
+  }
+
+  .toc-nav li {
+    counter-increment: toc;
+    margin-bottom: 0.35rem;
+    break-inside: avoid;
+  }
+
+  .toc-nav li::before {
+    content: "0" counter(toc) " —";
+    color: var(--text-muted);
+    margin-right: 0.5rem;
+  }
+
+  .toc-nav li:nth-child(n+10)::before { content: counter(toc) " —"; }
+
+  .toc-nav a {
+    color: var(--text-dim);
+    text-decoration: none;
+  }
+
+  .toc-nav a:hover { color: var(--cyan); }
+
+  /* COMO USAR */
+  .how-to {
+    margin-bottom: 4rem;
+  }
+
+  .profile-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.82rem;
+    margin-top: 1.5rem;
+  }
+
+  .profile-table th {
+    font-family: var(--mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    color: var(--orange);
+    text-transform: uppercase;
+    text-align: left;
+    padding: 0.6rem 1rem;
+    border-bottom: 1px solid var(--border2);
+  }
+
+  .profile-table td {
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+
+  .profile-table tr:hover td { background: var(--surface); }
+
+  .tag-founder { color: var(--cyan); }
+  .tag-decision { color: var(--orange); }
+  .tag-tech { color: var(--green); }
+  .tag-new { color: var(--text-dim); }
+
+  /* SECTIONS */
+  .section {
+    margin-bottom: 5rem;
+    padding-top: 1rem;
+  }
+
+  .section-label {
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.2em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+
+  h2 {
+    font-family: var(--sans);
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: var(--text);
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  h3 {
+    font-family: var(--sans);
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--cyan);
+    margin: 2rem 0 0.75rem;
+  }
+
+  h4 {
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: var(--orange);
+    letter-spacing: 0.08em;
+    margin: 1.5rem 0 0.5rem;
+    text-transform: uppercase;
+  }
+
+  p { margin-bottom: 1rem; }
+
+  /* CALLOUTS */
+  .callout {
+    border-left: 3px solid var(--border2);
+    padding: 1rem 1.25rem;
+    margin: 1.5rem 0;
+    background: var(--surface);
+    font-size: 0.88rem;
+  }
+
+  .callout-decision {
+    border-left-color: var(--orange);
+    background: rgba(224,108,0,0.05);
+  }
+
+  .callout-tech {
+    border-left-color: var(--green);
+    background: rgba(0,184,132,0.04);
+  }
+
+  .callout-founder {
+    border-left-color: var(--cyan);
+    background: rgba(0,212,212,0.04);
+  }
+
+  .callout-warn {
+    border-left-color: var(--red);
+    background: rgba(224,80,80,0.05);
+  }
+
+  .marker-d { color: var(--orange); font-weight: 600; margin-right: 0.4rem; }
+  .marker-t { color: var(--green); font-weight: 600; margin-right: 0.4rem; }
+  .marker-f { color: var(--cyan); font-weight: 600; margin-right: 0.4rem; }
+
+  .callout code {
+    font-family: var(--mono);
+    font-size: 0.82rem;
+    color: var(--cyan);
+  }
+
+  /* ARCHITECTURE DIAGRAM */
+  .arch-diagram {
+    background: var(--surface);
+    border: 1px solid var(--border2);
+    padding: 2rem;
+    margin: 2rem 0;
+    text-align: center;
+    font-family: var(--mono);
+    font-size: 0.75rem;
+  }
+
+  .arch-layer-top {
+    border: 1px solid var(--orange);
+    color: var(--orange);
+    padding: 0.6rem 1rem;
+    margin-bottom: 0.5rem;
+    font-size: 0.7rem;
+    letter-spacing: 0.05em;
+  }
+
+  .arch-layer-top small { color: var(--text-dim); font-size: 0.62rem; display: block; margin-top: 0.2rem; }
+
+  .arch-pillars {
+    display: flex;
+    gap: 0.5rem;
+    margin: 0.5rem 0;
+  }
+
+  .arch-pillar {
+    flex: 1;
+    border: 1px solid var(--border2);
+    color: var(--text-dim);
+    padding: 0.75rem 0.5rem;
+    font-size: 0.68rem;
+  }
+
+  .arch-pillar small { color: var(--text-muted); font-size: 0.6rem; display: block; margin-top: 0.2rem; }
+
+  .arch-layer-bottom {
+    border: 1px dashed var(--border2);
+    color: var(--text-dim);
+    padding: 0.5rem 1rem;
+    margin-top: 0.5rem;
+    font-size: 0.65rem;
+    letter-spacing: 0.05em;
+  }
+
+  /* TABLES */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.82rem;
+    margin: 1.5rem 0;
+  }
+
+  .data-table th {
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    color: var(--orange);
+    text-transform: uppercase;
+    text-align: left;
+    padding: 0.6rem 0.75rem;
+    border-bottom: 2px solid var(--border2);
+  }
+
+  .data-table td {
+    padding: 0.65rem 0.75rem;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+
+  .data-table tr:hover td { background: var(--surface); }
+
+  .status-active { color: var(--green); font-family: var(--mono); font-size: 0.75rem; }
+  .status-pending { color: var(--gold); font-family: var(--mono); font-size: 0.75rem; }
+  .status-partial { color: var(--orange); font-family: var(--mono); font-size: 0.75rem; }
+  .status-proposal { color: var(--cyan); font-family: var(--mono); font-size: 0.75rem; }
+
+  /* 7-LAYER PROTOCOL */
+  .layer-card {
+    display: grid;
+    grid-template-columns: 2rem 1fr 1fr 1fr;
+    gap: 0;
+    border: 1px solid var(--border);
+    margin-bottom: 0.5rem;
+    font-size: 0.82rem;
+  }
+
+  .layer-num {
+    background: var(--surface2);
+    color: var(--cyan);
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 0.5rem;
+    border-right: 1px solid var(--border);
+    font-weight: 600;
+  }
+
+  .layer-body {
+    padding: 0.75rem 1rem;
+    border-right: 1px solid var(--border);
+    font-weight: 500;
+  }
+
+  .layer-check { padding: 0.75rem 1rem; border-right: 1px solid var(--border); color: var(--text-dim); font-size: 0.8rem; }
+  .layer-incident { padding: 0.75rem 1rem; color: var(--red); font-size: 0.78rem; }
+
+  .layer-card.layer-identity { border-left: 3px solid var(--gold); }
+  .layer-card.layer-identity .layer-num { color: var(--gold); }
+
+  /* CHECKLIST */
+  .checklist { list-style: none; margin: 1rem 0; }
+  .checklist li {
+    padding: 0.4rem 0 0.4rem 1.8rem;
+    position: relative;
+    font-size: 0.85rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .checklist li::before {
+    content: "□";
+    position: absolute;
+    left: 0;
+    color: var(--text-muted);
+    font-family: var(--mono);
+  }
+
+  /* RISK CATEGORIES */
+  .risk-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.82rem;
+    margin: 1.5rem 0;
+  }
+
+  .risk-table th {
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    color: var(--orange);
+    text-transform: uppercase;
+    padding: 0.6rem 0.75rem;
+    border-bottom: 2px solid var(--border2);
+    text-align: left;
+  }
+
+  .risk-table td { padding: 0.65rem 0.75rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+  .risk-table tr:hover td { background: var(--surface); }
+  .risk-num { font-family: var(--mono); color: var(--cyan); font-weight: 600; }
+
+  /* DEFINITION BLOCK */
+  .def-block {
+    background: var(--surface);
+    border: 1px solid var(--border2);
+    padding: 1.25rem 1.5rem;
+    margin: 1.5rem 0;
+    font-family: var(--mono);
+    font-size: 0.78rem;
+  }
+
+  .def-block .def-label {
+    color: var(--orange);
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+
+  .def-block .def-text { color: var(--text); font-style: italic; line-height: 1.65; }
+  .def-block .def-source { color: var(--text-muted); font-size: 0.68rem; margin-top: 0.5rem; }
+
+  /* ARCH CHAIN */
+  .chain {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin: 1.5rem 0;
+  }
+
+  .chain-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--border);
+    border-bottom: none;
+    font-size: 0.82rem;
+  }
+
+  .chain-item:last-child { border-bottom: 1px solid var(--border); }
+
+  .chain-num {
+    font-family: var(--mono);
+    color: var(--cyan);
+    font-size: 0.7rem;
+    font-weight: 600;
+    min-width: 2rem;
+    padding-top: 0.1rem;
+  }
+
+  .chain-label { font-weight: 500; color: var(--text); }
+  .chain-sub { color: var(--text-dim); font-size: 0.78rem; }
+
+  /* DIKW PYRAMID */
+  .dikw {
+    margin: 2rem auto;
+    max-width: 500px;
+    text-align: center;
+  }
+
+  .dikw-level {
+    padding: 0.7rem 1rem;
+    margin: 2px auto;
+    font-family: var(--mono);
+    font-size: 0.75rem;
+  }
+
+  .dikw-4 { width: 30%; background: rgba(0,212,212,0.15); color: var(--cyan); }
+  .dikw-3 { width: 50%; background: rgba(0,212,212,0.1); color: var(--cyan); }
+  .dikw-2 { width: 70%; background: rgba(0,212,212,0.07); color: var(--text-dim); }
+  .dikw-1 { width: 90%; background: rgba(0,212,212,0.04); color: var(--text-muted); }
+
+  .dikw-level small { display: block; font-size: 0.62rem; margin-top: 0.15rem; opacity: 0.7; }
+
+  /* SOVEREIGNTY VECTORS */
+  .vector-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin: 1.5rem 0;
+  }
+
+  .vector-card {
+    border: 1px solid var(--border);
+    padding: 1rem;
+    font-size: 0.82rem;
+  }
+
+  .vector-card h5 {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--cyan);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 0.4rem;
+  }
+
+  .vector-card p { margin: 0; color: var(--text-dim); font-size: 0.8rem; line-height: 1.55; }
+
+  /* PATTERN STEPS */
+  .pattern {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0.5rem;
+    margin: 1.5rem 0;
+  }
+
+  .pattern-step {
+    border: 1px solid var(--border);
+    padding: 0.75rem;
+    text-align: center;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+  }
+
+  .pattern-step .ps-num { color: var(--cyan); font-size: 0.6rem; letter-spacing: 0.1em; display: block; margin-bottom: 0.25rem; }
+  .pattern-step .ps-label { color: var(--text-dim); line-height: 1.4; }
+
+  /* ROADMAP TABLE */
+  .roadmap-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.82rem;
+    margin: 1.5rem 0;
+  }
+
+  .roadmap-table th {
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    color: var(--orange);
+    text-transform: uppercase;
+    padding: 0.6rem 0.75rem;
+    border-bottom: 2px solid var(--border2);
+    text-align: left;
+  }
+
+  .roadmap-table td { padding: 0.65rem 0.75rem; border-bottom: 1px solid var(--border); font-size: 0.8rem; vertical-align: top; }
+
+  .v-current { color: var(--cyan); font-family: var(--mono); font-weight: 600; }
+  .v-future { color: var(--text-muted); font-family: var(--mono); }
+
+  /* GLOSSARY */
+  .gloss-entry { margin-bottom: 1.5rem; }
+  .gloss-term {
+    font-family: var(--mono);
+    color: var(--cyan);
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+  }
+  .gloss-def { font-size: 0.83rem; color: var(--text-dim); line-height: 1.6; }
+
+  /* REFERENCES */
+  .ref-group { margin-bottom: 2rem; }
+  .ref-group h4 { color: var(--orange); margin-bottom: 0.75rem; }
+  .ref-item {
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    padding: 0.35rem 0 0.35rem 1.2rem;
+    border-bottom: 1px solid var(--border);
+    line-height: 1.55;
+    position: relative;
+  }
+  .ref-item::before { content: "—"; position: absolute; left: 0; color: var(--text-muted); }
+
+  /* OWASP TABLE */
+  .owasp-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.78rem;
+    margin: 1.5rem 0;
+  }
+
+  .owasp-table th {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    color: var(--orange);
+    text-transform: uppercase;
+    padding: 0.5rem 0.6rem;
+    border-bottom: 2px solid var(--border2);
+    text-align: left;
+  }
+
+  .owasp-table td { padding: 0.55rem 0.6rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+  .owasp-code { font-family: var(--mono); color: var(--cyan); font-size: 0.72rem; white-space: nowrap; }
+
+  /* INTERSECTION TABLE */
+  .inter-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.8rem;
+    margin: 1.5rem 0;
+  }
+
+  .inter-table th {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    color: var(--orange);
+    text-transform: uppercase;
+    padding: 0.5rem 0.75rem;
+    border-bottom: 2px solid var(--border2);
+    text-align: left;
+  }
+
+  .inter-table td { padding: 0.6rem 0.75rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+  .inter-key { font-family: var(--mono); color: var(--cyan); font-size: 0.73rem; white-space: nowrap; }
+  .inter-risk { color: var(--red); font-size: 0.78rem; }
+  .inter-mit { color: var(--green); font-size: 0.78rem; }
+
+  /* FOOTER */
+  footer {
+    margin-top: 6rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border);
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    color: var(--text-muted);
+    text-align: center;
+    line-height: 2;
+  }
+
+  footer a { color: var(--text-dim); text-decoration: none; }
+  footer a:hover { color: var(--cyan); }
+
+  /* SEPARATOR */
+  hr { border: none; border-top: 1px solid var(--border); margin: 2rem 0; }
+
+  /* MONOSPACE INLINE */
+  code {
+    font-family: var(--mono);
+    font-size: 0.82em;
+    color: var(--cyan);
+    background: rgba(0,212,212,0.06);
+    padding: 0.1em 0.35em;
+    border-radius: 2px;
+  }
+
+  /* PATCH BADGE */
+  .patch-badge {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    color: var(--gold);
+    border: 1px solid var(--gold);
+    padding: 0.1rem 0.4rem;
+    margin-left: 0.5rem;
+    vertical-align: middle;
+    opacity: 0.8;
+  }
+
+  /* UE PACKAGE HIGHLIGHT */
+  .eu-package {
+    background: rgba(0,212,212,0.04);
+    border: 1px solid var(--cyan-dim);
+    padding: 1.25rem 1.5rem;
+    margin: 1.5rem 0;
+    font-size: 0.85rem;
+  }
+
+  .eu-package h5 {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--cyan);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+
+  .eu-legs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+  }
+
+  .eu-leg {
+    border: 1px solid var(--border2);
+    padding: 0.5rem 0.75rem;
+    font-size: 0.78rem;
+  }
+
+  .eu-leg strong { color: var(--cyan); font-family: var(--mono); font-size: 0.72rem; display: block; margin-bottom: 0.2rem; }
+  .eu-leg span { color: var(--text-dim); font-size: 0.76rem; }
+
+  /* ENVIRONMENTAL SECTION */
+  .env-metrics {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+    margin: 1.5rem 0;
+  }
+
+  .env-metric {
+    border: 1px solid var(--border);
+    padding: 0.75rem;
+    text-align: center;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+  }
+
+  .env-metric .em-label { color: var(--green); display: block; margin-bottom: 0.25rem; font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; }
+  .env-metric .em-val { color: var(--text); font-size: 0.85rem; }
+
+  /* AGENT IDENTITY */
+  .agent-id-frame {
+    background: var(--surface);
+    border: 1px solid var(--gold);
+    border-left: 3px solid var(--gold);
+    padding: 1.25rem 1.5rem;
+    margin: 1.5rem 0;
+  }
+
+  .agent-id-frame h5 {
+    font-family: var(--mono);
+    color: var(--gold);
+    font-size: 0.68rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+
+  .agent-profile {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+    font-family: var(--mono);
+    font-size: 0.75rem;
+  }
+
+  .ap-field { padding: 0.35rem 0; border-bottom: 1px solid var(--border); }
+  .ap-key { color: var(--text-muted); font-size: 0.65rem; display: block; }
+  .ap-val { color: var(--text); }
+
+  /* MULTI-AGENT */
+  .multi-agent {
+    background: var(--surface2);
+    border: 1px solid var(--border2);
+    padding: 1.25rem 1.5rem;
+    margin: 1.5rem 0;
+    font-size: 0.83rem;
+  }
+
+  .multi-agent h5 {
+    font-family: var(--mono);
+    color: var(--green);
+    font-size: 0.68rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 640px) {
+    body { padding: 1.5rem 1rem 4rem; }
+    .arch-pillars { flex-direction: column; }
+    .toc-nav ol { columns: 1; }
+    .vector-grid { grid-template-columns: 1fr; }
+    .pattern { grid-template-columns: 1fr; }
+    .env-metrics { grid-template-columns: 1fr; }
+    .agent-profile { grid-template-columns: 1fr; }
+    .eu-legs { grid-template-columns: 1fr; }
+    .layer-card { grid-template-columns: 2rem 1fr; }
+    .layer-check, .layer-incident { display: none; }
+  }
+
+  @media print {
+    body { background: white; color: black; max-width: 100%; }
+    :root {
+      --bg: white; --surface: #f5f5f5; --surface2: #eeeeee;
+      --border: #dddddd; --border2: #cccccc;
+      --cyan: #006666; --orange: #884400; --green: #006644;
+      --text: #111; --text-dim: #444; --text-muted: #888;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="doc-header">
+  <div class="doc-brand">HUBSTRY DEEP TECH / INSTITUTO PCIH³</div>
+  <h1 class="doc-title">
+    Framework de Governança por Camada de Segurança,<br>
+    Camada de Dados e Pilares de Domínio para Tecnologia com IA
+  </h1>
+  <div class="doc-meta">
+    v.04.1 <span>·</span> 09/06/2026 <span>·</span> CC BY 4.0 <span>·</span> guihermemachado.ceo@hubstry.dev
+  </div>
+</header>
+
+<!-- COMO USAR -->
+<section class="how-to" id="como-usar">
+  <div class="section-label">Guia de leitura</div>
+  <h2>Como Usar Este Documento</h2>
+
+  <p>Este protocolo foi escrito para pessoas com formações diferentes em equipes pequenas ou founders solo. Você não precisa dominar todas as áreas — escolha seu caminho de leitura.</p>
+
+  <p><strong>Caminho de Governança</strong> — Para: decisores, C-levels, compliance, jurídico, gestores públicos, investidores.<br>
+  Percurso: Princípio Fundador → Segurança como Camada de Governança → Camada de Dados (nível 1 + regulação) → Soberania Digital → Mapa de Interseções → Checklist Modo 2.</p>
+
+  <p><strong>Caminho de Execução por Domínio</strong> — Para: times técnicos, desenvolvedores, engenheiros de infraestrutura, especialistas em criptografia.<br>
+  Percurso: Pilar do seu domínio (Quântico OU Analógico-Físico OU Digital) → seção de segurança integrada → Camada de Dados (nível 2 + ciclo de vida) → Checklist Modo 1.</p>
+
+  <table class="profile-table">
+    <thead>
+      <tr><th>PERFIL</th><th>CAMINHO</th><th>FOCO</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><span class="tag-founder">☞</span> Founder solo / bootstrap</td><td>Governança → marcadores ☞ → Modo 1 resumido</td><td>Ações mínimas viáveis; o que fazer agora vs. depois</td></tr>
+      <tr><td><span class="tag-decision">■</span> Decisor / C-level / Gov</td><td>Governança completa + Soberania Digital + Mapa de Interseções</td><td>Riscos de negócio, impacto regulatório, oportunidade B2G</td></tr>
+      <tr><td><span class="tag-tech">◎</span> Desenvolvedor / TI</td><td>Pilar do seu domínio + Camada de Dados (ciclo de vida técnico)</td><td>Padrões técnicos, ferramentas, vetores de ataque</td></tr>
+      <tr><td><span class="tag-new">☞</span> Leitor novo no tema</td><td>Glossário primeiro → depois Nível 1 de cada seção</td><td>Vocabulário progressivo</td></tr>
+    </tbody>
+  </table>
+
+  <p style="font-size:0.82rem; color:var(--text-dim); margin-top:1rem;">
+    <strong style="color:var(--orange)">■</strong> Para decisores — impacto de negócio, risco regulatório, linguagem executiva ·
+    <strong style="color:var(--green)">◎</strong> Para times técnicos — profundidade técnica, padrões, ferramentas concretas ·
+    <strong style="color:var(--cyan)">☞</strong> Para founders solo — ação mínima viável agora; o que pode esperar; quando chamar especialista
+  </p>
+</section>
+
+<!-- NAV -->
+<nav class="toc-nav">
+  <h4>Índice</h4>
+  <ol>
+    <li><a href="#sec01">Princípio Fundador</a></li>
+    <li><a href="#sec02">Segurança por Design</a></li>
+    <li><a href="#sec03">Camada de Dados</a></li>
+    <li><a href="#sec04">Pilar Quântico</a></li>
+    <li><a href="#sec05">Pilar Analógico-Físico</a></li>
+    <li><a href="#sec06">Pilar Digital</a></li>
+    <li><a href="#sec07">Soberania Digital</a></li>
+    <li><a href="#sec08">Mapa de Interseções</a></li>
+    <li><a href="#sec09">Checklists Operacionais</a></li>
+    <li><a href="#sec10">Referências Normativas</a></li>
+    <li><a href="#sec11">Glossário</a></li>
+    <li><a href="#sec12">Roadmap de Evolução</a></li>
+  </ol>
+</nav>
+
+<!-- SEÇÃO 01 -->
+<section class="section" id="sec01">
+  <div class="section-label">SEÇÃO 01</div>
+  <h2>Princípio Fundador — A Geometria do Protocolo</h2>
+
+  <div class="callout">
+    <em>Segurança não é um domínio entre iguais — é o envelope que governa todos os outros.<br>
+    Dados não é um pilar — é a camada de valor que atravessa todos os domínios.</em>
+  </div>
+
+  <h3>A metáfora do prédio</h3>
+  <p>Pense num prédio. O sistema de segurança (câmeras, alarmes, controle de acesso) não é um andar como os outros — é a infraestrutura que envolve e protege todos os andares. Dentro do prédio, há uma rede de energia que alimenta cada cômodo sem ser ela mesma um cômodo: isso são os dados. Cada andar tem sua função específica: laboratório, escritório, datacenter. Mas todos herdam as regras de segurança do envelope — e todos produzem, consomem e transformam dados pela rede interna.</p>
+
+  <div class="arch-diagram">
+    <div class="arch-layer-top">
+      SEGURANÇA POR DESIGN — Camada de Governança Transversal
+      <small>(compliance, AI Safety, regulação, auditoria)</small>
+    </div>
+    <div class="arch-pillars">
+      <div class="arch-pillar">QUÂNTICO<small>(crypto)</small></div>
+      <div class="arch-pillar">ANALÓGICO-FÍSICO<small>(infra/DevOps)</small></div>
+      <div class="arch-pillar">DIGITAL<small>(devs/produto)</small></div>
+    </div>
+    <div class="arch-layer-bottom">DADOS — Camada Transversal de Valor · captura → ingestão → processamento → distribuição</div>
+  </div>
+
+  <h3>A dualidade pilar/camada (atualizada v.04)</h3>
+  <p>Cada elemento do protocolo opera em dois modos — como a luz na física quântica, que é onda E partícula dependendo de como é observada:</p>
+  <ul style="margin: 1rem 0 1rem 1.5rem; font-size:0.88rem; line-height:2;">
+    <li><strong style="color:var(--cyan)">Pilar</strong> — quando tratado como domínio independente com equipe e expertise própria</li>
+    <li><strong style="color:var(--orange)">Camada</strong> — quando tratado como substrato transversal que atravessa todos os outros domínios</li>
+  </ul>
+
+  <div class="callout callout-tech">
+    <strong>Nota de implementação:</strong> A dualidade pilar/camada é uma ferramenta de <em>compreensão conceitual</em>, não de implementação. Na execução prática, cada componente deve ter um modo operacional definido: ou opera como domínio independente (pilar) ou como substrato transversal (camada).
+  </div>
+
+  <p>A <strong style="color:var(--orange)">Segurança por Design</strong> é sempre camada de governança — nunca pilar entre iguais. Os <strong style="color:var(--cyan)">Dados</strong> são sempre camada de valor — nascem nos três pilares, fluem entre eles, precisam ser governados pela camada de segurança. <strong>Quântico</strong>, <strong>Analógico-Físico</strong> e <strong>Digital</strong> são pilares de domínio que herdam e implementam os requisitos de ambas as camadas.</p>
+
+  <p>A <strong>Soberania Digital</strong> é uma lente transversal — aplica-se a todos os pilares e a ambas as camadas, com especial intensidade no Analógico-Físico e na Camada de Dados.</p>
+
+  <div class="callout callout-tech">
+    <strong>Distinção arquitetural — Camada vs. Lente:</strong> Uma <em>camada</em> é um substrato operacional com requisitos técnicos executáveis, pipeline próprio e checklist dedicado. Uma <em>lente transversal</em> é um filtro analítico que requalifica decisões em todos os domínios sem possuir pipeline operacional próprio. Soberania Digital opera como lente porque não executa dados ou segurança diretamente, mas condiciona <em>como</em> ambos devem ser executados em contexto geopolítico.
+  </div>
+</section>
+
+<!-- SEÇÃO 02 -->
+<section class="section" id="sec02">
+  <div class="section-label">SEÇÃO 02</div>
+  <h2>Segurança por Design — Camada de Governança Transversal</h2>
+
+  <div class="callout">
+    <em>Construir segurança desde o primeiro dia custa 10 vezes menos do que remediar depois — e a regulação de 2026 já não deixa escolha.</em>
+  </div>
+
+  <h3>O caso Medvi — prova de que velocidade sem segurança destrói</h3>
+  <p>A Medvi gerou US$401M de receita em 2025 com 2 funcionários. E acumulou: advertência formal da FDA (Food and Drug Administration), ação coletiva judicial na Califórnia, exposição de dados de 250.000 pacientes. Velocidade sem Segurança por Design cria passivo que pode destruir o que foi construído.</p>
+  <p style="font-size:0.78rem; color:var(--text-muted);">Fonte: reportagens especializadas em health-tech e filings da FDA (2025). Verificar fonte primária antes de uso em contextos regulatórios formais.</p>
+
+  <h3>Definições canônicas de AI Safety</h3>
+  <p>Três definições do campo de AI Safety Engineering, em ordem cronológica — cada uma complementa as outras:</p>
+
+  <div class="def-block">
+    <div class="def-label">Yampolskiy &amp; Fox (2013)</div>
+    <div class="def-text">"AI Safety Engineering é a área de pesquisa dedicada a resolver o problema do controle das máquinas inteligentes pela humanidade."</div>
+    <div class="def-source">Topoi, vol. 32, nº 2, pp. 217–226.</div>
+  </div>
+
+  <div class="def-block">
+    <div class="def-label">Rudner &amp; Toner, CSET Georgetown (2021)</div>
+    <div class="def-text">"Pesquisa em AI Safety busca identificar causas potenciais de comportamentos não intencionais em sistemas de aprendizado de máquina e desenvolver ferramentas para reduzir a probabilidade de tais comportamentos."</div>
+    <div class="def-source">DOI: 10.5798/hy00-1m64.</div>
+  </div>
+
+  <div class="def-block">
+    <div class="def-label">Amodei et al., Anthropic (2016)</div>
+    <div class="def-text">"AI Safety é a área cuja finalidade é evitar ou mitigar danos causados por defeitos ou comportamentos não previstos pelos desenvolvedores do sistema de IA."</div>
+    <div class="def-source">arXiv:1606.06565.</div>
+  </div>
+
+  <div class="def-block" style="border-color:var(--orange);">
+    <div class="def-label" style="color:var(--cyan);">Definição operacional Hubstry (2026) — contexto agentic</div>
+    <div class="def-text">"AI Safety no contexto agentic é a disciplina que garante que sistemas de IA semi-autônomos operem dentro de escopos definidos, com supervisão humana verificável, trilha de auditoria completa e capacidade de interrupção segura."</div>
+    <div class="def-source">Convergência das três definições acima para o modelo operacional dominante em 2026.</div>
+  </div>
+
+  <h3>Cinco categorias de risco de IA</h3>
+  <p>Taxonomia consolidada da literatura de AI Safety: Yampolskiy &amp; Fox (2013); Rudner &amp; Toner, CSET (2021); Amodei et al. (2016).</p>
+
+  <table class="risk-table">
+    <thead><tr><th>#</th><th>Categoria</th><th>Exemplo Real</th><th>Camada de Resposta</th></tr></thead>
+    <tbody>
+      <tr><td class="risk-num">1</td><td>Accidental</td><td>Claude Code Leak — 513k linhas via NPM, Q1 2026</td><td>Pilar Digital</td></tr>
+      <tr><td class="risk-num">2</td><td>Mau uso</td><td>Claude em ataque gov. México — 195M registros, Q1 2026</td><td>Cláusula ética + Pilar Digital</td></tr>
+      <tr><td class="risk-num">3</td><td>Social e sistêmico</td><td>Desinformação em escala, viés em sistemas de crédito</td><td>Todos os pilares</td></tr>
+      <tr><td class="risk-num">4</td><td>Alinhamento e controle</td><td>Agente teria prejudicado operador para evitar ser desligado, 2025 [*]</td><td>Protocolo de 7 camadas</td></tr>
+      <tr><td class="risk-num">5</td><td>Catastrófico e existencial</td><td>Escopo de pesquisa de longo prazo (Yampolskiy, 2013/2023)</td><td>Governança sistêmica</td></tr>
+    </tbody>
+  </table>
+
+  <p style="font-size:0.78rem; color:var(--text-muted);">[*] Incidente categoria 4: relatado em comunicações públicas do campo de AI Safety (2025). Verificar fonte primária para uso em contextos formais.</p>
+
+  <div class="callout callout-decision">
+    <span class="marker-d">■</span>As definições convergem: o risco de IA não é ficção científica — é comportamento real de sistemas reais, documentado em 8 incidentes no primeiro trimestre de 2026. O mesmo mês em que a Anthropic publicou seu Founder's Playbook recomendando IA em toda operação de startup, o Claude foi citado como ferramenta em um ataque governamental no México que exfiltrou 195 milhões de registros.
+  </div>
+
+  <h3>Agent Identity Management <span class="patch-badge">v.04.1</span></h3>
+  <p>Antes de aplicar o protocolo de 7 camadas, cada agente de IA deve possuir identidade formal com autenticação, autorização e ciclo de vida documentado. Identidade de agente não é papel de usuário — é entidade técnica auditável independente.</p>
+
+  <div class="agent-id-frame">
+    <h5>Agent Profile Card — Campos Obrigatórios</h5>
+    <div class="agent-profile">
+      <div class="ap-field"><span class="ap-key">agent_id</span><span class="ap-val">string único, imutável, rastreável</span></div>
+      <div class="ap-field"><span class="ap-key">agent_type</span><span class="ap-val">task / orchestrator / tool-user / physical</span></div>
+      <div class="ap-field"><span class="ap-key">scope_boundary</span><span class="ap-val">lista explícita de ações permitidas</span></div>
+      <div class="ap-field"><span class="ap-key">permission_level</span><span class="ap-val">read / write / execute / irreversible</span></div>
+      <div class="ap-field"><span class="ap-key">human_owner</span><span class="ap-val">responsável nominal pelo agente</span></div>
+      <div class="ap-field"><span class="ap-key">lifecycle_status</span><span class="ap-val">active / suspended / decommissioned</span></div>
+      <div class="ap-field"><span class="ap-key">audit_endpoint</span><span class="ap-val">URL/stream do log de decisões</span></div>
+      <div class="ap-field"><span class="ap-key">kill_switch</span><span class="ap-val">mecanismo de interrupção segura verificado</span></div>
+    </div>
+  </div>
+
+  <p style="font-size:0.82rem; color:var(--text-dim);">Referência: NIST AI RMF 2026 GOVERN — Agent Identity Management; Singapore Model AI Governance Framework for Agentic AI (2026). Agentes não documentados com identidade formal constituem <strong style="color:var(--red)">shadow AI agents</strong> — vetor de risco prevalente em 2026 (CSA &amp; Token Security, <em>Autonomous but Not Controlled</em>, abr/2026: 82% das organizações descobriram pelo menos um agente não rastreado pela equipe de segurança).</p>
+
+  <h3>Protocolo de 7 camadas para agentes de IA</h3>
+  <p>Antes de colocar qualquer agente de IA em funcionamento, percorra as 7 camadas. Cada camada é um filtro. Se o agente não passar em qualquer camada, não vai para produção.</p>
+
+  <p style="font-family:var(--mono); font-size:0.75rem; color:var(--text-muted); margin-bottom:1rem;">Protocolo Hubstry — síntese original derivada de NIST AI RMF 1.0, OWASP Agentic AI Security 2026, ISO/IEC 42001:2023 e Singapore MGF for Agentic AI (2026).</p>
+
+  <div class="layer-card layer-identity">
+    <div class="layer-num">0</div>
+    <div class="layer-body">Registrar identidade</div>
+    <div class="layer-check">Agent Profile Card criado? agent_id, scope, kill_switch definidos?</div>
+    <div class="layer-incident">Shadow agent sem rastreabilidade — 82% das orgs têm ao menos 1</div>
+  </div>
+  <div class="layer-card">
+    <div class="layer-num">1</div>
+    <div class="layer-body">Limitar autonomia</div>
+    <div class="layer-check">Escopo do agente explicitamente definido e restrito?</div>
+    <div class="layer-incident">OpenClaw deletou emails sem confirmação, Q1 2026</div>
+  </div>
+  <div class="layer-card">
+    <div class="layer-num">2</div>
+    <div class="layer-body">Controlar identidade e permissões</div>
+    <div class="layer-check">Privilégio mínimo aplicado? Defaults de plataforma revisados?</div>
+    <div class="layer-incident">Vertex AI Double Agent — permissões excessivas via service accounts</div>
+  </div>
+  <div class="layer-card">
+    <div class="layer-num">3</div>
+    <div class="layer-body">Validar ações críticas</div>
+    <div class="layer-check">Ações irreversíveis exigem confirmação humana explícita?</div>
+    <div class="layer-incident">Meta Data Leak após sugestão técnica não validada</div>
+  </div>
+  <div class="layer-card">
+    <div class="layer-num">4</div>
+    <div class="layer-body">Registrar decisões</div>
+    <div class="layer-check">Decisões do agente logadas e auditáveis?</div>
+    <div class="layer-incident">Sem log = sem resposta a incidente e sem conformidade regulatória</div>
+  </div>
+  <div class="layer-card">
+    <div class="layer-num">5</div>
+    <div class="layer-body">Manter supervisão humana</div>
+    <div class="layer-check">Ponto de controle humano antes de ações de alto impacto?</div>
+    <div class="layer-incident">"Autonomia sem controles manuais e confirmações explícitas é uma bomba-relógio operacional" (OWASP GenAI Q1 2026)</div>
+  </div>
+  <div class="layer-card">
+    <div class="layer-num">6</div>
+    <div class="layer-body">Testar continuamente</div>
+    <div class="layer-check">Suite de testes cobre comportamentos críticos e de segurança?</div>
+    <div class="layer-incident">Comportamentos inesperados chegam a produção sem detecção</div>
+  </div>
+  <div class="layer-card">
+    <div class="layer-num">7</div>
+    <div class="layer-body">Validar saída e autorizar deploy</div>
+    <div class="layer-check">Revisão final integrando todas as camadas anteriores? Checksum de conformidade registrado?</div>
+    <div class="layer-incident">Deploy com falha silenciosa em camada anterior não detectada</div>
+  </div>
+
+  <p style="font-size:0.78rem; color:var(--text-muted); margin-top:0.5rem;">Camada 0 (Registrar identidade) adicionada no patch v.04.1. As camadas 1–7 permanecem inalteradas.</p>
+
+  <h3>Ambiente Regulatório Ativo</h3>
+
+  <table class="data-table">
+    <thead><tr><th>Regulação</th><th>Jurisdição</th><th>Status</th><th>Impacto Principal</th></tr></thead>
+    <tbody>
+      <tr><td>LGPD — Lei nº 13.709/2018</td><td>Brasil</td><td class="status-active">☑ Em vigor</td><td>Proteção de dados pessoais; fiscalização pela ANPD</td></tr>
+      <tr><td>ECA Digital — Lei nº 15.211/2025</td><td>Brasil</td><td class="status-active">☑ Em vigor desde mai/2026</td><td>Proteção de menores no digital; responsabilidade de plataformas</td></tr>
+      <tr><td>NR-1 — Norma Regulamentadora nº 1</td><td>Brasil</td><td class="status-active">☑ Em vigor</td><td>Gestão de riscos psicossociais incluindo uso de IA no trabalho</td></tr>
+      <tr><td>Marco Civil da Internet (Art. 19 parcialmente inconstitucional, STF 2025)</td><td>Brasil</td><td class="status-partial">▲ Parcialmente alterado</td><td>Aumenta responsabilidade de plataformas por conteúdo de terceiros</td></tr>
+      <tr><td>PL 2338/2023 — Regulação de IA</td><td>Brasil</td><td class="status-pending">☑ Em tramitação</td><td>Define responsabilidade por output de sistemas de IA</td></tr>
+      <tr><td>GDPR — Regulamento UE 2016/679</td><td>UE</td><td class="status-active">☑ Em vigor</td><td>Proteção de dados de cidadãos europeus em qualquer sistema</td></tr>
+      <tr><td>AI Act — Regulamento UE 2024/1689</td><td>UE</td><td class="status-active">☑ Em vigor gradual</td><td>Classificação de risco de sistemas de IA; obrigações por categoria</td></tr>
+      <tr><td>Pacote Soberania Tecnológica UE — Chips Act 2.0 + CADA + Open Source + Energia <span class="patch-badge">v.04.1</span></td><td>UE</td><td class="status-proposal">◈ Em proposta / negociação</td><td>Redução de dependência estrutural; 4 tiers de soberania cloud; fabricação avançada de chips; open source estratégico</td></tr>
+      <tr><td>California AI Regulations</td><td>EUA — CA</td><td class="status-active">☑ Em curso</td><td>Transparência e responsabilidade no mercado americano</td></tr>
+      <tr><td>Provisions on Generative AI Services</td><td>China</td><td class="status-active">☑ Em vigor (jul/2023)</td><td>Regulação de serviços de IA generativa; obrigação de registro</td></tr>
+      <tr><td>AI Governance Framework</td><td>Cingapura</td><td class="status-active">☑ Voluntário + enforcement setorial</td><td>Framework de governança de IA baseado em risco; benchmark ASEAN</td></tr>
+      <tr><td>Aceleração global: 30+ leis (2023), 40+ leis (2024); União Africana AI Policy <span class="patch-badge">v.04.1</span></td><td>Global</td><td class="status-active">☑ Em vigor (jurisdições variadas)</td><td>Convergência regulatória multilateral; OCDE, ONU, UA publicaram frameworks em 2024 (Stanford HAI AI Index 2025)</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout callout-decision">
+    <span class="marker-d">■</span>A regulação de IA está sendo escrita agora. Empresas que esperarem para se adaptar pagarão mais caro: multas, retrabalho de arquitetura, perda de contratos. Empresas que construírem com conformidade desde o início têm vantagem competitiva real e mensurável.
+  </div>
+
+  <div class="callout callout-founder">
+    <span class="marker-f">☞</span><strong>Agora:</strong> aplique as 7 camadas (mais Camada 0 de identidade) em qualquer agente de IA antes de ativá-lo. Leva 15–20 minutos por agente. <strong>Pode esperar:</strong> automação do checklist (implementar quando tiver mais de 3 agentes em produção). <strong>Quando chamar especialista:</strong> antes de colocar agente com acesso a dados de clientes ou capacidade de executar ações financeiras.
+  </div>
+
+  <h3>Checklist de Governança de Segurança</h3>
+  <ul class="checklist">
+    <li>Regulações aplicáveis ao negócio e à tecnologia mapeadas</li>
+    <li>Agent Profile Card (Camada 0) criado para cada agente antes do deploy</li>
+    <li>Protocolo de 7 camadas aplicado a todos os agentes de IA antes de qualquer deploy</li>
+    <li>Cláusula ética de não-licenciamento em todos os contratos: proibição explícita de uso em armas autônomas ou vigilância de cidadãos</li>
+    <li>Trilha de auditoria: todas as ações críticas dos sistemas logadas e auditáveis</li>
+    <li>Privacy by Design implementado na arquitetura (ver Pilar Digital)</li>
+    <li>Responsabilidades de segurança definidas por domínio: quem governa vs. quem executa</li>
+    <li>Revisão de conformidade regulatória a cada 6 meses ou após nova legislação relevante</li>
+  </ul>
+</section>
+
+<!-- SEÇÃO 03 -->
+<section class="section" id="sec03">
+  <div class="section-label">SEÇÃO 03</div>
+  <h2>Camada de Dados — Camada Transversal de Valor</h2>
+
+  <h3>Nível 1 — O essencial</h3>
+  <div class="callout">
+    <em>Dado sem contexto é ruído; dado governado com qualidade, rastreabilidade e soberania é o ativo econômico mais estratégico da organização digital.</em>
+  </div>
+
+  <p>Pense numa usina hidrelétrica. A água que passa pela turbina é o dado bruto — energia potencial sem forma definida. A eletricidade que chega às casas é a informação — energizada, formatada, utilizável. A conta de luz que planeja o consumo da cidade é o conhecimento. E a decisão de construir a próxima usina onde construir — essa é a sabedoria. O protocolo de dados governa todo esse fluxo: da captação ao descarte, da represa à decisão.</p>
+
+  <h3>A pirâmide DIKW — fundação conceitual</h3>
+
+  <div class="dikw">
+    <div class="dikw-level dikw-4">Sabedoria<small>julgamento aplicado</small></div>
+    <div class="dikw-level dikw-3">Conhecimento<small>padrões reconhecíveis</small></div>
+    <div class="dikw-level dikw-2">Informação<small>dado + contexto → significado</small></div>
+    <div class="dikw-level dikw-1">Dado<small>sinal sem contexto — raw signal</small></div>
+  </div>
+
+  <ul style="margin: 1rem 0 1rem 1.5rem; font-size:0.88rem; line-height:2;">
+    <li><strong style="color:var(--cyan)">Dado</strong> = sinal sem contexto. Temperatura: 37.2. Não significa nada isolado.</li>
+    <li><strong style="color:var(--cyan)">Informação</strong> = dado com contexto que gera significado. 37.2°C de um paciente adulto em repouso = febre baixa.</li>
+    <li><strong style="color:var(--cyan)">Conhecimento</strong> = informação com padrão reconhecível. Febre baixa persistente por 3 dias + outros sintomas = padrão diagnóstico.</li>
+    <li><strong style="color:var(--cyan)">Sabedoria</strong> = conhecimento com julgamento aplicado. Decidir tratar ou monitorar, considerando histórico e contexto social.</li>
+  </ul>
+
+  <p style="font-family:var(--mono); font-size:0.72rem; color:var(--text-muted);">Fonte: Ackoff, R.L. (1989). "From Data to Wisdom." Journal of Applied Systems Analysis, 16, 3-9. Shannon, C.E. (1948) estabelece a teoria matemática da informação como medida quantitativa.</p>
+
+  <h3>Nível 2 — Ciclo de Vida Completo do Dado</h3>
+
+  <table class="data-table">
+    <thead><tr><th>Etapa</th><th>O que é</th><th>Ferramentas de Referência</th></tr></thead>
+    <tbody>
+      <tr><td>Captura</td><td>IoT, APIs, interações digitais, câmeras, sensores físicos, web scraping</td><td>MQTT, Apache Kafka, Amazon Kinesis</td></tr>
+      <tr><td>Ingestão</td><td>Pipelines que movem dados brutos para armazenamento estruturado; ETL/ELT</td><td>Apache Airflow, dbt, Fivetran</td></tr>
+      <tr><td>Armazenamento</td><td>Data lakes, warehouses, lakehouses</td><td>BigQuery, Snowflake, Delta Lake, Apache Iceberg</td></tr>
+      <tr><td>Processamento</td><td>Transformação, enriquecimento, agregação, joins, cálculos derivados</td><td>dbt, Apache Spark, Apache Flink</td></tr>
+      <tr><td>Qualidade</td><td>Validação de esquema, limpeza, deduplicação, contratos de dados</td><td>Great Expectations, dbt tests, Soda Core</td></tr>
+      <tr><td>Segurança</td><td>Criptografia em repouso (AES-256) e em trânsito (TLS 1.3+), controle de acesso por papel e atributo</td><td>NIST FIPS 203/204/205, LGPD Art. 46</td></tr>
+      <tr><td>Integridade</td><td>Checks, audit trail imutável, data lineage</td><td>DataHub, Apache Atlas, OpenLineage</td></tr>
+      <tr><td>Distribuição</td><td>APIs de dados, relatórios, data products, feeds downstream</td><td>REST APIs, GraphQL, dbt exposures</td></tr>
+      <tr><td>Descarte</td><td>Políticas de retenção, anonimização irreversível, direito ao esquecimento executado</td><td>LGPD Art. 18, GDPR Art. 17</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout callout-decision">
+    <span class="marker-d">■</span>Dados pessoais são uma categoria jurídica especial sob a LGPD — não apenas um ativo técnico. O titular tem direitos: acesso, correção, portabilidade, eliminação. A multa pode chegar a 2% do faturamento, limitada a R$50 milhões por infração (LGPD Art. 52).
+  </div>
+
+  <h3>Governança de Dados — Os cinco pilares</h3>
+  <ol style="margin: 1rem 0 1rem 1.5rem; font-size:0.88rem; line-height:2.2;">
+    <li><strong>Propriedade e Custódia de Dados:</strong> cada conjunto de dados tem um responsável definido (data owner — decisão) e um guardião técnico (data steward — operação).</li>
+    <li><strong>Catálogo de Dados e Gestão de Metadados:</strong> inventário centralizado de todos os ativos de dados. Ferramentas: DataHub, Apache Atlas, Alation, Collibra.</li>
+    <li><strong>Rastreabilidade de Dados (Data Lineage):</strong> mapa completo da origem ao destino de cada dado. Requisito implícito da LGPD e explícito do GDPR.</li>
+    <li><strong>Gestão de Dados Mestre (MDM):</strong> governança dos dados de referência críticos para garantir consistência entre sistemas.</li>
+    <li><strong>Políticas de Qualidade de Dados:</strong> definição formal do que constitui "dado de qualidade" — completude, consistência, precisão, temporalidade, unicidade.</li>
+  </ol>
+
+  <h3>Checklist Camada de Dados</h3>
+  <ul class="checklist">
+    <li>Inventário de dados: todos os conjuntos catalogados com tipo, localização, proprietário e sensibilidade</li>
+    <li>Data owners e data stewards designados para conjuntos de dados críticos</li>
+    <li>Dados pessoais (LGPD) identificados, bases legais de tratamento documentadas</li>
+    <li>Data lineage implementado para pipelines que tocam dados pessoais ou regulados</li>
+    <li>Políticas de qualidade de dados definidas e monitoradas para dados de produção</li>
+    <li>Direito ao esquecimento: capacidade técnica de deletar todos os dados de um titular em menos de 30 dias</li>
+    <li>Criptografia de dados em repouso (AES-256) e em trânsito (TLS 1.3+)</li>
+    <li>Retenção: política documentada de quanto tempo cada tipo de dado é mantido e como é descartado</li>
+    <li>Dados de longo prazo sensíveis: roadmap para proteção PQC (ver Pilar Quântico)</li>
+  </ul>
+</section>
+
+<!-- SEÇÃO 04 -->
+<section class="section" id="sec04">
+  <div class="section-label">SEÇÃO 04 — PILAR DE DOMÍNIO 1</div>
+  <h2>Quântico</h2>
+
+  <h3>Nível 1 — O essencial</h3>
+  <div class="callout">
+    <em>Um computador quântico poderoso quebrará toda a criptografia que protege seus dados hoje — e alguém pode estar coletando esses dados agora para descriptografar depois.</em>
+  </div>
+
+  <h3>Sub-camada defensiva — PQC (Criptografia Pós-Quântica)</h3>
+  <p>O NIST publicou três padrões finais em 2024:</p>
+  <ul style="margin: 1rem 0 1rem 1.5rem; font-size:0.88rem; line-height:2;">
+    <li><strong>NIST FIPS 203 — ML-KEM:</strong> troca segura de chaves</li>
+    <li><strong>NIST FIPS 204 — ML-DSA:</strong> assinaturas digitais</li>
+    <li><strong>NIST FIPS 205 — SLH-DSA:</strong> assinaturas baseadas em hash</li>
+  </ul>
+
+  <h3>GuruDev Core — protocolo semântico da interface clássico-quântica</h3>
+  <p>O GuruDev Core é o protocolo semântico que governa a delegação entre o processamento clássico e o quântico — análogo ao que o TCP/IP é para redes de computadores. Implementado com 228 testes automatizados. DOI: 10.5281/zenodo.1877646.</p>
+
+  <h3>HSL — Camada de Segurança Harmônica</h3>
+  <p>Protocolo proprietário Hubstry que realiza handshakes de autenticação em aproximadamente 200 bytes, contra os ~8 KB do TLS 1.3 padrão. Baseado no framework matemático HALE (Harmonic Addressing and Labeling Equation). Projetado para dispositivos IoT e edge computing com recursos físicos limitados.</p>
+
+  <div class="callout callout-tech">
+    <strong>Status de validação:</strong> validação externa em processo. Para produção, usar TLS 1.3 como baseline confirmado até que a validação externa seja concluída. O HSL é recomendado como referência arquitetural para dispositivos resource-constrained.
+  </div>
+
+  <h3>Checklist Pilar Quântico</h3>
+  <ul class="checklist">
+    <li>CBOM: inventário de todos os algoritmos criptográficos em uso</li>
+    <li>Algoritmos vulneráveis identificados: RSA, ECC, Diffie-Hellman mapeados para substituição</li>
+    <li>Plano de migração para NIST FIPS 203/204/205 documentado com prazo</li>
+    <li>Crypto-agility: arquitetura permite substituição de algoritmos sem redesign</li>
+    <li>Dados históricos sensíveis protegidos contra "harvest now, decrypt later"</li>
+    <li>IoT e edge: compatibilidade com algoritmos leves (HSL ~200 bytes para dispositivos resource-constrained)</li>
+    <li>Supply chain criptográfico: bibliotecas de terceiros auditadas com CodeRabbit</li>
+    <li>Provedores cloud: roadmap PQC confirmado</li>
+  </ul>
+</section>
+
+<!-- SEÇÃO 05 -->
+<section class="section" id="sec05">
+  <div class="section-label">SEÇÃO 05 — PILAR DE DOMÍNIO 2</div>
+  <h2>Analógico-Físico</h2>
+
+  <h3>Nível 1 — O essencial</h3>
+  <div class="callout">
+    <em>Toda tecnologia digital repousa sobre substrato físico real com donos, localização geográfica e vulnerabilidades geopolíticas — ignorar isso é construir sobre areia.</em>
+  </div>
+
+  <h3>A cadeia de dependência crítica de semicondutores</h3>
+
+  <div class="chain">
+    <div class="chain-item"><div class="chain-num">01</div><div><div class="chain-label">Terras-raras</div><div class="chain-sub">Processadas majoritariamente na China</div></div></div>
+    <div class="chain-item"><div class="chain-num">02</div><div><div class="chain-label">Óptica de precisão para litografia</div><div class="chain-sub">Zeiss, Alemanha</div></div></div>
+    <div class="chain-item"><div class="chain-num">03</div><div><div class="chain-label">Máquinas de litografia EUV</div><div class="chain-sub">ASML, Holanda — única no mundo</div></div></div>
+    <div class="chain-item"><div class="chain-num">04</div><div><div class="chain-label">Fabricação de chips avançados</div><div class="chain-sub">TSMC, Taiwan — &gt;90% dos chips mais avançados do mundo</div></div></div>
+    <div class="chain-item"><div class="chain-num">05</div><div><div class="chain-label">Processadores, GPUs, chips de IA</div><div class="chain-sub">Disponibilizados para mercado global</div></div></div>
+    <div class="chain-item"><div class="chain-num">06</div><div><div class="chain-label">Data centers, servidores, dispositivos IoT</div><div class="chain-sub">Infraestrutura operacional</div></div></div>
+    <div class="chain-item"><div class="chain-num">07</div><div><div class="chain-label">Todo sistema digital operacional</div><div class="chain-sub">Cada seta é uma dependência. Uma disrupção em qualquer ponto propaga-se para cima na cadeia.</div></div></div>
+  </div>
+
+  <div class="callout callout-founder">
+    <span class="marker-f">☞</span>Para founders solo e times pequenos: (1) priorizar provedores cloud com diversificação geográfica de data centers, (2) evitar lock-in em hardware específico via abstração de camada, (3) monitorar riscos de supply chain via Snyk e SBOM para dependências de firmware.
+  </div>
+
+  <h3>Infraestrutura Orbital — Satélites como Componente de Soberania</h3>
+  <p>Satélites não são apenas telecomunicações — são infraestrutura crítica de Estado. Funções estratégicas: comunicações estratégicas, sensoriamento remoto, posicionamento e navegação, comunicações militares e de defesa, conectividade para regiões remotas.</p>
+
+  <h3>Dimensão Ambiental <span class="patch-badge">v.04.1</span></h3>
+  <p>A infraestrutura digital produz impacto ambiental mensurável e crescente — especialmente treino e inferência de LLMs e operação de data centers. Sustentabilidade ambiental é dimensão de governança do Pilar Analógico-Físico, não tema paralelo.</p>
+
+  <div class="env-metrics">
+    <div class="env-metric"><span class="em-label">Carbon Footprint</span><span class="em-val">kg CO₂eq / modelo treinado</span></div>
+    <div class="env-metric"><span class="em-label">Energy Consumption</span><span class="em-val">kWh / inferência em escala</span></div>
+    <div class="env-metric"><span class="em-label">Water Usage</span><span class="em-val">litros / hora de data center</span></div>
+  </div>
+
+  <p>A mesma dependência de energia barata que determina localização soberana de data centers (lente de Soberania Digital) tem contraface ambiental: fontes renováveis, eficiência energética de servidores e cooling, e PUE (Power Usage Effectiveness) são KPIs operacionais de governança, não apenas RSE.</p>
+
+  <p>O Pacote de Soberania Tecnológica da UE (03/06/2026) inclui explicitamente o Roteiro de Digitalização e IA no Setor da Energia — integrando eficiência energética, smart grids e sustentabilidade como dimensão do framework de soberania, não como anexo.</p>
+
+  <div class="callout callout-tech">
+    <span class="marker-t">◎</span><strong>Referência normativa:</strong> NIST AI RMF 2026 GOVERN — Environmental Sustainability (GOVERN 1.6). Indicadores recomendados: carbon footprint assessment por sistema de IA, relatório de consumo energético por pipeline de inferência, política de fornecedores com compromissos verificáveis de emissões.
+  </div>
+
+  <h3>Checklist Pilar Analógico-Físico</h3>
+  <ul class="checklist">
+    <li>Redundância geográfica: sem single point of failure no hosting</li>
+    <li>Estratégia multicloud: ao menos dois provedores em regiões geograficamente distintas</li>
+    <li>Jurisdição de dados mapeada: onde os dados ficam fisicamente e qual lei se aplica</li>
+    <li>Plano de continuidade: o que acontece se o provedor principal ficar indisponível por 24h, 72h, 7 dias?</li>
+    <li>Zero Trust físico: acesso a infraestrutura física com autenticação multifator e log</li>
+    <li>IoT e edge: dispositivos físicos com arquitetura de segurança equivalente aos sistemas centrais</li>
+    <li>Integridade de firmware: verificação de hardware de fornecedores críticos</li>
+    <li>Dependência de posicionamento por satélite: sistemas críticos com fallback multi-constelação ou terrestre</li>
+    <li>Carbon footprint assessment documentado para sistemas de IA em produção <span class="patch-badge">v.04.1</span></li>
+    <li>Política de eficiência energética (PUE) para infraestrutura própria ou contratada <span class="patch-badge">v.04.1</span></li>
+  </ul>
+</section>
+
+<!-- SEÇÃO 06 -->
+<section class="section" id="sec06">
+  <div class="section-label">SEÇÃO 06 — PILAR DE DOMÍNIO 3</div>
+  <h2>Digital</h2>
+
+  <h3>Nível 1 — O essencial</h3>
+  <div class="callout">
+    <em>O software é a camada mais visível e a mais fácil de comprometer — porque é onde mais decisões técnicas acontecem sem revisão de segurança.</em>
+  </div>
+
+  <h3>O founder como orquestrador de agentes</h3>
+  <p>Em 2026, o papel do founder migrou de executor individual para orquestrador de agentes de IA (Anthropic, The Founder's Playbook, 14 mai 2026). Isso multiplica capacidade operacional — e multiplica a superfície de ataque digital se os agentes não forem governados pelo protocolo de 8 etapas (Camada 0 + 7 camadas).</p>
+
+  <h3>Multi-Agent Ecosystems <span class="patch-badge">v.04.1</span></h3>
+  <p>O protocolo v.04 governa agentes individualmente. Em arquiteturas de produção com múltiplos agentes encadeados — pipelines IoT, sistemas de orquestração, redes de agentes especializados — a governança precisa operar no nível do ecossistema, não apenas de cada agente.</p>
+
+  <div class="multi-agent">
+    <h5>Framework de Governança de Ecossistemas Multi-Agente</h5>
+    <p style="margin-bottom:0.75rem; font-size:0.82rem; color:var(--text-dim);">Derivado do NIST AI RMF 2026 GOVERN (Multi-Agent Ecosystems), Singapore MGF for Agentic AI (2026) e WEF AI Agents in Action (2026):</p>
+    <ol style="margin: 0 0 0 1.5rem; font-size:0.82rem; line-height:2.2;">
+      <li><strong style="color:var(--green)">Assess &amp; Bound Risks:</strong> mapeamento de risco no nível do sistema, não apenas por agente individual. Comportamentos emergentes de interação entre agentes são riscos sistêmicos.</li>
+      <li><strong style="color:var(--green)">Accountability:</strong> cadeia de responsabilidade definida para cada pipeline multi-agente. Quem é responsável quando o incidente ocorre na fronteira entre dois agentes?</li>
+      <li><strong style="color:var(--green)">Technical Controls:</strong> isolamento de namespace, controle de fluxo de dados entre agentes, monitoramento de comunicação inter-agente.</li>
+      <li><strong style="color:var(--green)">End-User Responsibility:</strong> usuário final informado sobre automações multi-agente que afetam suas decisões ou dados.</li>
+    </ol>
+    <p style="margin-top:0.75rem; font-size:0.75rem; color:var(--text-muted);">Referências: Singapore Model AI Governance Framework for Agentic AI (2026); WEF, <em>AI Agents in Action: Foundations for Evaluation and Governance</em> (2026).</p>
+  </div>
+
+  <h3>Privacy by Design — implementação arquitetural concreta</h3>
+  <ol style="margin: 1rem 0 1rem 1.5rem; font-size:0.88rem; line-height:2.2;">
+    <li><strong>Minimização de coleta:</strong> o sistema coleta apenas o dado necessário para a função específica.</li>
+    <li><strong>Pseudonimização por padrão:</strong> identificadores pessoais são separados dos dados desde a persistência.</li>
+    <li><strong>Direito ao esquecimento como função de arquitetura:</strong> a capacidade de deletar todos os dados de um titular específico é projetada como função de primeiro nível.</li>
+    <li><strong>Controle de acesso granular por tipo de dado:</strong> os escopos de permissão são definidos pelo tipo de dado, não apenas pelo papel do usuário.</li>
+  </ol>
+
+  <h3>OWASP GenAI — vetores do domínio digital</h3>
+
+  <table class="owasp-table">
+    <thead><tr><th>Vetor</th><th>O que é</th><th>Incidente Q1 2026</th><th>Ferramenta</th></tr></thead>
+    <tbody>
+      <tr><td class="owasp-code">LLM01</td><td>Prompt Injection — atacante insere instruções ocultas</td><td>GrafanaGhost — Noma Security, abr/2026</td><td>LLM Guard, Giskard</td></tr>
+      <tr><td class="owasp-code">LLM02</td><td>Divulgação de Info Sensível — agente vaza dados sem autorização</td><td>México — 195M registros exfiltrados</td><td>Giskard, LLM Guard</td></tr>
+      <tr><td class="owasp-code">LLM03</td><td>Supply Chain — componente de terceiro comprometido</td><td>Claude Code Leak — 513k linhas via NPM</td><td>CodeRabbit, Snyk</td></tr>
+      <tr><td class="owasp-code">LLM05</td><td>Tratamento Impróprio de Saída — saída executada sem validação</td><td>OpenClaw, Flowise</td><td>CodeRabbit, NeMo Guardrails</td></tr>
+      <tr><td class="owasp-code">LLM06</td><td>Agência Excessiva — agente tem mais autonomia do que deveria</td><td>OpenClaw deletou emails; Vertex AI Double Agent</td><td>NeMo Guardrails, Giskard</td></tr>
+      <tr><td class="owasp-code">AS101</td><td>Goal Hijack — agente redirecionado para objetivo diferente</td><td>GrafanaGhost, Meta</td><td>Giskard, NeMo Guardrails</td></tr>
+      <tr><td class="owasp-code">AS103</td><td>Abuso de Privilégio — agente acessa recursos além da permissão</td><td>Vertex AI Double Agent — Unit 42</td><td>Giskard, Policy-as-Code</td></tr>
+      <tr><td class="owasp-code">AS105</td><td>Execução Inesperada de Código — agente executa código arbitrário</td><td>Flowise CVE-2025-59528</td><td>CodeRabbit (pre-merge)</td></tr>
+      <tr><td class="owasp-code">AS110</td><td>Rogue Agents — agente age fora do escopo de forma autônoma</td><td>OpenClaw</td><td>NeMo Guardrails, Giskard</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Checklist Pilar Digital</h3>
+  <ul class="checklist">
+    <li>Privacy by Design: minimização, pseudonimização, erasure, controle granular implementados na arquitetura</li>
+    <li>Dependências auditadas via SCA: Snyk, OWASP Dependency-Check, ou Dependabot</li>
+    <li>Nenhum segredo em código: chaves e tokens em HashiCorp Vault, AWS Secrets Manager, ou .env protegido</li>
+    <li>CI/CD com gates de segurança: nenhum deploy sem testes e scan de segurança passando</li>
+    <li>Suite de testes automatizados cobrindo casos críticos de segurança</li>
+    <li>MFA habilitado em todas as contas de serviço, cloud e repositório</li>
+    <li>OWASP GenAI: LLM01-LLM10 e AS101-AS110 verificados para cada agente em produção</li>
+    <li>Ambientes de configuração de agentes isolados via containers ou VMs dedicadas</li>
+    <li>Governança de ecossistema multi-agente: accountability e technical controls definidos para pipelines encadeados</li>
+    <li>Licenças de software documentadas para todos os componentes de terceiros</li>
+  </ul>
+</section>
+
+<!-- SEÇÃO 07 -->
+<section class="section" id="sec07">
+  <div class="section-label">SEÇÃO 07</div>
+  <h2>Soberania Digital</h2>
+
+  <h3>Nível 1 — O essencial</h3>
+  <div class="callout">
+    <em>Soberania digital não se restaura depois que foi vendida — precisa ser arquitetura de design desde o início, exatamente como Segurança por Design.</em>
+  </div>
+
+  <p><strong>O que é soberania digital:</strong> a capacidade de um Estado, organização ou indivíduo de exercer controle efetivo sobre sua infraestrutura tecnológica, seus dados e seu ecossistema digital — independentemente de pressões externas, dependências de fornecedores ou jurisdições estrangeiras. Soberania digital é compatível com integração global — a diferença está em quem detém poder de interrupção sobre os sistemas críticos.</p>
+
+  <h3>Pacote de Soberania Tecnológica da UE <span class="patch-badge">v.04.1</span></h3>
+
+  <div class="eu-package">
+    <h5>European Technological Sovereignty Package — Comissão Europeia, 03/06/2026</h5>
+    <p>A Comissão Europeia apresentou o pacote mais abrangente já proposto para redução de dependências estruturais digitais. Contexto declarado: a UE permanece dependente de fornecedores não-europeus em mais de 80% de produtos, serviços e infraestrutura digitais; mais de 70% do mercado cloud europeu é controlado por três hyperscalers americanos; a Europa produz cerca de 10% dos semicondutores globais. O pacote segue para negociação no Parlamento Europeu e no Conselho da UE.</p>
+
+    <div class="eu-legs">
+      <div class="eu-leg"><strong>Chips Act 2.0</strong><span>Capacidade de fabricação de chips avançados para IA na Europa. Prioriza construção de foundry europeia. Reduz dependência TSMC/Taiwan (nós 03–04 da cadeia no Pilar Analógico-Físico).</span></div>
+      <div class="eu-leg"><strong>Cloud and AI Development Act (CADA)</strong><span>Framework EU-wide com quatro tiers de soberania cloud para setor público. Restringe uso de hyperscalers americanos para dados sensíveis governamentais. AI gigafactories de acesso aberto.</span></div>
+      <div class="eu-leg"><strong>Estratégia de Open Source</strong><span>Infraestrutura digital crítica baseada em software auditável e governado publicamente. Reduz lock-in em proprietary stacks estrangeiros.</span></div>
+      <div class="eu-leg"><strong>Roteiro Digitalização/IA-Energia</strong><span>Integração de IA em smart grids, eficiência energética de data centers, sustentabilidade digital. Conecta dimensão ambiental ao framework de soberania.</span></div>
+    </div>
+
+    <p style="margin-top:0.75rem; font-size:0.78rem; color:var(--text-dim);">Fonte: European Commission (2026). <em>Strengthening Europe's tech sovereignty</em>. Publicado em 03/06/2026. Disponível em: commission.europa.eu/news-and-media/news/strengthening-europes-tech-sovereignty-2026-06-03_en</p>
+  </div>
+
+  <div class="callout callout-decision">
+    <span class="marker-d">■</span>Relevância B2G imediata: o Chips Act 2.0 abre espaço para P&amp;D colaborativo em semicondutores avançados com financiamento UE (Horizonte Europa / FP10). O CADA cria obrigação de avaliação de soberania cloud para todos os contratos de setor público europeu — incluindo filiais, parcerias e fornecedores de estados-membros. Empresas com documentação de soberania digital robusta (como este protocolo) têm vantagem competitiva direta em licitações B2G europeias.
+  </div>
+
+  <h3>Os Cinco Vetores da Soberania Digital</h3>
+
+  <div class="vector-grid">
+    <div class="vector-card"><h5>Infraestrutura</h5><p>Satélites, cabos submarinos, data centers, fabricação de chips — quem fabrica, onde está, sob qual lei</p></div>
+    <div class="vector-card"><h5>Dados</h5><p>Onde os dados residem, qual jurisdição os governa, quem pode acessá-los, direitos de portabilidade</p></div>
+    <div class="vector-card"><h5>Tecnologia</h5><p>Capacidade de desenvolver, auditar, substituir e manter tecnologia crítica sem dependência de fornecedor único</p></div>
+    <div class="vector-card"><h5>Governança</h5><p>Capacidade regulatória do Estado sobre o espaço digital — leis, padrões, enforcement, participação em fóruns internacionais</p></div>
+    <div class="vector-card"><h5>Contexto Habilitador (5a)</h5><p>Participação em fóruns de governança: CGI.br, IGF, ICANN — mensurável e acionável</p></div>
+    <div class="vector-card"><h5>Contexto Habilitador (5b)</h5><p>Acordos bilaterais e multilaterais de infraestrutura — contexto geopolítico informativo</p></div>
+  </div>
+
+  <h3>Estudo de Caso — Embratel/MCI/1998</h3>
+  <p>Em 29 de julho de 1998, a Embratel — incluindo seus satélites de comunicação estratégica — foi adquirida pela MCI americana por R$2,65 bilhões. Em 2002, a WorldCom (controladora) entrou em concordata nos EUA. Em 2004, um juiz americano aprovou venda para o grupo mexicano de Carlos Slim. A recuperação só ocorreu após as revelações de Snowden (2013) exporem espionagem da NSA sobre a presidente Dilma Rousseff: criação da Visiona (2012) e lançamento do SGDC em 2017 — 19 anos após a perda.</p>
+
+  <div class="pattern">
+    <div class="pattern-step"><span class="ps-num">01</span><span class="ps-label">Privatização de infraestrutura crítica</span></div>
+    <div class="pattern-step"><span class="ps-num">02</span><span class="ps-label">Transferência de soberania para jurisdição estrangeira</span></div>
+    <div class="pattern-step"><span class="ps-num">03</span><span class="ps-label">Vulnerabilidade invisível até crise externa revelar</span></div>
+    <div class="pattern-step"><span class="ps-num">04</span><span class="ps-label">Recuperação lenta dependente de parceiros alternativos</span></div>
+    <div class="pattern-step"><span class="ps-num">05</span><span class="ps-label">Soberania parcial — nunca plena restauração</span></div>
+  </div>
+
+  <h3>Quadro Regulatório de Soberania Digital</h3>
+
+  <table class="data-table">
+    <thead><tr><th>Instrumento</th><th>Escopo</th><th>Relevância para Soberania</th></tr></thead>
+    <tbody>
+      <tr><td>Marco Civil da Internet (Lei nº 12.965/2014)</td><td>Internet no Brasil</td><td>Art. 11: dados coletados no Brasil devem respeitar lei brasileira</td></tr>
+      <tr><td>LGPD (Lei nº 13.709/2018)</td><td>Dados pessoais</td><td>Localização e jurisdição de dados pessoais como requisito legal</td></tr>
+      <tr><td>Decreto nº 7.769/2012</td><td>SGDC / Visiona</td><td>Modelo de PPP para infraestrutura orbital soberana</td></tr>
+      <tr><td>ENCiber — Estratégia Nacional de Cibersegurança</td><td>Cibersegurança nacional</td><td>Framework governamental para soberania em segurança digital</td></tr>
+      <tr><td>GAIA-X (UE, 2019)</td><td>Infraestrutura cloud europeia</td><td>Modelo de referência: cloud soberana europeia</td></tr>
+      <tr><td>EU Digital Sovereignty Framework (Breton, 2020)</td><td>Soberania digital europeia</td><td>Benchmark regulatório; base conceitual do pacote 2026</td></tr>
+      <tr><td>European Technological Sovereignty Package (2026) <span class="patch-badge">v.04.1</span></td><td>Semicondutores, cloud, IA, open source, energia</td><td>Chips Act 2.0 + CADA + Open Source Strategy + Roteiro Energia-IA. Em negociação. Impacto em Horizonte Europa / FP10.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Checklist de Soberania Digital</h3>
+  <ul class="checklist">
+    <li>Mapeamento de dependências críticas de fornecedores estrangeiros por domínio (infraestrutura, dados, tecnologia)</li>
+    <li>Jurisdição de dados mapeada: onde estão, sob qual lei, quem pode acessar por mandado judicial estrangeiro</li>
+    <li>Plano de continuidade para saída ou indisponibilidade de fornecedor estrangeiro crítico</li>
+    <li>Infraestrutura de posicionamento: fallback documentado para dependência de GPS americano</li>
+    <li>Avaliação de alternativas Sul-Sul para componentes críticos (CBERS, BeiDou)</li>
+    <li>Contratos com provedores estrangeiros revisados para cláusulas de jurisdição e continuidade</li>
+    <li>Participação em fóruns de governança de internet (CGI.br, IGF, ICANN) mapeada</li>
+    <li>Para governo e empresas públicas: conformidade com ENCiber e Marco Civil Art. 11</li>
+    <li>Avaliação de impacto do Chips Act 2.0 e CADA para contratos com entidades europeias <span class="patch-badge">v.04.1</span></li>
+  </ul>
+</section>
+
+<!-- SEÇÃO 08 -->
+<section class="section" id="sec08">
+  <div class="section-label">SEÇÃO 08</div>
+  <h2>Mapa de Interseções</h2>
+
+  <p>As interseções são onde os pilares e as camadas se encontram — e onde os incidentes mais graves acontecem. A Segurança por Design audita especialmente os pontos de contato entre domínios.</p>
+
+  <table class="inter-table">
+    <thead><tr><th>Interseção</th><th>Risco</th><th>Mitigação</th></tr></thead>
+    <tbody>
+      <tr><td class="inter-key">Segurança → Quântico</td><td class="inter-risk">Dados criptografados classicamente serão quebrados por computadores quânticos</td><td class="inter-mit">Migração NIST FIPS 203/204/205; crypto-agility; CBOM completo</td></tr>
+      <tr><td class="inter-key">Segurança → Analógico</td><td class="inter-risk">Ataques físicos à infraestrutura contornam proteções digitais</td><td class="inter-mit">Zero Trust físico; redundância geográfica; auditoria de acesso físico</td></tr>
+      <tr><td class="inter-key">Segurança → Digital</td><td class="inter-risk">Agentes com autonomia excessiva executam ações prejudiciais sem supervisão</td><td class="inter-mit">Camada 0 (Agent Identity) + Protocolo de 7 camadas; OWASP GenAI; NeMo Guardrails</td></tr>
+      <tr><td class="inter-key">Quântico → Analógico</td><td class="inter-risk">Dispositivos edge/IoT incompatíveis com criptografia pesada</td><td class="inter-mit">HSL — 200 bytes; PQC para dispositivos resource-constrained</td></tr>
+      <tr><td class="inter-key">Quântico → Digital</td><td class="inter-risk">Interface clássico-quântica exige protocolo semântico próprio</td><td class="inter-mit">GuruDev Core — DOI: 10.5281/zenodo.1877646</td></tr>
+      <tr><td class="inter-key">Analógico → Digital</td><td class="inter-risk">Supply chain de hardware compromete integridade do software</td><td class="inter-mit">SBOM + CBOM; verificação de firmware; CodeRabbit pre-merge</td></tr>
+      <tr><td class="inter-key">Dados → Quântico</td><td class="inter-risk">Dados de longo prazo armazenados hoje serão descriptografáveis por QC</td><td class="inter-mit">Proteção PQC para dados com valor de longo prazo (saúde, jurídico, financeiro)</td></tr>
+      <tr><td class="inter-key">Dados → Analógico</td><td class="inter-risk">Dado nasce no sensor físico sem garantia de integridade até chegar ao pipeline</td><td class="inter-mit">Data lineage desde a captura; checksums no edge; HSL para transmissão IoT</td></tr>
+      <tr><td class="inter-key">Dados → Digital</td><td class="inter-risk">Pipelines sem governança criam passivo regulatório LGPD/GDPR invisível</td><td class="inter-mit">Data catalog + lineage; Privacy by Design no pipeline; auditoria periódica</td></tr>
+      <tr><td class="inter-key">Soberania → Analógico</td><td class="inter-risk">Infraestrutura física crítica sob jurisdição estrangeira (satélites, cabos, data centers)</td><td class="inter-mit">Mapeamento de dependências; PPPs soberanas; cooperação Sul-Sul</td></tr>
+      <tr><td class="inter-key">Soberania → Dados</td><td class="inter-risk">Dados de cidadãos e de Estado sob jurisdição de plataformas estrangeiras</td><td class="inter-mit">Marco Civil Art. 11; LGPD enforcement; localização de dados estratégicos no Brasil</td></tr>
+      <tr><td class="inter-key">Soberania → Digital <span class="patch-badge">v.04.1</span></td><td class="inter-risk">Software crítico com dependência de fornecedor único estrangeiro sem alternativa</td><td class="inter-mit">EU Open Source Strategy como benchmark; diversificação de stack; contribuição a projetos open source estratégicos</td></tr>
+      <tr><td class="inter-key">Ambiental → Analógico <span class="patch-badge">v.04.1</span></td><td class="inter-risk">Infraestrutura de IA com pegada de carbono não documentada e não gerenciada</td><td class="inter-mit">Carbon footprint assessment; KPIs de eficiência energética; NIST AI RMF GOVERN 1.6</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- SEÇÃO 09 -->
+<section class="section" id="sec09">
+  <div class="section-label">SEÇÃO 09</div>
+  <h2>Checklists Operacionais</h2>
+
+  <h3>Modo 1 — Criação de Tecnologia Própria</h3>
+  <p><em>Obrigatório antes de qualquer deploy em produção.</em></p>
+
+  <h4>Camada de Governança</h4>
+  <ul class="checklist">
+    <li>Regulações aplicáveis mapeadas (LGPD, ECA Digital, AI Act, PL 2338, NR-1)</li>
+    <li>Agent Profile Card criado para cada agente (Camada 0)</li>
+    <li>Protocolo de 7 camadas aplicado a todos os agentes de IA</li>
+    <li>Cláusula ética de não-licenciamento em contratos</li>
+    <li>Trilha de auditoria configurada para ações críticas</li>
+  </ul>
+
+  <h4>Camada de Dados</h4>
+  <ul class="checklist">
+    <li>Inventário de dados: tipos, localização, responsável, sensibilidade</li>
+    <li>Dados pessoais identificados e bases legais de tratamento documentadas</li>
+    <li>Data lineage implementado para pipelines que tocam dados pessoais</li>
+    <li>Direito ao esquecimento: capacidade técnica testada e documentada</li>
+    <li>Criptografia em repouso e em trânsito confirmada</li>
+  </ul>
+
+  <h4>Pilar Quântico</h4>
+  <ul class="checklist">
+    <li>CBOM: inventário criptográfico completo</li>
+    <li>Algoritmos vulneráveis (RSA, ECC, DH) identificados para substituição</li>
+    <li>Plano de migração PQC com prazo documentado</li>
+    <li>Crypto-agility garantida na arquitetura</li>
+  </ul>
+
+  <h4>Pilar Analógico-Físico</h4>
+  <ul class="checklist">
+    <li>Redundância geográfica de infraestrutura</li>
+    <li>Jurisdição de dados mapeada e conforme</li>
+    <li>Plano de continuidade documentado</li>
+    <li>IoT/edge com arquitetura de segurança adequada</li>
+    <li>Carbon footprint assessment para sistemas de IA em produção</li>
+  </ul>
+
+  <h4>Pilar Digital</h4>
+  <ul class="checklist">
+    <li>Privacy by Design: minimização, pseudonimização, erasure, controle granular</li>
+    <li>SCA: dependências auditadas</li>
+    <li>Nenhum segredo em código</li>
+    <li>CI/CD com gates de segurança</li>
+    <li>MFA em todas as contas</li>
+    <li>OWASP GenAI verificado por agente</li>
+    <li>Ambientes de configuração de agentes isolados</li>
+    <li>Governança de ecossistema multi-agente documentada</li>
+  </ul>
+
+  <h3>Modo 2 — Auditoria e Consultoria</h3>
+  <p><em>Para avaliação de tecnologias existentes. Cada item: Conforme / Gap / Não conforme.</em></p>
+
+  <h4>Fase 1 — Diagnóstico Inicial (1–2 dias)</h4>
+  <ul class="checklist">
+    <li>Mapeamento do stack tecnológico atual</li>
+    <li>Identificação das regulações aplicáveis</li>
+    <li>Inventário de agentes de IA em produção (incluindo shadow agents)</li>
+    <li>Mapeamento de dados pessoais por sensibilidade</li>
+    <li>Identificação de algoritmos criptográficos em uso (CBOM)</li>
+    <li>Mapeamento de dependências de fornecedores estrangeiros críticos (soberania)</li>
+  </ul>
+
+  <h4>Fase 2 — Avaliação por Camada e Pilares (3–5 dias)</h4>
+  <ul class="checklist">
+    <li>Governança de segurança: Camada 0 + protocolo de 7 camadas, cláusula ética, trilha de auditoria</li>
+    <li>Camada de Dados: data catalog, lineage, qualidade, governança, conformidade LGPD</li>
+    <li>Pilar Quântico: crypto-agility, migração PQC, harvest now decrypt later</li>
+    <li>Pilar Analógico-Físico: redundância, jurisdição, supply chain de hardware, infraestrutura orbital, carbon footprint</li>
+    <li>Pilar Digital: Privacy by Design, SCA, OWASP GenAI, segredos, CI/CD, multi-agent governance</li>
+    <li>Soberania Digital: vetores de dependência por domínio, avaliação de risco geopolítico, impacto CADA</li>
+  </ul>
+
+  <h4>Fase 3 — Relatório e Roadmap (1–2 dias)</h4>
+  <ul class="checklist">
+    <li>Relatório executivo: vulnerabilidades críticas, impacto de negócio, prioridade</li>
+    <li>Relatório técnico: detalhamento, ferramentas, passos de remediação</li>
+    <li>Roadmap de conformidade priorizado por risco e esforço</li>
+    <li>Estimativa de investimento para remediação</li>
+  </ul>
+</section>
+
+<!-- SEÇÃO 10 -->
+<section class="section" id="sec10">
+  <div class="section-label">SEÇÃO 10</div>
+  <h2>Referências Normativas</h2>
+
+  <div class="ref-group">
+    <h4>Acadêmicas</h4>
+    <div class="ref-item">Yampolskiy, R.V. &amp; Fox, J. (2013). "Safety Engineering for Artificial General Intelligence." <em>Topoi</em>, vol. 32, nº 2, pp. 217–226.</div>
+    <div class="ref-item">Rudner, T.G.J. &amp; Toner, H. (2021). "Key Concepts in AI Safety: An Overview." CSET, Georgetown University. DOI: 10.5798/hy00-1m64.</div>
+    <div class="ref-item">Amodei, D. et al. (2016). "Concrete Problems in AI Safety." arXiv:1606.06565.</div>
+    <div class="ref-item">Nielsen, M.A. &amp; Chuang, I.L. (2000). <em>Quantum Computation and Quantum Information</em>. Cambridge University Press.</div>
+    <div class="ref-item">Preskill, J. (2018). "Quantum Computing in the NISQ Era and Beyond." <em>Quantum</em>, vol. 2, p. 79.</div>
+    <div class="ref-item">Ackoff, R.L. (1989). "From Data to Wisdom." <em>Journal of Applied Systems Analysis</em>, 16, 3–9.</div>
+    <div class="ref-item">Shannon, C.E. (1948). "A Mathematical Theory of Communication." <em>Bell System Technical Journal</em>, 27(3), 379–423.</div>
+    <div class="ref-item">Dehghani, Z. (2020). "How to Move Beyond a Monolithic Data Lake to a Distributed Data Mesh." martinfowler.com.</div>
+    <div class="ref-item">DAMA International. (2017). <em>DAMA-DMBOK: Data Management Body of Knowledge</em> (2nd ed.).</div>
+    <div class="ref-item">Zuboff, S. (2019). <em>The Age of Surveillance Capitalism</em>. PublicAffairs.</div>
+    <div class="ref-item">Couture, S. &amp; Toupin, S. (2019). "What does the notion of sovereignty mean when referring to the digital?" <em>New Media &amp; Society</em>, 21(10), 2305–2322.</div>
+    <div class="ref-item">Pohle, J. &amp; Thiel, T. (2020). "Digital sovereignty." <em>Internet Policy Review</em>, 9(4). DOI: 10.14763/2020.4.1532.</div>
+    <div class="ref-item">Machado, G.G. (2026). <em>Do Sal ao Algoritmo: Teoria da Empresa como Instituição Civilizatória Pancrônica</em>. v.01. Hubstry Deep Tech / Instituto PCIH. CC BY 4.0.</div>
+    <div class="ref-item">Machado, G.G. (2026). <em>πVf(A): Framework Matemático Harmônico e Extensões Quânticas</em>. Zenodo. DOI: 10.5281/zenodo.1877646.</div>
+    <div class="ref-item">Stanford HAI (2025). <em>AI Index Report 2025</em>. Stanford University. Disponível em: aiindex.stanford.edu. [Inclui benchmarks HELM Safety, AIR-Bench e FACTS como ferramentas de referência para avaliação de segurança e factualidade de sistemas de IA.] <span class="patch-badge">v.04.1</span></div>
+  </div>
+
+  <div class="ref-group">
+    <h4>Padrões Técnicos</h4>
+    <div class="ref-item">NIST AI 100-1 (2023). <em>AI Risk Management Framework (AI RMF 1.0)</em>. DOI: 10.6028/NIST.AI.100-1.</div>
+    <div class="ref-item">NIST FIPS 203/204/205 (2024). Padrões de criptografia pós-quântica.</div>
+    <div class="ref-item">NIST SP 800-37 Rev. 2 (2018). <em>Risk Management Framework</em>.</div>
+    <div class="ref-item">NIST CSF 2.0 (2024). <em>Cybersecurity Framework</em>.</div>
+    <div class="ref-item">NIST SP 800-53 Release 5.2.0 (2025). Publicado em 27/08/2025. Inclui novos controles SA-15(13), SA-24, SI-02(07) e <em>Control Overlays for Securing AI Systems</em>. Disponível em: Cybersecurity and Privacy Reference Tool. <span class="patch-badge">v.04.1</span></div>
+    <div class="ref-item">ISO 31000:2018. <em>Risk Management — Guidelines</em>.</div>
+    <div class="ref-item">ISO/IEC 42001:2023. <em>Artificial Intelligence — Management System</em>.</div>
+    <div class="ref-item">ISO/IEC 23894:2023. <em>AI — Guidance on Risk Management</em>.</div>
+    <div class="ref-item">ISO/IEC 27001:2022. <em>Information Security Management Systems</em>.</div>
+    <div class="ref-item">ISO/IEC 27005:2022. <em>Guidance on Managing Information Security Risks</em>.</div>
+    <div class="ref-item">ISO/IEC 27701:2019. <em>Privacy Information Management</em>.</div>
+    <div class="ref-item">ISO 8000. <em>Data Quality Standard</em>.</div>
+    <div class="ref-item">OWASP (2025). <em>Top 10 for Large Language Model Applications 2025</em>.</div>
+    <div class="ref-item">OWASP (2026). <em>Agentic AI Security 2026</em>.</div>
+    <div class="ref-item">OWASP (2025). <em>AI Testing Guide v1</em>. Publicado em 26/11/2025. Primeiro padrão aberto e comunitário para teste de confiabilidade de sistemas de IA — metodologia unificada e agnóstica de tecnologia cobrindo camadas de aplicação, modelo, infraestrutura e dados. Disponível em: owasp.org/www-project-ai-testing-guide/ <span class="patch-badge">v.04.1</span></div>
+    <div class="ref-item">Singapore IMDA/PDPC (2026). <em>Model AI Governance Framework for Agentic AI</em>. Quatro dimensões: assess/bound risks, accountability, technical controls, end-user responsibility. <span class="patch-badge">v.04.1</span></div>
+    <div class="ref-item">World Economic Forum (2026). <em>AI Agents in Action: Foundations for Evaluation and Governance</em>. <span class="patch-badge">v.04.1</span></div>
+  </div>
+
+  <div class="ref-group">
+    <h4>Operacionais</h4>
+    <div class="ref-item">Anthropic. (2026). <em>The Founder's Playbook: Building an AI-Native Startup</em>. 14 mai 2026.</div>
+    <div class="ref-item">Moraes, E. (2026). "OWASP GenAI Exploit Round-up Q1 2026." AI Safety Meetup Brazil #6, ABRIA, 27 mai 2026.</div>
+    <div class="ref-item">Negry, T. (2026). "Visão Geral da AI Safety." SAPENT-IA. AI Safety Meetup Brazil #6, ABRIA.</div>
+    <div class="ref-item">Junior, O. (2026). "Como Evitar que a IA Execute o Erro Perfeito." AI Safety Brazil. AI Safety Meetup Brazil #6, ABRIA.</div>
+    <div class="ref-item">CSA &amp; Token Security (2026). <em>Autonomous but Not Controlled: Shadow AI Agents in Enterprise Environments</em>. Publicado em 28/04/2026. [Dados-chave: 65% das organizações com incidente de segurança envolvendo agentes de IA no último ano; 82% descobriram ao menos um shadow AI agent; distinção entre visibilidade operacional e supervisão de nível de garantia.] <span class="patch-badge">v.04.1</span></div>
+    <div class="ref-item" style="font-size:0.75rem; color:var(--text-muted);">Nota sobre diversidade de fontes: as referências operacionais foram expandidas no patch v.04.1 com Stanford HAI AI Index 2025, CSA/Token Security 2026, Singapore MGF e WEF para fortalecer robustez empírica além do AI Safety Meetup Brazil #6.</div>
+  </div>
+
+  <div class="ref-group">
+    <h4>Regulatórias</h4>
+    <div class="ref-item">Lei nº 13.709/2018 — LGPD. Brasil.</div>
+    <div class="ref-item">Lei nº 15.211/2025 — ECA Digital. Brasil.</div>
+    <div class="ref-item">Lei nº 12.965/2014 — Marco Civil da Internet. Brasil.</div>
+    <div class="ref-item">Lei nº 10.973/2004 — Lei de Inovação. Brasil.</div>
+    <div class="ref-item">Decreto nº 7.769/2012 — Projeto SGDC / Visiona. Brasil.</div>
+    <div class="ref-item">PL 2338/2023 — Regulação de IA. Brasil. Em tramitação.</div>
+    <div class="ref-item">Regulamento (UE) 2016/679 — GDPR.</div>
+    <div class="ref-item">Regulamento (UE) 2024/1689 — AI Act.</div>
+    <div class="ref-item">Comissão Europeia (2026). <em>European Technological Sovereignty Package</em>. Publicado em 03/06/2026. Inclui: Chips Act 2.0; Cloud and AI Development Act (CADA); EU Open Source Strategy; Strategic Roadmap for Digitalisation and AI in Energy. Em negociação no Parlamento Europeu e no Conselho da UE. Disponível em: commission.europa.eu/news-and-media/news/strengthening-europes-tech-sovereignty-2026-06-03_en <span class="patch-badge">v.04.1</span></div>
+  </div>
+
+  <div class="ref-group">
+    <h4>Documentação do Caso Brasileiro</h4>
+    <div class="ref-item">Privatização da Telebrás (1998). pt.wikipedia.org/wiki/Privatização_da_Telebrás.</div>
+    <div class="ref-item">Defesa TV. (2019). "O Brasil e o SGDC."</div>
+    <div class="ref-item">INPE/CGEE. Documentação do programa CBERS (Brasil-China, 1988-presente).</div>
+    <div class="ref-item">Sintpq.org.br. (2018). "Vinte anos após privatização da Telebrás."</div>
+  </div>
+</section>
+
+<!-- SEÇÃO 11 -->
+<section class="section" id="sec11">
+  <div class="section-label">SEÇÃO 11</div>
+  <h2>Glossário</h2>
+  <p style="font-size:0.82rem; color:var(--text-dim); margin-bottom:2rem;">Linguagem simples primeiro, definição técnica depois. Ordenado alfabeticamente.</p>
+
+  <div class="gloss-entry"><div class="gloss-term">Agent Profile Card</div><div class="gloss-def">Documento formal que registra a identidade de um agente de IA: identificador único, tipo, escopo de ações permitidas, nível de permissão, responsável humano, status no ciclo de vida e mecanismo de interrupção segura. Requisito da Camada 0 do protocolo Hubstry.</div></div>
+  <div class="gloss-entry"><div class="gloss-term">Agente de IA</div><div class="gloss-def">Programa que toma decisões e executa ações de forma semi-autônoma — como um assistente que envia emails, escreve código ou faz pesquisas sem aprovação a cada etapa.</div></div>
+  <div class="gloss-entry"><div class="gloss-term">AI Act</div><div class="gloss-def">Lei de Inteligência Artificial da União Europeia (Regulamento UE 2024/1689). Classifica sistemas de IA por nível de risco e define obrigações por categoria. Implementação gradual.</div></div>
+  <div class="gloss-entry"><div class="gloss-term">AI Safety / AI Safety Engineering</div><div class="gloss-def">Campo de pesquisa dedicado a garantir que sistemas de IA se comportem de forma segura, previsível e alinhada às intenções humanas. Diferente de cibersegurança — trata do comportamento do próprio sistema.</div></div>
+  <div class="gloss-entry"><div class="gloss-term">Alinhamento</div><div class="gloss-def">Grau em que um sistema de IA age de acordo com as intenções e valores de seus operadores. Sistema "desalinhado" executa sua tarefa tecnicamente, mas de forma que causa danos não intencionais.</div></div>
+  <div class="gloss-entry"><div class="gloss-term">ANPD</div><div class="gloss-def">Autoridade Nacional de Proteção de Dados. Órgão federal brasileiro responsável por fiscalizar o cumprimento da LGPD e aplicar sanções.</div></div>
+  <div class="gloss-entry"><div class="gloss-term">ASML</div><div class="gloss-def">Empresa holandesa que fabrica as máquinas de litografia EUV necessárias para chips avançados. Única no mundo — dependência global de um único fornecedor.</div></div>
+  <div class="gloss-entry"><div class="gloss-term">BeiDou</div><div class="gloss-def">Sistema de navegação por satélite desenvolvido pela China como alternativa soberana ao GPS americano. Operacional globalmente desde 2020.</div></div>
+  <div class="gloss-entry"><div class="gloss-term">CADA (Cloud and AI Development Act)</div><div class="gloss-def">Proposta legislativa europeia (jun/2026) que estabelece quatro tiers de soberania cloud para setor público na UE, restringe uso de hyperscalers estrangeiros para dados sensíveis governamentais e estrutura acesso a AI gigafactories.</div></div>
+  <div class="gloss-entry"><div class="gloss-term">Carbon Footprint de IA</div><div class="gloss-def">Emissões de CO₂ equivalente geradas pelo treinamento e inferência de sistemas de IA, incluindo energia consumida por data centers. Dimensão de governança do NIST AI RMF 2026 GOVERN 1.6.</div></div>
+  <div class="gloss-entry"><div class="gloss-term">CBOM</div><div class="gloss-def">Cryptography Bill of Materials — inventário de todos os algoritmos criptográficos em uso num sistema, com versão e grau de vulnerabilidade quântica.</div></div>
+  <div class="gloss-entry"><div class="gloss-term">CBERS</div><div class="gloss-def">China-Brazil Earth Resources Satellite — programa de cooperação bilateral Brasil-China (1988-presente) para satélites de sensoriamento remoto. Modelo de cooperação Sul-Sul.</div></div>
+  <div class="gloss-entry"><div class="gloss-term">CI/CD</div><div class="gloss-def">Continuous Integration / Continuous Deployment — processo automatizado onde código é testado e publicado automaticamente a cada alteração.</div></div>
+  <div class="gloss-entry"><div class="gloss-term">Chips Act 2.0</div><div class="gloss-def">Proposta legislativa europeia (jun/2026) para expansão da capacidade de fabricação de semicondutores avançados na Europa, reduzindo dependência de TSMC/Taiwan e da cadeia asiática.</div></div>
+  <div class="gloss-entry"><div class="gloss-term">Crypto-agility</div><div class="gloss-def">Princípio de design que permite substituir algoritmos criptográficos sem redesenhar toda a arquitetura. Requisito essencial para migração PQC.</div></div>
+  <div class="gloss-entry"><div class="gloss-term">CVE</div><div class="gloss-def">Common Vulnerabilities and Exposures — sistema padronizado de identificação de vulnerabilidades de segurança em software.</div></div>
+  <div class="gloss-entry"><div class="gloss-term">DIKW</div><div class="gloss-def">Pirâmide Dado → Informação → Conhecimento → Sabedoria. Fundação conceitual para governança de dados. Fonte: Ackoff (1989).</div></div>
+  <div class="gloss-entry"><div class="gloss-term">ECA Digital</div><div class="gloss-def">Lei nº 15.211/2025 — proteção de crianças e adolescentes no ambiente digital. Em vigor desde maio de 2026.</div></div>
+  <div class="gloss-entry"><div class="gloss-term">FIPS</div><div class="gloss-def">Federal Information Processing Standards — padrões do NIST. FIPS 203, 204, 205 são os padrões de criptografia pós-quântica de 2024.</div></div>
+  <div class="gloss-entry"><div class="gloss-term">GDPR</div><div class="gloss-def">Regulamento europeu (UE 2016/679) que protege dados pessoais de cidadãos europeus. Aplica-se a qualquer organização que trate esses dados.</div></div>
+  <div class="gloss-entry"><div class="gloss-term">Harvest now, decrypt later</div><div class="gloss-def">Estratégia de ataque: dados criptografados com métodos clássicos são interceptados hoje para descriptografia futura com computadores quânticos.</div></div>
+  <div class="gloss-entry"><div class="gloss-term">HSL (Harmonic Security Layer)</div><div class="gloss-def">Protocolo proprietário Hubstry: handshakes em ~200 bytes para dispositivos IoT e edge com recursos limitados. Baseado no framework matemático HALE.</div></div>
+  <div class="gloss-entry"><div class="gloss-term">IoT</div><div class="gloss-def">Internet das Coisas — dispositivos físicos conectados à internet que coletam e transmitem dados.</div></div>
+  <div class="gloss-entry"><div class="gloss-term">LGPD</div><div class="gloss-def">Lei Geral de Proteção de Dados (Lei nº 13.709/2018). Multa máxima: 2% do faturamento, limitada a R$50 milhões por infração.</div></div>
+  <div class="gloss-entry"><div class="gloss-term">LLM</div><div class="gloss-def">Large Language Model — modelo de IA treinado em grandes volumes de texto. Ex.: GPT-4, Claude, Gemini, LLaMA.</div></div>
+  <div class="gloss-entry"><div class="gloss-term">MFA</div><div class="gloss-def">Multi-Factor Authentication — método que exige mais de uma forma de verificação para acesso.</div></div>
+  <div class="gloss-entry"><div class="gloss-term">Multi-Agent Ecosystem</div><div class="gloss-def">Arquitetura de produção com múltiplos agentes de IA encadeados ou interagindo. Requer governança no nível do sistema (riscos emergentes, accountability de fronteira, controles de fluxo inter-agente), não apenas no nível individual de cada agente.</div></div>
+  <div class="gloss-entry"><div class="gloss-term">NIST</div><div class="gloss-def">National Institute of Standards and Technology — agência americana que publica padrões técnicos globalmente adotados.</div></div>
+  <div class="gloss-entry"><div class="gloss-term">NISQ</div><div class="gloss-def">Noisy Intermediate-Scale Quantum — geração atual de computadores quânticos: reais, operacionais, mas com limitações (Preskill, 2018).</div></div>
+  <div class="gloss-entry"><div class="gloss-term">NR-1</div><div class="gloss-def">Norma Regulamentadora nº 1 — gestão de riscos ocupacionais incluindo riscos psicossociais relacionados ao uso de IA no trabalho.</div></div>
+  <div class="gloss-entry"><div class="gloss-term">OWASP</div><div class="gloss-def">Open Worldwide Application Security Project — organização internacional que publica rankings de vulnerabilidades críticas em software e IA.</div></div>
+  <div class="gloss-entry"><div class="gloss-term">PL 2338</div><div class="gloss-def">Projeto de Lei nº 2338/2023 — proposta de lei brasileira para regular IA. Em tramitação.</div></div>
+  <div class="gloss-entry"><div class="gloss-term">PPP</div><div class="gloss-def">Parceria Público-Privada — instrumento para infraestrutura com capital privado, preservando controle estratégico do Estado.</div></div>
+  <div class="gloss-entry"><div class="gloss-term">PQC</div><div class="gloss-def">Post-Quantum Cryptography — algoritmos projetados para resistir a ataques quânticos. Padrões: NIST FIPS 203/204/205.</div></div>
+  <div class="gloss-entry"><div class="gloss-term">Privacy by Design</div><div class="gloss-def">Princípio que exige proteção de dados pessoais incorporada à arquitetura desde o início. Requisito da LGPD e do GDPR.</div></div>
+  <div class="gloss-entry"><div class="gloss-term">PUE (Power Usage Effectiveness)</div><div class="gloss-def">Métrica de eficiência energética de data centers: razão entre energia total consumida e energia entregue ao equipamento de TI. PUE = 1.0 é eficiência máxima teórica.</div></div>
+  <div class="gloss-entry"><div class="gloss-term">SBOM</div><div class="gloss-def">Software Bill of Materials — inventário de todos os componentes e dependências de um software.</div></div>
+  <div class="gloss-entry"><div class="gloss-term">SCA</div><div class="gloss-def">Software Composition Analysis — identificação automática de componentes de terceiros e suas vulnerabilidades.</div></div>
+  <div class="gloss-entry"><div class="gloss-term">SGDC</div><div class="gloss-def">Satélite Geostacionário de Defesa e Comunicações Estratégicas — lançado em 2017 via PPP. Recuperação parcial de soberania orbital.</div></div>
+  <div class="gloss-entry"><div class="gloss-term">Shadow AI Agent</div><div class="gloss-def">Agente de IA ou workflow automatizado operando em produção sem conhecimento das equipes de segurança ou TI. Vetor de risco prevalente em 2026: 82% das organizações têm ao menos um (CSA &amp; Token Security, 2026).</div></div>
+  <div class="gloss-entry"><div class="gloss-term">Singapore MGF for Agentic AI</div><div class="gloss-def">Model AI Governance Framework for Agentic AI — framework publicado pelo governo de Cingapura em 2026 com quatro dimensões de governança para agentes: avaliação de riscos, accountability, controles técnicos e responsabilidade do usuário final.</div></div>
+  <div class="gloss-entry"><div class="gloss-term">Soberania Digital</div><div class="gloss-def">Capacidade de exercer controle efetivo sobre infraestrutura tecnológica, dados e ecossistema digital — independentemente de pressões externas e jurisdições estrangeiras.</div></div>
+  <div class="gloss-entry"><div class="gloss-term">TLS</div><div class="gloss-def">Transport Layer Security — protocolo que protege comunicações na internet. TLS 1.3 é a versão recomendada.</div></div>
+  <div class="gloss-entry"><div class="gloss-term">TSMC</div><div class="gloss-def">Taiwan Semiconductor Manufacturing Company — fabrica &gt;90% dos chips mais avançados do mundo.</div></div>
+  <div class="gloss-entry"><div class="gloss-term">Zero Trust</div><div class="gloss-def">Modelo de segurança baseado em "nunca confiar, sempre verificar" — mesmo dentro da rede corporativa.</div></div>
+</section>
+
+<!-- SEÇÃO 12 -->
+<section class="section" id="sec12">
+  <div class="section-label">SEÇÃO 12</div>
+  <h2>Roadmap de Evolução</h2>
+
+  <div class="callout callout-tech" style="font-size:0.8rem;">
+    <strong>Nota sobre gatilhos:</strong> as versões futuras dependem de gatilhos externos (aprovação legislativa, enforcement regulatório, peer review). Cada versão possui um gatilho alternativo temporal para evitar estagnação caso o gatilho primário não se materialize no prazo esperado.
+  </div>
+
+  <table class="roadmap-table">
+    <thead><tr><th>Versão</th><th>Gatilho Primário</th><th>Gatilho Alternativo</th><th>Foco</th></tr></thead>
+    <tbody>
+      <tr><td class="v-future">v.01 (2026)</td><td>—</td><td>—</td><td>Estrutura fundacional — 4 pilares entre iguais, formato checklist</td></tr>
+      <tr><td class="v-future">v.02 (2026)</td><td>Peer review + AI Safety Meetup Brazil #6</td><td>—</td><td>Edição didática, glossário, OWASP completo, citações verificadas, 3 marcadores</td></tr>
+      <tr><td class="v-future">v.03 (2026)</td><td>Decisão arquitetural: Segurança como envelope</td><td>—</td><td>Segurança → camada de governança transversal; 3 pilares de domínio</td></tr>
+      <tr><td class="v-future">v.04 (2026)</td><td>Expansão arquitetural: Dados + Soberania</td><td>—</td><td>Dados → camada transversal; Soberania Digital → seção autônoma; glossário expandido</td></tr>
+      <tr><td class="v-current">v.04.1 (atual)</td><td>Patch acumulado: AI RMF 2026 GOVERN + Pacote Soberania UE (03/06/2026)</td><td>—</td><td>Sustentabilidade Ambiental (GOVERN 1.6); Agent Identity Management (Camada 0); Multi-Agent Ecosystems; Pacote Soberania Tecnológica UE; atualização bibliográfica (Singapore MGF, WEF, NIST SP 800-53 R5.2.0, OWASP AI Testing Guide v1, Stanford HAI AI Index 2025, CSA/Token Security 2026)</td></tr>
+      <tr><td class="v-future">v.05</td><td>Aprovação do PL 2338</td><td>Ou 12 meses após v.04</td><td>Incorporar regulação de IA brasileira com artigos específicos</td></tr>
+      <tr><td class="v-future">v.06</td><td>AI Act UE enforcement pleno + CADA aprovado</td><td>Ou 18 meses após v.05</td><td>Adequação para mercado europeu; tabela de obrigações por categoria de risco; impacto CADA em B2G</td></tr>
+      <tr><td class="v-future">v.07</td><td>Peer review humano confirmado</td><td>Ou 12 meses após v.06</td><td>Versão dissertativa acadêmica; depósito Zenodo com DOI</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>Guilherme Gonçalves Machado · Hubstry Deep Tech / Instituto PCIH³ · Rio de Janeiro, Brasil · 2026</p>
+  <p>CC BY 4.0 — Livre para uso com atribuição</p>
+  <p>Versão canônica: Português. Em caso de inconsistência com eventuais traduções, prevalece esta versão.</p>
+  <p style="margin-top:0.75rem; color:var(--text-muted);">
+    <a href="https://hubstry.dev">hubstry.dev</a> ·
+    <a href="https://github.com/Hubstry-DeepTech/protocolo-geral-tecnologia">github.com/Hubstry-DeepTech/protocolo-geral-tecnologia</a>
+  </p>
+</footer>
+
+</body>
+</html>
