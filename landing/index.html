@@ -138,16 +138,27 @@ body:not(.show-pt):not(.show-en):not(.show-es) [lang="es"]{display:none!importan
   box-shadow:var(--shadow);margin-bottom:1.5rem;
 }
 .question-card h3{margin-bottom:1rem;font-size:1.05rem}
-.likert-scale{display:flex;gap:.5rem;flex-wrap:wrap}
+.likert-scale{display:flex;flex-direction:column;gap:.6rem}
 .likert-btn{
-  flex:1;min-width:70px;padding:12px 8px;border:2px solid #e5e7eb;
+  display:flex;align-items:flex-start;gap:.85rem;width:100%;
+  padding:14px 16px;border:2px solid #e5e7eb;
   border-radius:var(--radius);background:var(--hubstry-white);cursor:pointer;
-  font-size:.85rem;font-weight:600;text-align:center;transition:all .2s;
-  color:var(--hubstry-gray);
+  text-align:left;transition:all .18s;
 }
-.likert-btn:hover{border-color:var(--hubstry-teal);color:var(--hubstry-teal)}
-.likert-btn.selected{background:var(--hubstry-teal);border-color:var(--hubstry-teal);color:var(--hubstry-white)}
-.likert-label{display:block;font-size:.7rem;color:var(--hubstry-gray);margin-top:4px}
+.likert-btn:hover{border-color:var(--hubstry-teal);background:rgba(15,168,158,.04)}
+.likert-btn.selected{border-color:var(--hubstry-teal);background:rgba(15,168,158,.08);box-shadow:0 0 0 1px var(--hubstry-teal) inset}
+.likert-num{
+  flex:0 0 auto;width:30px;height:30px;border-radius:50%;
+  display:inline-flex;align-items:center;justify-content:center;
+  background:#eef2f5;color:var(--hubstry-gray);font-weight:800;font-size:.9rem;
+  transition:all .18s;
+}
+.likert-btn:hover .likert-num{background:rgba(15,168,158,.18);color:var(--hubstry-teal)}
+.likert-btn.selected .likert-num{background:var(--hubstry-teal);color:var(--hubstry-white)}
+.likert-text{display:flex;flex-direction:column;gap:2px}
+.likert-label-main{font-weight:700;font-size:.95rem;color:var(--hubstry-blue)}
+.likert-btn.selected .likert-label-main{color:var(--hubstry-teal)}
+.likert-desc{font-size:.8rem;color:var(--hubstry-gray);line-height:1.4}
 .quiz-nav{display:flex;justify-content:space-between;margin-top:1.5rem;gap:1rem}
 .quiz-nav button{
   padding:12px 24px;border-radius:var(--radius);font-weight:600;
@@ -254,14 +265,86 @@ body:not(.show-pt):not(.show-en):not(.show-es) [lang="es"]{display:none!importan
 }
 .site-footer a{color:var(--hubstry-teal)}
 
+/* ===== NAV PROTOCOL LINK ===== */
+.nav-protocol{
+  border:1px solid rgba(255,255,255,.35);padding:6px 14px;border-radius:var(--radius);
+  font-weight:600!important;opacity:1!important;
+}
+.nav-protocol:hover{border-color:var(--hubstry-teal);background:rgba(15,168,158,.15)}
+
+/* ===== DEEP-DIVE CALLOUT ===== */
+.deepdive-callout{
+  display:flex;align-items:center;gap:1.2rem;flex-wrap:wrap;
+  background:var(--hubstry-white);border:1px solid #e5e7eb;border-left:4px solid var(--hubstry-gold);
+  border-radius:10px;padding:1.4rem 1.6rem;margin:1.5rem 0;box-shadow:var(--shadow);
+}
+.deepdive-callout .dd-text{flex:1;min-width:240px}
+.deepdive-callout .dd-text strong{color:var(--hubstry-blue);display:block;margin-bottom:.25rem;font-size:1rem}
+.deepdive-callout .dd-text span{font-size:.88rem;color:var(--hubstry-gray)}
+.deepdive-callout .dd-link{
+  display:inline-block;padding:11px 22px;background:var(--hubstry-blue);color:var(--hubstry-white);
+  border-radius:var(--radius);font-weight:600;font-size:.9rem;white-space:nowrap;
+}
+.deepdive-callout .dd-link:hover{background:#1a3a6a;text-decoration:none;color:var(--hubstry-white)}
+
+/* ===== EDGE-TO-EDGE BAND ===== */
+.edge-band{
+  background:linear-gradient(135deg,var(--hubstry-teal),#0d8a82);
+  color:var(--hubstry-white);text-align:center;padding:3.5rem 2rem;
+}
+.edge-band h2{color:var(--hubstry-white);margin-bottom:.6rem;font-size:1.7rem}
+.edge-band p{max-width:680px;margin:0 auto 1.6rem;opacity:.95;font-size:1.02rem}
+.edge-band .edge-tag{
+  display:inline-block;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.35);
+  padding:5px 16px;border-radius:20px;font-size:.8rem;font-weight:700;letter-spacing:.5px;
+  margin-bottom:1.2rem;text-transform:uppercase;
+}
+.edge-flow{
+  display:flex;justify-content:center;align-items:center;gap:.5rem;flex-wrap:wrap;
+  margin:1.5rem auto 0;max-width:760px;
+}
+.edge-step{
+  background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);
+  border-radius:var(--radius);padding:10px 16px;font-size:.85rem;font-weight:600;
+}
+.edge-arrow{font-size:1.1rem;opacity:.8}
+.edge-band .cta-btn{background:var(--hubstry-white);color:var(--hubstry-blue);margin-top:1.6rem}
+.edge-band .cta-btn:hover{background:var(--hubstry-light);color:var(--hubstry-blue)}
+
+/* ===== PRICING ===== */
+.pricing-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:1.8rem;align-items:stretch;
+}
+.price-card{
+  display:flex;flex-direction:column;background:var(--hubstry-white);border:1px solid #e5e7eb;
+  border-radius:12px;padding:2rem 1.6rem;box-shadow:var(--shadow);position:relative;
+}
+.price-card.featured{border:2px solid var(--hubstry-teal);box-shadow:0 8px 32px rgba(15,168,158,.18)}
+.price-badge{
+  position:absolute;top:-12px;left:50%;transform:translateX(-50%);
+  background:var(--hubstry-teal);color:#fff;font-size:.72rem;font-weight:700;
+  padding:4px 14px;border-radius:12px;letter-spacing:.4px;white-space:nowrap;
+}
+.price-tier{font-size:.78rem;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--hubstry-teal)}
+.price-name{font-size:1.2rem;font-weight:700;color:var(--hubstry-blue);margin:.3rem 0 .2rem}
+.price-aud{font-size:.82rem;color:var(--hubstry-gray);margin-bottom:1rem;min-height:2.4em}
+.price-value{font-size:1.9rem;font-weight:800;color:var(--hubstry-dark);line-height:1.1}
+.price-value small{font-size:.8rem;font-weight:600;color:var(--hubstry-gray);display:block;margin-top:.2rem}
+.price-features{list-style:none;margin:1.2rem 0;padding:0;flex:1}
+.price-features li{font-size:.87rem;color:var(--hubstry-dark);padding:.4rem 0 .4rem 1.5rem;position:relative;line-height:1.45}
+.price-features li::before{content:"\2713";position:absolute;left:0;color:var(--hubstry-teal);font-weight:800}
+.price-card .cta-btn{width:100%;text-align:center}
+.price-card.outline .cta-btn{background:var(--hubstry-white);color:var(--hubstry-blue);border:2px solid var(--hubstry-blue)}
+.price-card.outline .cta-btn:hover{background:var(--hubstry-blue);color:#fff}
+.pricing-note{font-size:.8rem;color:var(--hubstry-gray);margin-top:1.4rem;text-align:center;font-style:italic}
+
 /* ===== RESPONSIVE ===== */
 @media(max-width:768px){
-  .layer-grid,.ip-layers{grid-template-columns:1fr}
+  .layer-grid,.ip-layers,.pricing-grid{grid-template-columns:1fr}
   .hero h1{font-size:2rem}
   .dimensions-grid{grid-template-columns:1fr}
   .site-header{flex-wrap:wrap;gap:.5rem;padding:1rem}
   .nav-links{gap:.8rem}
-  .likert-scale{flex-wrap:nowrap;overflow-x:auto}
   .quiz-nav{flex-direction:column}
 }
 </style>
@@ -275,7 +358,9 @@ body:not(.show-pt):not(.show-en):not(.show-es) [lang="es"]{display:none!importan
     <a href="#modelo">Model</a>
     <a href="#dimensoes">Dimensions</a>
     <a href="#quiz">Quiz</a>
+    <a href="#pricing">Pricing</a>
     <a href="#glossario">Glossary</a>
+    <a href="https://guilherme-machado-ceo.github.io/protocolo-geral-tecnologia/" target="_blank" rel="noopener" class="nav-protocol" title="Protocolo Geral de Tecnologia — documento técnico completo (deep dive)">Protocol&nbsp;&#8599;</a>
     <div class="lang-toggle">
       <button class="lang-btn active" onclick="setLang('pt-BR')">PT-BR</button>
       <button class="lang-btn" onclick="setLang('en')">EN</button>
@@ -349,7 +434,23 @@ body:not(.show-pt):not(.show-en):not(.show-es) [lang="es"]{display:none!importan
       <p lang="es">Para organizaciones que requieren gobernanza integral, la Capa 2 ofrece reportes detallados con análisis comparativo por industria, benchmarking de mercado, plan de acción personalizado, integración con marcos regulatorios (EU AI Act, LGPD, NIST AI RMF) y gobernanza total de datos con DPO dedicado. Ideal para organizaciones en sectores regulados.</p>
     </div>
   </div>
-</div>
+
+  <!-- ===== DEEP-DIVE CALLOUT (link contextualizado ao Protocolo) ===== -->
+  <div class="deepdive-callout">
+    <div class="dd-text">
+      <strong lang="pt-BR">Este diagnóstico é a porta de entrada. O método completo está no Protocolo.</strong>
+      <strong lang="en">This diagnostic is the entry point. The full method lives in the Protocol.</strong>
+      <strong lang="es">Este diagnóstico es la puerta de entrada. El método completo está en el Protocolo.</strong>
+      <span lang="pt-BR">As 7 dimensões do HMI derivam do <em>Protocolo Geral de Tecnologia</em> da Hubstry (v.04.2) — o documento técnico que detalha Camada de Segurança, Camada de Dados e Pilares de Domínio. Leia o deep dive completo.</span>
+      <span lang="en">The 7 HMI dimensions derive from Hubstry's <em>General Technology Protocol</em> (v.04.2) — the technical document detailing the Security Layer, Data Layer, and Domain Pillars. Read the full deep dive.</span>
+      <span lang="es">Las 7 dimensiones del HMI derivan del <em>Protocolo General de Tecnología</em> de Hubstry (v.04.2) — el documento técnico que detalla Capa de Seguridad, Capa de Datos y Pilares de Dominio. Lea el deep dive completo.</span>
+    </div>
+    <a class="dd-link" href="https://guilherme-machado-ceo.github.io/protocolo-geral-tecnologia/" target="_blank" rel="noopener">
+      <span lang="pt-BR">Ler o Protocolo &#8599;</span>
+      <span lang="en">Read the Protocol &#8599;</span>
+      <span lang="es">Leer el Protocolo &#8599;</span>
+    </a>
+  </div>
 </div>
 
 <!-- ===== 7 DIMENSIONS ===== -->
@@ -357,9 +458,9 @@ body:not(.show-pt):not(.show-en):not(.show-es) [lang="es"]{display:none!importan
   <h2 lang="pt-BR">As 7 Dimensões do HMI v2.0</h2>
   <h2 lang="en">The 7 Dimensions of HMI v2.0</h2>
   <h2 lang="es">Las 7 Dimensiones del HMI v2.0</h2>
-  <p lang="pt-BR">Cada dimensão captura um aspecto crítico da governança de IA organizacional. A avaliação utiliza escala Likert de 4 pontos (1 a 4) para cada uma das 3 perguntas por dimensão, gerando um perfil detalhado de maturidade que revela pontos fortes e oportunidades de melhoria prioritárias.</p>
-  <p lang="en">Each dimension captures a critical aspect of organizational AI governance. The assessment uses a 4-point Likert scale (1 to 4) for each of the 3 questions per dimension, generating a detailed maturity profile that reveals strengths and priority improvement opportunities.</p>
-  <p lang="es">Cada dimensión captura un aspecto crítico de la gobernanza de IA organizacional. La evaluación utiliza una escala Likert de 4 puntos (1 a 4) para cada una de las 3 preguntas por dimensión, generando un perfil detallado de madurez que revela fortalezas y oportunidades de mejora prioritarias.</p>
+  <p lang="pt-BR">Cada dimensão captura um aspecto crítico da governança de IA organizacional. A avaliação utiliza uma escala de maturidade de 5 níveis (de Inexistente a Otimizado) para cada uma das 3 perguntas por dimensão — cada nível descreve um estágio concreto de capacidade, não uma opinião —, gerando um perfil detalhado que revela pontos fortes e oportunidades de melhoria prioritárias.</p>
+  <p lang="en">Each dimension captures a critical aspect of organizational AI governance. The assessment uses a 5-level maturity scale (from Non-existent to Optimized) for each of the 3 questions per dimension — each level describes a concrete capability stage, not an opinion — generating a detailed profile that reveals strengths and priority improvement opportunities.</p>
+  <p lang="es">Cada dimensión captura un aspecto crítico de la gobernanza de IA organizacional. La evaluación utiliza una escala de madurez de 5 niveles (de Inexistente a Optimizado) para cada una de las 3 preguntas por dimensión — cada nivel describe una etapa concreta de capacidad, no una opinión —, generando un perfil detallado que revela fortalezas y oportunidades de mejora prioritarias.</p>
   <div class="dimensions-grid">
 
     <div class="dim-card">
@@ -535,9 +636,9 @@ body:not(.show-pt):not(.show-en):not(.show-es) [lang="es"]{display:none!importan
       <h2 lang="pt-BR">Diagnóstico HMI v2.0</h2>
       <h2 lang="en">HMI v2.0 Diagnostic</h2>
       <h2 lang="es">Diagnóstico HMI v2.0</h2>
-      <p lang="pt-BR">Responda às 21 perguntas a seguir (7 dimensões × 3 perguntas) usando a escala de concordância. Ao final, você receberá seu índice de maturidade com um radar chart detalhado por dimensão. Todo o processamento ocorre no seu navegador — nenhum dado é enviado a servidores.</p>
-      <p lang="en">Answer the following 21 questions (7 dimensions × 3 questions) using the agreement scale. At the end, you will receive your maturity index with a detailed radar chart by dimension. All processing occurs in your browser — no data is sent to servers.</p>
-      <p lang="es">Responda las 21 preguntas a continuación (7 dimensiones × 3 preguntas) usando la escala de concordancia. Al final, recibirá su índice de madurez con un radar chart detallado por dimensión. Todo el procesamiento ocurre en su navegador — ningún dato se envía a servidores.</p>
+      <p lang="pt-BR">Responda às 21 perguntas a seguir (7 dimensões × 3 perguntas) escolhendo, para cada item, o nível de maturidade que melhor descreve a situação real da sua organização — de Inexistente a Otimizado. Ao final, você receberá seu índice de maturidade com um radar chart detalhado por dimensão. Todo o processamento ocorre no seu navegador — nenhum dado é enviado a servidores.</p>
+      <p lang="en">Answer the following 21 questions (7 dimensions × 3 questions) by choosing, for each item, the maturity level that best describes your organization's actual situation — from Non-existent to Optimized. At the end, you will receive your maturity index with a detailed radar chart by dimension. All processing occurs in your browser — no data is sent to servers.</p>
+      <p lang="es">Responda las 21 preguntas a continuación (7 dimensiones × 3 preguntas) eligiendo, para cada ítem, el nivel de madurez que mejor describe la situación real de su organización — de Inexistente a Optimizado. Al final, recibirá su índice de madurez con un radar chart detallado por dimensión. Todo el procesamiento ocurre en su navegador — ningún dato se envía a servidores.</p>
       <button class="cta-btn" onclick="startQuiz()" style="margin-top:1.5rem">
         <span lang="pt-BR">Começar avaliação</span>
         <span lang="en">Start assessment</span>
@@ -717,11 +818,32 @@ var quizData = {
   ]
 };
 
-// ===== LIKERT LABELS =====
+// ===== CAPABILITY MATURITY SCALE (5 níveis ancorados em evidência) =====
+// Substitui a escala de concordância (discordo/concordo) por uma escala de
+// estágio de capacidade, comportamentalmente ancorada (BARS), alinhada 1:1
+// aos 5 níveis de maturidade do HMI (Exploratório → Soberano).
 var likertLabels = {
-  "pt-BR": ["Discordo totalmente", "Discordo parcialmente", "Concordo parcialmente", "Concordo totalmente"],
-  "en": ["Strongly disagree", "Somewhat disagree", "Somewhat agree", "Strongly agree"],
-  "es": ["Totalmente en desacuerdo", "Parcialmente en desacuerdo", "Parcialmente de acuerdo", "Totalmente de acuerdo"]
+  "pt-BR": [
+    { label: "Inexistente",  desc: "Não há prática nem documentação sobre o item." },
+    { label: "Inicial",      desc: "Existe de modo informal ou ad hoc, em casos isolados, sem padronização." },
+    { label: "Definido",     desc: "Formalizado e documentado, aplicado de forma padronizada na organização." },
+    { label: "Gerenciado",   desc: "Implementado e monitorado com métricas, revisado periodicamente pela gestão." },
+    { label: "Otimizado",    desc: "Auditado por terceiros, com melhoria contínua e benchmarking setorial." }
+  ],
+  "en": [
+    { label: "Non-existent", desc: "No practice or documentation for this item." },
+    { label: "Initial",      desc: "Informal or ad hoc, in isolated cases, without standardization." },
+    { label: "Defined",      desc: "Formalized and documented, applied in a standardized way across the organization." },
+    { label: "Managed",      desc: "Implemented and monitored with metrics, periodically reviewed by management." },
+    { label: "Optimized",    desc: "Third-party audited, with continuous improvement and sector benchmarking." }
+  ],
+  "es": [
+    { label: "Inexistente",  desc: "No hay práctica ni documentación sobre el ítem." },
+    { label: "Inicial",      desc: "Existe de modo informal o ad hoc, en casos aislados, sin estandarización." },
+    { label: "Definido",     desc: "Formalizado y documentado, aplicado de forma estandarizada en la organización." },
+    { label: "Gestionado",   desc: "Implementado y monitoreado con métricas, revisado periódicamente por la gestión." },
+    { label: "Optimizado",   desc: "Auditado por terceros, con mejora continua y benchmarking sectorial." }
+  ]
 };
 
 // ===== STATE =====
@@ -786,10 +908,12 @@ function renderQuestion() {
   html += '<div class="quiz-dimension-label">' + dim.id + ' — ' + dim.name[currentLang] + '</div>';
   html += '<h3>' + question[currentLang] + '</h3>';
   html += '<div class="likert-scale">';
-  for (var i = 1; i <= 4; i++) {
+  for (var i = 1; i <= 5; i++) {
+    var opt = labels[i - 1];
     html += '<div class="likert-btn' + (answer === i ? ' selected' : '') + '" onclick="selectAnswer(' + i + ')">';
-    html += i;
-    html += '<span class="likert-label">' + labels[i - 1] + '</span>';
+    html += '<span class="likert-num">' + i + '</span>';
+    html += '<span class="likert-text"><span class="likert-label-main">' + opt.label + '</span>';
+    html += '<span class="likert-desc">' + opt.desc + '</span></span>';
     html += '</div>';
   }
   html += '</div></div>';
@@ -865,7 +989,7 @@ function showResults() {
     var dimMax = 0;
     for (var q = 0; q < quizData.dimensions[d].questions.length; q++) {
       dimTotal += answers[gi] || 0;
-      dimMax += 4;
+      dimMax += 5;
       gi++;
     }
     var pct = Math.round((dimTotal / dimMax) * 100);
@@ -944,7 +1068,7 @@ function showResults() {
     html += '<div class="dim-score-card">';
     html += '<div class="dim-name">' + ds.id + ' — ' + ds.name + '</div>';
     html += '<div class="dim-val">' + ds.score + '%</div>';
-    html += '<div class="dim-pct">' + ds.raw + ' / ' + (quizData.dimensions[i].questions.length * 4) + '</div>';
+    html += '<div class="dim-pct">' + ds.raw + ' / ' + (quizData.dimensions[i].questions.length * 5) + '</div>';
     html += '</div>';
   }
   html += '</div>';
@@ -1253,7 +1377,7 @@ setLang("pt-BR");
     </li>
 
     <li>
-      <strong>Hubstry Protocol — Framework de Governança de IA</strong>
+      <strong><a href="https://guilherme-machado-ceo.github.io/protocolo-geral-tecnologia/" target="_blank" rel="noopener">Hubstry Protocol — Framework de Governança de IA &#8599;</a></strong>
       <p lang="pt-BR">Framework proprietário desenvolvido pela Hubstry para governança de inteligência artificial em organizações brasileiras e latino-americanas. Base conceitual do HMI v2.0, integrando referências internacionais (EU AI Act, NIST, ISO) com requisitos regulatórios locais (LGPD, Bacen, Marco Civil) para criar um modelo adaptado ao ecossistema regulatório brasileiro.</p>
       <p lang="en">Proprietary framework developed by Hubstry for AI governance in Brazilian and Latin American organizations. Conceptual basis of HMI v2.0, integrating international references (EU AI Act, NIST, ISO) with local regulatory requirements (LGPD, Bacen, Marco Civil) to create a model adapted to the Brazilian regulatory ecosystem.</p>
       <p lang="es">Framework propietario desarrollado por Hubstry para gobernanza de inteligencia artificial en organizaciones brasileñas y latinoamericanas. Base conceptual de HMI v2.0, integrando referencias internacionales con requisitos regulatorios locales.</p>
@@ -1273,6 +1397,159 @@ setLang("pt-BR");
       <p lang="es">Publicación especializada en planificación de recuperación de desastre y continuidad de negocio en ambientes de nube, cubriendo estrategias de backup, replicación geográfica, RTO/RPO y procedimientos de failover. Referencia primaria para D7.</p>
     </li>
   </ol>
+</div>
+</div>
+
+<!-- ===== EDGE-TO-EDGE GOVERNANCE BAND ===== -->
+<section class="edge-band">
+  <span class="edge-tag">
+    <span lang="pt-BR">Da medição à implementação</span>
+    <span lang="en">From measurement to implementation</span>
+    <span lang="es">De la medición a la implementación</span>
+  </span>
+  <h2 lang="pt-BR">A Hubstry implementa governança de IA <em>edge-to-edge</em></h2>
+  <h2 lang="en">Hubstry implements AI governance <em>edge-to-edge</em></h2>
+  <h2 lang="es">Hubstry implementa gobernanza de IA <em>edge-to-edge</em></h2>
+  <p lang="pt-BR">O HMI mede onde você está. A Hubstry leva você ao próximo nível: implantamos a governança de ponta a ponta — do diagnóstico à operação auditável, cobrindo política, dados, modelos e conformidade em todas as bordas do seu ecossistema de IA.</p>
+  <p lang="en">The HMI measures where you are. Hubstry takes you to the next level: we deploy governance end-to-end — from diagnostic to auditable operation, covering policy, data, models, and compliance across every edge of your AI ecosystem.</p>
+  <p lang="es">El HMI mide dónde está. Hubstry lo lleva al siguiente nivel: implementamos la gobernanza de punta a punta — del diagnóstico a la operación auditable, cubriendo política, datos, modelos y conformidad en todos los bordes de su ecosistema de IA.</p>
+  <div class="edge-flow">
+    <span class="edge-step" lang="pt-BR">Diagnóstico (HMI)</span>
+    <span class="edge-step" lang="en">Diagnostic (HMI)</span>
+    <span class="edge-step" lang="es">Diagnóstico (HMI)</span>
+    <span class="edge-arrow">&#8594;</span>
+    <span class="edge-step" lang="pt-BR">Desenho de governança</span>
+    <span class="edge-step" lang="en">Governance design</span>
+    <span class="edge-step" lang="es">Diseño de gobernanza</span>
+    <span class="edge-arrow">&#8594;</span>
+    <span class="edge-step" lang="pt-BR">Implementação</span>
+    <span class="edge-step" lang="en">Implementation</span>
+    <span class="edge-step" lang="es">Implementación</span>
+    <span class="edge-arrow">&#8594;</span>
+    <span class="edge-step" lang="pt-BR">Operação auditável</span>
+    <span class="edge-step" lang="en">Auditable operation</span>
+    <span class="edge-step" lang="es">Operación auditable</span>
+  </div>
+  <a href="#pricing" class="cta-btn">
+    <span lang="pt-BR">Ver planos de implementação</span>
+    <span lang="en">See implementation plans</span>
+    <span lang="es">Ver planes de implementación</span>
+  </a>
+</section>
+
+<!-- ===== PRICING ===== -->
+<div class="section-alt">
+<div class="section" id="pricing">
+  <h2 lang="pt-BR">Planos de Implementação</h2>
+  <h2 lang="en">Implementation Plans</h2>
+  <h2 lang="es">Planes de Implementación</h2>
+  <p lang="pt-BR">O diagnóstico HMI é e continua gratuito. Para organizações que decidem agir sobre o resultado, a Hubstry oferece três modalidades de implementação de governança de IA — do baseline para MEI/PME (Microempreendedores Individuais / Pequenas e Médias Empresas) à governança edge-to-edge para setores regulados.</p>
+  <p lang="en">The HMI diagnostic is and remains free. For organizations deciding to act on the result, Hubstry offers three AI governance implementation tiers — from a baseline for micro and small-to-medium enterprises to edge-to-edge governance for regulated sectors.</p>
+  <p lang="es">El diagnóstico HMI es y sigue siendo gratuito. Para organizaciones que deciden actuar sobre el resultado, Hubstry ofrece tres modalidades de implementación de gobernanza de IA — del baseline para micro y pequeñas y medianas empresas a la gobernanza edge-to-edge para sectores regulados.</p>
+
+  <div class="pricing-grid">
+
+    <!-- TIER 0 — Diagnóstico gratuito -->
+    <div class="price-card outline">
+      <span class="price-tier">
+        <span lang="pt-BR">Camada 1</span><span lang="en">Layer 1</span><span lang="es">Capa 1</span>
+      </span>
+      <div class="price-name">
+        <span lang="pt-BR">Diagnóstico HMI</span><span lang="en">HMI Diagnostic</span><span lang="es">Diagnóstico HMI</span>
+      </div>
+      <div class="price-aud">
+        <span lang="pt-BR">Qualquer organização que queira medir sua maturidade.</span>
+        <span lang="en">Any organization that wants to measure its maturity.</span>
+        <span lang="es">Cualquier organización que quiera medir su madurez.</span>
+      </div>
+      <div class="price-value">
+        <span lang="pt-BR">Gratuito</span><span lang="en">Free</span><span lang="es">Gratuito</span>
+        <small lang="pt-BR">sem cadastro · sem coleta de dados</small>
+        <small lang="en">no sign-up · no data collection</small>
+        <small lang="es">sin registro · sin recolección de datos</small>
+      </div>
+      <ul class="price-features">
+        <li><span lang="pt-BR">21 perguntas · 7 dimensões</span><span lang="en">21 questions · 7 dimensions</span><span lang="es">21 preguntas · 7 dimensiones</span></li>
+        <li><span lang="pt-BR">Radar chart e índice por dimensão</span><span lang="en">Radar chart and per-dimension index</span><span lang="es">Radar chart e índice por dimensión</span></li>
+        <li><span lang="pt-BR">100% client-side · conforme à LGPD</span><span lang="en">100% client-side · LGPD-compliant</span><span lang="es">100% client-side · conforme a la LGPD</span></li>
+      </ul>
+      <a href="#quiz" class="cta-btn">
+        <span lang="pt-BR">Iniciar avaliação</span><span lang="en">Start assessment</span><span lang="es">Iniciar evaluación</span>
+      </a>
+    </div>
+
+    <!-- TIER 1 — Essencial (featured) -->
+    <div class="price-card featured">
+      <span class="price-badge">
+        <span lang="pt-BR">Mais procurado</span><span lang="en">Most popular</span><span lang="es">Más solicitado</span>
+      </span>
+      <span class="price-tier">
+        <span lang="pt-BR">Implementação</span><span lang="en">Implementation</span><span lang="es">Implementación</span>
+      </span>
+      <div class="price-name">
+        <span lang="pt-BR">Essencial</span><span lang="en">Essential</span><span lang="es">Esencial</span>
+      </div>
+      <div class="price-aud">
+        <span lang="pt-BR">MEI / PME que precisam de um baseline de governança auditável.</span>
+        <span lang="en">Micro and SMEs needing an auditable governance baseline.</span>
+        <span lang="es">Micro y PYMEs que necesitan un baseline de gobernanza auditable.</span>
+      </div>
+      <div class="price-value">
+        <span lang="pt-BR">a partir de R$ 4.900</span>
+        <span lang="en">from R$ 4,900</span>
+        <span lang="es">desde R$ 4.900</span>
+        <small lang="pt-BR">setup único · entrega em ~4 semanas</small>
+        <small lang="en">one-time setup · ~4 weeks delivery</small>
+        <small lang="es">setup único · entrega en ~4 semanas</small>
+      </div>
+      <ul class="price-features">
+        <li><span lang="pt-BR">Diagnóstico HMI assistido + leitura de resultado</span><span lang="en">Assisted HMI diagnostic + result readout</span><span lang="es">Diagnóstico HMI asistido + lectura de resultado</span></li>
+        <li><span lang="pt-BR">Política de IA + inventário de sistemas (D1)</span><span lang="en">AI policy + system inventory (D1)</span><span lang="es">Política de IA + inventario de sistemas (D1)</span></li>
+        <li><span lang="pt-BR">Baseline LGPD e mapa de conformidade (D3/D6)</span><span lang="en">LGPD baseline and compliance map (D3/D6)</span><span lang="es">Baseline LGPD y mapa de conformidad (D3/D6)</span></li>
+        <li><span lang="pt-BR">Plano de ação priorizado por dimensão</span><span lang="en">Action plan prioritized by dimension</span><span lang="es">Plan de acción priorizado por dimensión</span></li>
+      </ul>
+      <a href="mailto:guihermemachado.ceo@hubstry.dev?subject=HMI%20%E2%80%94%20Implementa%C3%A7%C3%A3o%20Essencial" class="cta-btn">
+        <span lang="pt-BR">Falar com a Hubstry</span><span lang="en">Talk to Hubstry</span><span lang="es">Hablar con Hubstry</span>
+      </a>
+    </div>
+
+    <!-- TIER 2 — Edge-to-Edge -->
+    <div class="price-card">
+      <span class="price-tier">
+        <span lang="pt-BR">Implementação</span><span lang="en">Implementation</span><span lang="es">Implementación</span>
+      </span>
+      <div class="price-name">
+        <span lang="pt-BR">Edge-to-Edge</span><span lang="en">Edge-to-Edge</span><span lang="es">Edge-to-Edge</span>
+      </div>
+      <div class="price-aud">
+        <span lang="pt-BR">Setores regulados e ecossistemas multi-agente que exigem governança de ponta a ponta.</span>
+        <span lang="en">Regulated sectors and multi-agent ecosystems requiring end-to-end governance.</span>
+        <span lang="es">Sectores regulados y ecosistemas multi-agente que exigen gobernanza de punta a punta.</span>
+      </div>
+      <div class="price-value">
+        <span lang="pt-BR">Sob consulta</span><span lang="en">Custom quote</span><span lang="es">Bajo consulta</span>
+        <small lang="pt-BR">escopo e SLA personalizados</small>
+        <small lang="en">custom scope and SLA</small>
+        <small lang="es">alcance y SLA personalizados</small>
+      </div>
+      <ul class="price-features">
+        <li><span lang="pt-BR">Tudo do Essencial, nas 7 dimensões</span><span lang="en">Everything in Essential, across all 7 dimensions</span><span lang="es">Todo lo de Esencial, en las 7 dimensiones</span></li>
+        <li><span lang="pt-BR">Governança contínua: MLOps, drift, failover (D5/D7)</span><span lang="en">Continuous governance: MLOps, drift, failover (D5/D7)</span><span lang="es">Gobernanza continua: MLOps, drift, failover (D5/D7)</span></li>
+        <li><span lang="pt-BR">Alinhamento ISO/IEC 42001 e NIST AI RMF</span><span lang="en">ISO/IEC 42001 and NIST AI RMF alignment</span><span lang="es">Alineación ISO/IEC 42001 y NIST AI RMF</span></li>
+        <li><span lang="pt-BR">Trilha de auditoria e DPO dedicado</span><span lang="en">Audit trail and dedicated DPO</span><span lang="es">Trilla de auditoría y DPO dedicado</span></li>
+      </ul>
+      <a href="mailto:guihermemachado.ceo@hubstry.dev?subject=HMI%20%E2%80%94%20Implementa%C3%A7%C3%A3o%20Edge-to-Edge" class="cta-btn">
+        <span lang="pt-BR">Solicitar proposta</span><span lang="en">Request a proposal</span><span lang="es">Solicitar propuesta</span>
+      </a>
+    </div>
+
+  </div>
+
+  <p class="pricing-note">
+    <span lang="pt-BR">Valores de referência para escopos típicos; a proposta final depende do porte, do setor e do nível de maturidade inicial medido pelo HMI. Diagnóstico sempre gratuito.</span>
+    <span lang="en">Reference values for typical scopes; the final proposal depends on size, sector, and the initial maturity level measured by the HMI. The diagnostic is always free.</span>
+    <span lang="es">Valores de referencia para alcances típicos; la propuesta final depende del tamaño, el sector y el nivel de madurez inicial medido por el HMI. El diagnóstico es siempre gratuito.</span>
+  </p>
 </div>
 </div>
 
@@ -1297,9 +1574,9 @@ setLang("pt-BR");
   <p lang="en">HMI v2.0 — Hubstry Maturity Index | Compliance by design — no personal data collected | Natively LGPD-compliant</p>
   <p lang="es">HMI v2.0 — Hubstry Maturity Index | Compliance por diseño — sin recolección de datos personales | Nativamente conforme a la LGPD</p>
   <p style="margin-top:.5rem">
-    <span lang="pt-BR">Hubstry Protocol — Construído com referências: EU AI Act, NIST AI RMF, ISO/IEC 42001, ISO/IEC 23894, ISO 31000</span>
-    <span lang="en">Hubstry Protocol — Built with references: EU AI Act, NIST AI RMF, ISO/IEC 42001, ISO/IEC 23894, ISO 31000</span>
-    <span lang="es">Hubstry Protocol — Construido con referencias: EU AI Act, NIST AI RMF, ISO/IEC 42001, ISO/IEC 23894, ISO 31000</span>
+    <span lang="pt-BR"><a href="https://guilherme-machado-ceo.github.io/protocolo-geral-tecnologia/" target="_blank" rel="noopener">Hubstry Protocol &#8599;</a> — Construído com referências: EU AI Act, NIST AI RMF, ISO/IEC 42001, ISO/IEC 23894, ISO 31000</span>
+    <span lang="en"><a href="https://guilherme-machado-ceo.github.io/protocolo-geral-tecnologia/" target="_blank" rel="noopener">Hubstry Protocol &#8599;</a> — Built with references: EU AI Act, NIST AI RMF, ISO/IEC 42001, ISO/IEC 23894, ISO 31000</span>
+    <span lang="es"><a href="https://guilherme-machado-ceo.github.io/protocolo-geral-tecnologia/" target="_blank" rel="noopener">Hubstry Protocol &#8599;</a> — Construido con referencias: EU AI Act, NIST AI RMF, ISO/IEC 42001, ISO/IEC 23894, ISO 31000</span>
   </p>
 </footer>
 
