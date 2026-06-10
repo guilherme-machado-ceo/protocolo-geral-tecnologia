@@ -1,0 +1,1507 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hubstry | Diagnostico de Maturidade em Governanca de IA</title>
+<meta name="description" content="Avalie a maturidade de governança de IA da sua organização em 5 minutos. Framework proprietario baseado em EU AI Act, NIST AI RMF, ISO/IEC 42001 e mais 5 fontes internacionais.">
+<meta name="robots" content="index, follow">
+<link rel="alternate" hreflang="pt" href="?lang=pt">
+<link rel="alternate" hreflang="en" href="?lang=en">
+<link rel="alternate" hreflang="es" href="?lang=es">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+--bg:#0a0a0a;--bg2:#111;--bg3:#1a1a1a;--bg4:#222;
+--cyan:#00d4d4;--orange:#e06c00;--gold:#c8a000;--green:#00b884;--red:#e05050;--purple:#8b5cf6;
+--text:#e0e0e0;--text2:#a0a0a0;--text3:#666;
+--radius:12px;--radius-sm:8px;
+--font:'Segoe UI',system-ui,-apple-system,sans-serif;
+--mono:'SF Mono','Fira Code','Consolas',monospace;
+--max-w:960px;--tr:.3s ease
+}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.7;overflow-x:hidden}
+a{color:var(--cyan);text-decoration:none;transition:color var(--tr)}
+a:hover{color:var(--orange)}
+img{max-width:100%}
+/* LANG TOGGLE */
+.lang-bar{position:fixed;top:0;right:0;z-index:1000;display:flex;gap:0;background:var(--bg3);border-radius:0 0 0 var(--radius);overflow:hidden}
+.lang-btn{padding:8px 16px;font-size:.75rem;font-weight:700;background:transparent;color:var(--text3);border:none;cursor:pointer;transition:all var(--tr);letter-spacing:.5px;text-transform:uppercase}
+.lang-btn.active{background:var(--cyan);color:var(--bg)}
+.lang-btn:hover:not(.active){color:var(--text)}
+[lang="en"],[lang="es"]{display:none}
+body.show-en [lang="en"]{display:initial}
+body.show-en [lang="pt"],body.show-en [lang="es"]{display:none}
+body.show-es [lang="es"]{display:initial}
+body.show-es [lang="pt"],body.show-es [lang="en"]{display:none}
+body.show-pt [lang="pt"]{display:initial}
+body.show-pt [lang="en"],body.show-pt [lang="es"]{display:none}
+/* SECTIONS */
+.section{max-width:var(--max-w);margin:0 auto;padding:60px 24px 80px}
+.section-sm{max-width:720px;margin:0 auto;padding:40px 24px 60px}
+/* HERO */
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:80px 24px 60px;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle at 30% 40%,rgba(0,212,212,.06) 0%,transparent 50%),radial-gradient(circle at 70% 60%,rgba(224,108,0,.04) 0%,transparent 50%);animation:pulse 8s ease-in-out infinite alternate}
+@keyframes pulse{0%{transform:scale(1) rotate(0deg)}100%{transform:scale(1.1) rotate(2deg)}}
+.hero-inner{position:relative;z-index:1;max-width:800px}
+.hero-badge{display:inline-block;background:var(--bg3);border:1px solid var(--bg4);border-radius:100px;padding:6px 20px;font-size:.75rem;color:var(--cyan);margin-bottom:32px;letter-spacing:1px;text-transform:uppercase}
+.hero h1{font-size:clamp(2rem,5vw,3.5rem);font-weight:800;line-height:1.15;margin-bottom:24px;background:linear-gradient(135deg,var(--text) 40%,var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero h2{font-size:clamp(1rem,2.5vw,1.35rem);font-weight:400;color:var(--text2);max-width:640px;margin:0 auto 48px;line-height:1.7}
+.hero-ctas{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:14px 32px;border-radius:var(--radius);font-size:.95rem;font-weight:600;cursor:pointer;border:none;transition:all var(--tr)}
+.btn-primary{background:var(--cyan);color:var(--bg)}
+.btn-primary:hover{background:#00eaea;transform:translateY(-2px);box-shadow:0 8px 30px rgba(0,212,212,.25)}
+.btn-secondary{background:transparent;color:var(--text);border:1px solid var(--bg4)}
+.btn-secondary:hover{border-color:var(--cyan);color:var(--cyan);transform:translateY(-2px)}
+/* PERSONA CARDS */
+.personas{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;margin-top:48px}
+.persona-card{background:var(--bg2);border:1px solid var(--bg3);border-radius:var(--radius);padding:28px 24px;transition:all var(--tr);position:relative;overflow:hidden}
+.persona-card::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;transition:all var(--tr)}
+.persona-card:nth-child(1)::before{background:var(--cyan)}
+.persona-card:nth-child(2)::before{background:var(--gold)}
+.persona-card:nth-child(3)::before{background:var(--green)}
+.persona-card:nth-child(4)::before{background:var(--purple)}
+.persona-card:hover{border-color:var(--bg4);transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,.3)}
+.persona-icon{font-size:2rem;margin-bottom:16px;display:block}
+.persona-card h3{font-size:1.05rem;margin-bottom:8px;color:var(--text)}
+.persona-card p{font-size:.85rem;color:var(--text2);line-height:1.6}
+/* DIVIDER */
+.divider{max-width:var(--max-w);margin:0 auto;padding:0 24px}
+.divider hr{border:none;border-top:1px solid var(--bg3)}
+/* SECTION HEADING */
+.section-label{font-size:.7rem;letter-spacing:2px;text-transform:uppercase;color:var(--cyan);margin-bottom:12px;font-weight:600}
+.section-title{font-size:clamp(1.5rem,3vw,2.2rem);font-weight:700;margin-bottom:16px;line-height:1.3}
+.section-desc{font-size:1rem;color:var(--text2);max-width:640px;line-height:1.7;margin-bottom:40px}
+/* QUIZ */
+#quiz-section{display:none}
+.quiz-container{max-width:700px;margin:0 auto;padding:40px 24px 80px}
+.quiz-progress{display:flex;gap:4px;margin-bottom:32px;flex-wrap:wrap}
+.quiz-progress-bar{height:6px;flex:1;border-radius:3px;background:var(--bg3);transition:background var(--tr);min-width:20px}
+.quiz-progress-bar.filled{background:var(--cyan)}
+.quiz-progress-bar.current{background:var(--orange)}
+.quiz-counter{text-align:right;font-size:.8rem;color:var(--text3);margin-bottom:8px}
+.quiz-dim-label{font-size:.7rem;letter-spacing:2px;text-transform:uppercase;color:var(--cyan);margin-bottom:8px;font-weight:600}
+.quiz-question-num{font-size:.85rem;color:var(--text3);margin-bottom:4px}
+.quiz-question{font-size:1.15rem;font-weight:600;line-height:1.5;margin-bottom:8px}
+.quiz-hint{font-size:.8rem;color:var(--text3);margin-bottom:24px;font-style:italic;line-height:1.5}
+.quiz-options{display:flex;flex-direction:column;gap:10px;margin-bottom:32px}
+.quiz-option{display:flex;align-items:center;gap:14px;padding:14px 20px;background:var(--bg2);border:1px solid var(--bg3);border-radius:var(--radius-sm);cursor:pointer;transition:all var(--tr);font-size:.92rem;line-height:1.5}
+.quiz-option:hover{border-color:var(--cyan);background:var(--bg3)}
+.quiz-option.selected{border-color:var(--cyan);background:rgba(0,212,212,.08)}
+.quiz-option.selected .quiz-option-dot{background:var(--cyan);border-color:var(--cyan)}
+.quiz-option-dot{width:20px;height:20px;min-width:20px;border-radius:50%;border:2px solid var(--bg4);transition:all var(--tr);display:flex;align-items:center;justify-content:center}
+.quiz-option.selected .quiz-option-dot::after{content:'';width:8px;height:8px;border-radius:50%;background:var(--bg)}
+.quiz-nav{display:flex;justify-content:space-between;align-items:center}
+.quiz-nav .btn{font-size:.85rem;padding:10px 24px}
+.quiz-glossary-link{font-size:.8rem;color:var(--text3);cursor:pointer;margin-top:8px;display:inline-flex;align-items:center;gap:4px;transition:color var(--tr)}
+.quiz-glossary-link:hover{color:var(--cyan)}
+/* RESULTS */
+#results-section{display:none}
+.results-container{max-width:700px;margin:0 auto;padding:40px 24px 80px}
+.results-header{text-align:center;margin-bottom:48px}
+.results-score-circle{width:160px;height:160px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0 auto 24px;border:4px solid var(--bg3);position:relative}
+.results-score-circle .score-num{font-size:3rem;font-weight:800;color:var(--cyan)}
+.results-score-circle .score-max{font-size:.85rem;color:var(--text3)}
+.results-level{text-align:center;margin-bottom:8px}
+.results-level-name{font-size:1.5rem;font-weight:700;color:var(--gold)}
+.results-level-desc{font-size:.9rem;color:var(--text2);max-width:540px;margin:8px auto 0;line-height:1.6}
+.results-radar{text-align:center;margin:48px 0}
+.results-radar canvas{max-width:100%;height:auto}
+.results-dims{margin-top:40px}
+.dim-row{display:flex;align-items:center;gap:16px;margin-bottom:16px;padding:12px 16px;background:var(--bg2);border-radius:var(--radius-sm);border:1px solid var(--bg3)}
+.dim-label{min-width:140px;font-size:.85rem;font-weight:600;color:var(--text)}
+.dim-bar-wrap{flex:1;height:10px;background:var(--bg3);border-radius:5px;overflow:hidden}
+.dim-bar{height:100%;border-radius:5px;transition:width .8s ease}
+.dim-val{min-width:40px;text-align:right;font-size:.85rem;font-weight:600;color:var(--cyan)}
+.results-cta{text-align:center;margin-top:48px;padding:40px;background:var(--bg2);border:1px solid var(--bg3);border-radius:var(--radius)}
+.results-cta h3{font-size:1.2rem;margin-bottom:8px}
+.results-cta p{font-size:.9rem;color:var(--text2);margin-bottom:24px}
+/* GLOSSARY MODAL */
+.glossary-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:2000;align-items:center;justify-content:center;padding:24px}
+.glossary-overlay.active{display:flex}
+.glossary-modal{background:var(--bg2);border:1px solid var(--bg3);border-radius:var(--radius);max-width:640px;width:100%;max-height:80vh;overflow-y:auto;padding:32px}
+.glossary-modal h2{font-size:1.3rem;margin-bottom:20px;color:var(--cyan)}
+.glossary-entry{margin-bottom:20px;padding-bottom:16px;border-bottom:1px solid var(--bg3)}
+.glossary-entry:last-child{border-bottom:none}
+.glossary-term{font-weight:700;color:var(--gold);font-size:.95rem;margin-bottom:4px}
+.glossary-full{font-size:.8rem;color:var(--text3);margin-bottom:4px;font-style:italic}
+.glossary-desc{font-size:.85rem;color:var(--text2);line-height:1.6}
+.glossary-close{position:absolute;top:16px;right:16px;background:none;border:none;color:var(--text3);font-size:1.5rem;cursor:pointer}
+/* REFERENCES */
+.ref-list{list-style:none;counter-reset:ref}
+.ref-list li{counter-increment:ref;padding:16px 16px 16px 48px;position:relative;margin-bottom:12px;background:var(--bg2);border-radius:var(--radius-sm);border:1px solid var(--bg3);font-size:.85rem;color:var(--text2);line-height:1.6}
+.ref-list li::before{content:counter(ref);position:absolute;left:16px;top:16px;font-weight:700;color:var(--cyan);font-size:.8rem}
+/* FOOTER */
+footer{text-align:center;padding:40px 24px;border-top:1px solid var(--bg3);font-size:.8rem;color:var(--text3)}
+footer a{color:var(--cyan)}
+/* RESPONSIVE */
+@media(max-width:640px){
+.hero{padding:100px 20px 40px}
+.personas{grid-template-columns:1fr}
+.hero-ctas{flex-direction:column;align-items:center}
+.btn{width:100%;justify-content:center}
+.dim-row{flex-direction:column;align-items:flex-start;gap:8px}
+.dim-label{min-width:auto}
+}
+/* ANIMATIONS */
+@keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.fade-in{animation:fadeIn .5s ease forwards}
+@keyframes countUp{from{opacity:0}to{opacity:1}}
+.count-up{animation:countUp .8s ease forwards}
+</style>
+</head>
+<body class="show-pt">
+
+<!-- LANGUAGE BAR -->
+<div class="lang-bar">
+<button class="lang-btn active" data-lang="pt" onclick="setLang('pt')">PT</button>
+<button class="lang-btn" data-lang="en" onclick="setLang('en')">EN</button>
+<button class="lang-btn" data-lang="es" onclick="setLang('es')">ES</button>
+</div>
+
+<!-- ==================== LANDING PAGE ==================== -->
+<div id="landing">
+
+<!-- HERO -->
+<section class="hero">
+<div class="hero-inner">
+<div class="hero-badge">
+<span lang="pt">Framework Proprietario &middot; 8 Fontes Internacionais</span>
+<span lang="en">Proprietary Framework &middot; 8 International Sources</span>
+<span lang="es">Framework Propietario &middot; 8 Fuentes Internacionales</span>
+</div>
+
+<h1>
+<span lang="pt">Quanto sua empresa esta preparada para governar IA?</span>
+<span lang="en">How ready is your organization to govern AI?</span>
+<span lang="es">Que tan preparada esta su organizacion para gobernar IA?</span>
+</h1>
+
+<h2>
+<span lang="pt">Diagnostico gratuito de maturidade em governança de IA. Baseado no Hubstry Protocol e em 7 frameworks internacionais, incluindo o regulamento europeu de IA, normas ISO e o framework de gestão de risco do NIST. Zero coleta de dados. Resultado instantaneo.</span>
+<span lang="en">Free AI governance maturity diagnostic. Based on the Hubstry Protocol and 7 international frameworks, including the European AI Act, ISO standards, and the NIST risk management framework. Zero data collection. Instant results.</span>
+<span lang="es">Diagnostico gratuito de madurez en gobernanza de IA. Basado en el Protocolo Hubstry y 7 marcos internacionales, incluyendo el Reglamento Europeo de IA, normas ISO y el marco de gestion de riesgos del NIST. Cero recopilacion de datos. Resultado instantaneo.</span>
+</h2>
+
+<div class="hero-ctas">
+<a href="#" class="btn btn-primary" onclick="startQuiz();return false">
+<span lang="pt">&#9654;&ensp;Faca o Diagnostico</span>
+<span lang="en">&#9654;&ensp;Take the Assessment</span>
+<span lang="es">&#9654;&ensp;Realice el Diagnostico</span>
+</a>
+<a href="https://guilherme-machado-ceo.github.io/protocolo-geral-tecnologia/" target="_blank" class="btn btn-secondary">
+<span lang="pt">&#128196;&ensp;Leia o Protocolo Completo</span>
+<span lang="en">&#128196;&ensp;Read the Full Protocol</span>
+<span lang="es">&#128196;&ensp;Lea el Protocolo Completo</span>
+</a>
+</div>
+</div>
+</section>
+
+<!-- WHO IS THIS FOR -->
+<section class="section">
+<div class="section-label">
+<span lang="pt">Para Quem e Este Diagnostico</span>
+<span lang="en">Who Is This Assessment For</span>
+<span lang="es">Para Quien es Este Diagnostico</span>
+</div>
+<div class="section-title">
+<span lang="pt">Governanca de IA no tamanho certo da sua organização</span>
+<span lang="en">AI Governance at the Right Scale for Your Organization</span>
+<span lang="es">Gobernanza de IA en el tamano correcto de su organizacion</span>
+</div>
+<div class="section-desc">
+<span lang="pt">Empresas em diferentes estágios de maturidade tecnológica enfrentam desafios distintos. O Hubstry Maturity Index foi projetado para quatro perfis principais, cada um com peso diferente nas dimensões de avaliação.</span>
+<span lang="en">Organizations at different stages of technológical maturity face distinct challenges. The Hubstry Maturity Index was designed for four primary profiles, each with different weights across assessment dimensions.</span>
+<span lang="es">Las organizaciones en diferentes etapas de madurez tecnológica enfrentan desafios distintos. El Hubstry Maturity Index fue disenado para cuatro perfiles principales, cada uno con pesos diferentes en las dimensiones de evaluacion.</span>
+</div>
+
+<div class="personas">
+<!-- C-LEVEL -->
+<div class="persona-card">
+<span class="persona-icon">&#128188;</span>
+<h3>
+<span lang="pt">C-Level de PMEs de Tecnologia</span>
+<span lang="en">Tech SMB C-Level Executives</span>
+<span lang="es">Directivos C-Level de PyMEs Tecnológicas</span>
+</h3>
+<p>
+<span lang="pt">Voce tem IA espalhada pela empresa sem governança formal. Precisa de clareza rapida sobre onde esta e o que fazer primeiro, sem precisar de um time dedicado.</span>
+<span lang="en">You have AI scattered across the organization without formal governance. You need quick clarity on where you stand and what to prioritize, without a dedicated team.</span>
+<span lang="es">Tiene IA dispersa por la organizacion sin gobernanza formal. Necesita claridad rapida sobre donde esta y que hacer primero, sin un equipo dedicado.</span>
+</p>
+</div>
+
+<!-- GOV -->
+<div class="persona-card">
+<span class="persona-icon">&#127963;</span>
+<h3>
+<span lang="pt">Decisores Governamentais</span>
+<span lang="en">Government Decision Makers</span>
+<span lang="es">Responsables de Decisiones Gubernamentales</span>
+</h3>
+<p>
+<span lang="pt">Precisa cumprir o regulamento europeu de IA (EU AI Act) e a LGPD brasileira, mas nao sabe por onde comecar. Precisa de um framework alinhado com regulamentações internacionais.</span>
+<span lang="en">You need to comply with the European AI Act and Brazil's LGPD, but don't know where to start. You need a framework aligned with international regulations.</span>
+<span lang="es">Necesita cumplir con el Reglamento Europeo de IA y la LGPD brasilea, pero no sabe por donde empezar. Necesita un marco alineado con regulaciones internacionales.</span>
+</p>
+</div>
+
+<!-- TI -->
+<div class="persona-card">
+<span class="persona-icon">&#128187;</span>
+<h3>
+<span lang="pt">Times de Tecnologia</span>
+<span lang="en">Technology Teams</span>
+<span lang="es">Equipos de Tecnologia</span>
+</h3>
+<p>
+<span lang="pt">Quer implementar governança de IA mas precisa de um blueprint técnico prático, com dimensões claras e um score objetivo para acompanhar a evolucao.</span>
+<span lang="en">You want to implement AI governance but need a practical technical blueprint, with clear dimensions and an objective score to track progress.</span>
+<span lang="es">Quiere implementar gobernanza de IA pero necesita un plano técnico practico, con dimensiones claras y una puntuacion objetiva para acompanar el progreso.</span>
+</p>
+</div>
+
+<!-- STARTUPS -->
+<div class="persona-card">
+<span class="persona-icon">&#128640;</span>
+<h3>
+<span lang="pt">Startups Pre-Seed e Seed</span>
+<span lang="en">Pre-Seed and Seed Startups</span>
+<span lang="es">Startups Pre-Seed y Seed</span>
+</h3>
+<p>
+<span lang="pt">Precisa demonstrar maturidade em governança de IA para investidores e aceleradoras. Um score de governança aumenta a confiança e o valuation.</span>
+<span lang="en">You need to demonstrate AI governance maturity to investors and accelerators. A governance score increases trust and valuation.</span>
+<span lang="es">Necesita demostrar madurez en gobernanza de IA para inversores y aceleradoras. Una puntuacion de gobernanza aumenta la confianza y la valoracion.</span>
+</p>
+</div>
+</div>
+</section>
+
+<div class="divider"><hr></div>
+
+<!-- ABOUT THE FRAMEWORK -->
+<section class="section">
+<div class="section-label">
+<span lang="pt">Sobre o Framework</span>
+<span lang="en">About the Framework</span>
+<span lang="es">Sobre el Marco</span>
+</div>
+<div class="section-title">
+<span lang="pt">Hubstry Maturity Index — HMI</span>
+<span lang="en">Hubstry Maturity Index — HMI</span>
+<span lang="es">Hubstry Maturity Index — HMI</span>
+</div>
+<div class="section-desc">
+<span lang="pt">O Hubstry Maturity Index e um modelo proprietario de avaliação de maturidade em governança de IA. Ele não copia nenhum framework existente — e uma fusao original de 8 fontes internacionais, criando algo que não existe em nenhum outro lugar. Sao 7 dimensões de avaliação, cada uma absorvendo conceitos de múltiplos frameworks, resultando em um diagnóstico mais completo e contextualizado que qualquer alternativa individual.</span>
+<span lang="en">The Hubstry Maturity Index is a proprietary AI governance maturity assessment model. It doesn't copy any existing framework — it's an original fusion of 8 international sources, creating something that doesn't exist anywhere else. It consists of 7 assessment dimensions, each absorbing concepts from multiple frameworks, resulting in a more complete and contextualized diagnostic than any individual alternative.</span>
+<span lang="es">El Hubstry Maturity Index es un modelo propietario de evaluacion de madurez en gobernanza de IA. No copia ningun marco existente — es una fusion original de 8 fuentes internacionales, creando algo que no existe en ningun otro lugar. Consta de 7 dimensiones de evaluacion, cada una absorbiendo conceptos de multiples marcos, resultando en un diagnóstico mas completo y contextualizado que cualquier alternativa individual.</span>
+</div>
+
+<div class="section-desc">
+<span lang="pt">Este diagnóstico pública (Camada 1) não coleta nenhum dado pessoal. Tudo e processado localmente no seu navegador. Zero dados enviados a servidores. Zero cookies de rastreamento. A Lei Geral de Protecao de Dados (LGPD) literalmente nao se aplica a esta versao. Para um relatorio personalizado e mais robusto, consulte a Camada 2 (mediante conversao).</span>
+<span lang="en">This public diagnostic (Layer 1) collects no personal data. Everything is processed locally in your browser. Zero data sent to servers. Zero tracking cookies. The General Data Protection Law (LGPD) literally does not apply to this version. For a personalized and more robust report, see Layer 2 (available upon conversion).</span>
+<span lang="es">Este diagnóstico público (Capa 1) no recopila ningun dato personal. Todo se procesa localmente en su navegador. Cero datos enviados a servidores. Cero cookies de rastreo. La Ley General de Proteccion de Datos (LGPD) literalmente no aplica a esta version. Para un informe personalizado y mas robusto, consulte la Capa 2 (disponible mediante conversion).</span>
+</div>
+
+<div class="hero-ctas" style="justify-content:center;margin-top:32px">
+<a href="#" class="btn btn-primary" onclick="startQuiz();return false">
+<span lang="pt">&#9654;&ensp;Iniciar Diagnostico Gratuito</span>
+<span lang="en">&#9654;&ensp;Start Free Assessment</span>
+<span lang="es">&#9654;&ensp;Iniciar Diagnostico Gratuito</span>
+</a>
+</div>
+</section>
+
+<div class="divider"><hr></div>
+
+<!-- REFERENCES -->
+<section class="section-sm">
+<div class="section-label">
+<span lang="pt">Referencias</span>
+<span lang="en">References</span>
+<span lang="es">Referencias</span>
+</div>
+<div class="section-title" style="font-size:1.3rem">
+<span lang="pt">Fontes que Compoe o Hubstry Maturity Index</span>
+<span lang="en">Sources Composing the Hubstry Maturity Index</span>
+<span lang="es">Fuentes que Componen el Hubstry Maturity Index</span>
+</div>
+
+<ol class="ref-list" style="margin-top:24px">
+<li>
+<span lang="pt"><strong>EU AI Act</strong> — Regulamento da Inteligencia Artificial da Uniao Europeia (Regulamento 2024/1689). Classifica sistemas de IA por nivel de risco (proibido, alto risco, limitado, mínimo) e exige conformidade para sistemas de alto risco.</span>
+<span lang="en"><strong>EU AI Act</strong> — European Union Artificial Intelligence Regulation (Regulation 2024/1689). Classifies AI systems by risk level (prohibited, high-risk, limited, minimal) and requires compliance for high-risk systems.</span>
+<span lang="es"><strong>EU AI Act</strong> — Reglamento de Inteligencia Artificial de la Union Europea (Reglamento 2024/1689). Clasifica sistemas de IA por nivel de riesgo (prohibido, alto riesgo, limitado, mínimo) y exige cumplimiento para sistemas de alto riesgo.</span>
+</li>
+<li>
+<span lang="pt"><strong>NIST AI RMF 1.0</strong> — Framework de Gestão de Risco em IA do Instituto Nacional de Padroes e Tecnologia dos EUA (sigla original: National Institute of Standards and Technology Artificial Intelligence Risk Management Framework). Guia voluntario com 4 funções: Governar, Mapear, Medir e Gerenciar.</span>
+<span lang="en"><strong>NIST AI RMF 1.0</strong> — National Institute of Standards and Technology Artificial Intelligence Risk Management Framework. Voluntary guide with 4 functions: Govern, Map, Measure, and Manage.</span>
+<span lang="es"><strong>NIST AI RMF 1.0</strong> — Marco de Gestion de Riesgo de IA del Instituto Nacional de Estandares y Tecnologia de EE.UU. Guia voluntario con 4 funciones: Gobernar, Mapear, Medir y Gestionar.</span>
+</li>
+<li>
+<span lang="pt"><strong>ISO/IEC 23894:2023</strong> — Diretrizes para Gestão de Risco em IA (sigla original: Guidelines for Artificial Intelligence Risk Management). Complementa a ISO 31000 com foco especifico em riscos de sistemas de IA, cobrindo avaliação, tratamento e monitoramento de riscos.</span>
+<span lang="en"><strong>ISO/IEC 23894:2023</strong> — Guidelines for Artificial Intelligence Risk Management. Complements ISO 31000 with a specific focus on AI system risks, covering risk assessment, treatment, and monitoring.</span>
+<span lang="es"><strong>ISO/IEC 23894:2023</strong> — Directrices para la Gestion de Riesgos en IA. Complementa la ISO 31000 con enfoque especifico en riesgos de sistemas de IA, cubriendo evaluacion, tratamiento y monitoreo de riesgos.</span>
+</li>
+<li>
+<span lang="pt"><strong>ISO/IEC 42001:2023</strong> — Sistema de Gestão de Inteligencia Artificial (sigla original: Artificial Intelligence Management System). Primeira norma ISO certificável para governança de IA. Equivalente ao que a ISO 9001 e para qualidade, mas aplicada a organizações que desenvolvem ou utilizam IA.</span>
+<span lang="en"><strong>ISO/IEC 42001:2023</strong> — Artificial Intelligence Management System. The first certifiable ISO standard for AI governance. Equivalent to what ISO 9001 is for quality, but applied to organizations that develop or use AI.</span>
+<span lang="es"><strong>ISO/IEC 42001:2023</strong> — Sistema de Gestion de Inteligencia Artificial. Primera norma ISO certificable para gobernanza de IA. Equivalente a lo que la ISO 9001 es para calidad, pero aplicada a organizaciones que desarrollan o utilizan IA.</span>
+</li>
+<li>
+<span lang="pt"><strong>ISO 31000:2018</strong> — Diretrizes para Gestão de Risco (sigla original: Risk Management Guidelines). Framework genérico e internacional para gerenciar qualquer tipo de risco, aplicavel a organizações de todos os setores e tamanhos.</span>
+<span lang="en"><strong>ISO 31000:2018</strong> — Risk Management Guidelines. A generic, international framework for managing any type of risk, applicable to organizations of all sectors and sizes.</span>
+<span lang="es"><strong>ISO 31000:2018</strong> — Directrices para la Gestion de Riesgos. Marco genérico e internacional para gestionar cualquier tipo de riesgo, aplicable a organizaciones de todos los sectores y tamanos.</span>
+</li>
+<li>
+<span lang="pt"><strong>Hubstry Protocol v.04.2</strong> — Framework de Governanca de IA trilingue (PT/EN/ES), open-source sob licenca CC BY 4.0. Estrutura em 3 pilares (Quantico, Analógico-Fisico, Digital) e 2 camadas transversais, com lente de Soberania Digital.</span>
+<span lang="en"><strong>Hubstry Protocol v.04.2</strong> — Trilingual AI Governance Framework (PT/EN/ES), open-source under CC BY 4.0 license. Structured in 3 pillars (Quantum, Analog-Physical, Digital) and 2 transversal layers, with a Digital Sovereignty lens.</span>
+<span lang="es"><strong>Hubstry Protocol v.04.2</strong> — Marco de Gobernanza de IA trilingue (PT/EN/ES), de codigo abierto bajo licencia CC BY 4.0. Estructurado en 3 pilares (Quantico, Analógico-Fisico, Digital) y 2 capas transversales, con lente de Soberania Digital.</span>
+</li>
+<li>
+<span lang="pt"><strong>Deloitte — Physical AI Trust Dimensions</strong> — Analise da Deloitte sobre dimensões de confiança para sistemas de IA físicos (robótica, veiculos autonomos, agentes físicos). Aborda oversight de agentes físicos e riscos únicos de IA no mundo real.</span>
+<span lang="en"><strong>Deloitte — Physical AI Trust Dimensions</strong> — Deloitte analysis on trust dimensions for physical AI systems (robotics, autonomous vehicles, physical agents). Addresses oversight of physical agents and unique risks of real-world AI.</span>
+<span lang="es"><strong>Deloitte — Physical AI Trust Dimensions</strong> — Analisis de Deloitte sobre dimensiones de confianza para sistemas de IA físicos (robótica, vehiculos autonomos, agentes físicos). Aborda supervision de agentes físicos y riesgos únicos de IA en el mundo real.</span>
+</li>
+<li>
+<span lang="pt"><strong>PWS Cloud — Guia de Recuperacao de Desastres (DR/BCP)</strong> — Material prático sobre continuidade de negocios e recuperacao de desastres. Aborda conceitos como BIA (Analise de Impacto no Negocio), RTO (Tempo Maximo de Recuperacao) e RPO (Ponto Maximo de Recuperacao) aplicados a infraestrutura tecnológica.</span>
+<span lang="en"><strong>PWS Cloud — Disaster Recovery Guide (DR/BCP)</strong> — Practical material on business continuity and disaster recovery. Covers concepts such as BIA (Business Impact Analysis), RTO (Recovery Time Objective), and RPO (Recovery Point Objective) applied to technology infrastructure.</span>
+<span lang="es"><strong>PWS Cloud — Guia de Recuperacion de Desastres (DR/BCP)</strong> — Material practico sobre continuidad de negocios y recuperacion de desastres. Cubre conceptos como BIA (Analisis de Impacto en el Negocio), RTO (Tiempo Maximo de Recuperacion) y RPO (Punto Maximo de Recuperacion) aplicados a infraestructura tecnológica.</span>
+</li>
+</ol>
+</section>
+
+<!-- FOOTER -->
+<footer>
+<div>
+<span lang="pt">Hubstry Maturity Index &copy; 2026 &middot; Baseado no <a href="https://guilherme-machado-ceo.github.io/protocolo-geral-tecnologia/" target="_blank">Hubstry Protocol v.04.2</a> &middot; CC BY 4.0 &middot; Zero dados coletados</span>
+<span lang="en">Hubstry Maturity Index &copy; 2026 &middot; Based on the <a href="https://guilherme-machado-ceo.github.io/protocolo-geral-tecnologia/" target="_blank">Hubstry Protocol v.04.2</a> &middot; CC BY 4.0 &middot; Zero data collected</span>
+<span lang="es">Hubstry Maturity Index &copy; 2026 &middot; Basado en el <a href="https://guilherme-machado-ceo.github.io/protocolo-geral-tecnologia/" target="_blank">Protocolo Hubstry v.04.2</a> &middot; CC BY 4.0 &middot; Cero datos recopilados</span>
+</div>
+<div style="margin-top:8px">
+<span lang="pt">Este diagnóstico não armazena, transmite ou processa dados pessoais em servidores. Todo o calculo e executado localmente no seu navegador.</span>
+<span lang="en">This diagnostic does not store, transmit, or process personal data on servers. All calculations are executed locally in your browser.</span>
+<span lang="es">Este diagnóstico no almacena, transmite ni procesa datos personales en servidores. Todos los calculos se ejecutan localmente en su navegador.</span>
+</div>
+</footer>
+
+</div><!-- END LANDING -->
+
+
+<!-- ==================== QUIZ ==================== -->
+<div id="quiz-section">
+<div class="quiz-container">
+
+<div class="quiz-counter" id="quiz-counter"></div>
+<div class="quiz-progress" id="quiz-progress"></div>
+
+<div id="quiz-question-area"></div>
+
+<div class="quiz-nav">
+<button class="btn btn-secondary" id="quiz-prev" onclick="prevQuestion()">
+<span lang="pt">&larr; Anterior</span>
+<span lang="en">&larr; Previous</span>
+<span lang="es">&larr; Anterior</span>
+</button>
+<button class="btn btn-primary" id="quiz-next" onclick="nextQuestion()">
+<span lang="pt">Proximo &rarr;</span>
+<span lang="en">Next &rarr;</span>
+<span lang="es">Siguiente &rarr;</span>
+</button>
+</div>
+
+<div style="margin-top:20px">
+<span class="quiz-glossary-link" onclick="openGlossary()">
+<span lang="pt">&#128218; Glossario de Termos</span>
+<span lang="en">&#128218; Glossary</span>
+<span lang="es">&#128218; Glosario de Terminos</span>
+</span>
+</div>
+
+</div>
+</div>
+
+
+<!-- ==================== RESULTS ==================== -->
+<div id="results-section">
+<div class="results-container">
+
+<div class="results-header fade-in">
+<div class="results-score-circle" id="score-circle">
+<span class="score-num" id="score-num">0</span>
+<span class="score-max" id="score-max">/100</span>
+</div>
+
+<div class="results-level">
+<div class="results-level-name" id="level-name"></div>
+<div class="results-level-desc" id="level-desc"></div>
+</div>
+</div>
+
+<div class="results-radar fade-in">
+<canvas id="radar-canvas" width="400" height="400"></canvas>
+</div>
+
+<div class="results-dims" id="results-dims"></div>
+
+<div class="results-cta fade-in">
+<h3>
+<span lang="pt">Quer um relatorio personalizado e completo?</span>
+<span lang="en">Want a personalized and comprehensive report?</span>
+<span lang="es">Quiere un informe personalizado y completo?</span>
+</h3>
+<p>
+<span lang="pt">A Camada 2 do Hubstry Maturity Index gera um relatorio detalhado com gap analysis, benchmark setorial, e roadmap de 30/60/90 dias. Mediante conversao com coleta de dados consentida conforme a LGPD.</span>
+<span lang="en">Layer 2 of the Hubstry Maturity Index generates a detailed report with gap analysis, sector benchmarking, and a 30/60/90-day roadmap. Available upon conversion with LGPD-compliant data collection.</span>
+<span lang="es">La Capa 2 del Hubstry Maturity Index genera un informe detallado con analisis de brechas, benchmark sectorial y hoja de ruta de 30/60/90 dias. Disponible mediante conversion con recopilacion de datos consentida conforme la LGPD.</span>
+</p>
+<button class="btn btn-secondary" onclick="backToLanding()">
+<span lang="pt">&#128196; Voltar ao Inicio</span>
+<span lang="en">&#128196; Back to Home</span>
+<span lang="es">&#128196; Volver al Inicio</span>
+</button>
+</div>
+
+</div>
+</div>
+
+
+<!-- ==================== GLOSSARY MODAL ==================== -->
+<div class="glossary-overlay" id="glossary-overlay" onclick="if(event.target===this)closeGlossary()">
+<div class="glossary-modal">
+<h2>
+<span lang="pt">Glossario de Termos</span>
+<span lang="en">Glossary</span>
+<span lang="es">Glosario de Terminos</span>
+</h2>
+
+<div class="glossary-entry">
+<div class="glossary-term">EU AI Act</div>
+<div class="glossary-full" lang="pt">Regulamento da Inteligencia Artificial da Uniao Europeia (Lei 2024/1689)</div>
+<div class="glossary-full" lang="en">European Union Artificial Intelligence Regulation (Law 2024/1689)</div>
+<div class="glossary-full" lang="es">Reglamento de Inteligencia Artificial de la Union Europea (Ley 2024/1689)</div>
+<div class="glossary-desc">
+<span lang="pt">Lei da Uniao Europeia que classifica sistemas de IA em quatro categorias de risco (proibido, alto risco, risco limitado e risco mínimo) e define obrigações de conformidade para empresas que operam na Europa, incluindo organizações fora da UE que oferecem serviços de IA para europeus.</span>
+<span lang="en">European Union law that classifies AI systems into four risk categories (prohibited, high-risk, limited risk, and minimal risk) and defines compliance obligations for companies operating in Europe, including organizations outside the EU that provide AI services to Europeans.</span>
+<span lang="es">Ley de la Union Europea que clasifica sistemas de IA en cuatro categorias de riesgo (prohibido, alto riesgo, riesgo limitado y riesgo mínimo) y define obligaciones de cumplimiento para empresas que operan en Europa, incluyendo organizaciones fuera de la UE que ofrecen servicios de IA a europeos.</span>
+</div>
+</div>
+
+<div class="glossary-entry">
+<div class="glossary-term">LGPD</div>
+<div class="glossary-full" lang="pt">Lei Geral de Protecao de Dados (Lei 13.709/2018, Brasil)</div>
+<div class="glossary-full" lang="en">General Data Protection Law (Law 13.709/2018, Brazil)</div>
+<div class="glossary-full" lang="es">Ley General de Proteccion de Datos (Ley 13.709/2018, Brasil)</div>
+<div class="glossary-desc">
+<span lang="pt">Lei brasileira que regula como empresas coletam, usam, armazenam e compartilham dados pessoais de individuos. Inspirada na GDPR europeia, exige consentimento explícito, direito de exclusão e portabilidade dos dados.</span>
+<span lang="en">Brazilian law that regulates how companies collect, use, store, and share personal data of individuals. Inspired by the European GDPR, it requires explicit consent, right to deletion, and data portability.</span>
+<span lang="es">Ley brasilea que regula como las empresas recopilan, usan, almacenan y comparten datos personales de individuos. Inspirada en el GDPR europeo, requiere consentimiento explícito, derecho de eliminacion y portabilidad de datos.</span>
+</div>
+</div>
+
+<div class="glossary-entry">
+<div class="glossary-term">NIST AI RMF</div>
+<div class="glossary-full" lang="pt">National Institute of Standards and Technology Artificial Intelligence Risk Management Framework (Framework de Gestão de Risco em IA do Instituto Nacional de Padroes e Tecnologia dos EUA)</div>
+<div class="glossary-full" lang="en">National Institute of Standards and Technology Artificial Intelligence Risk Management Framework</div>
+<div class="glossary-full" lang="es">Marco de Gestion de Riesgo de IA del Instituto Nacional de Estandares y Tecnologia de EE.UU.</div>
+<div class="glossary-desc">
+<span lang="pt">Guia voluntario públicado pelo governo dos Estados Unidos para ajudar organizações a gerenciar riscos de sistemas de IA. Organizado em 4 funções: Governar (lideranca e cultura), Mapear (contexto e identificação), Medir (analise e avaliação) e Gerenciar (mitigação e comúnicação).</span>
+<span lang="en">Voluntary guide published by the U.S. government to help organizations manage AI system risks. Organized in 4 functions: Govern (leadership and culture), Map (context and identification), Measure (analysis and evaluation), and Manage (mitigation and commúnication).</span>
+<span lang="es">Guia voluntario públicado por el gobierno de EE.UU. para ayudar a organizaciones a gestionar riesgos de sistemas de IA. Organizado en 4 funciones: Gobernar (liderazgo y cultura), Mapear (contexto e identificacion), Medir (analisis y evaluacion) y Gestionar (mitigacion y comúnicacion).</span>
+</div>
+</div>
+
+<div class="glossary-entry">
+<div class="glossary-term">ISO/IEC 42001:2023</div>
+<div class="glossary-full" lang="pt">Sistema de Gestão de Inteligencia Artificial (Artificial Intelligence Management System)</div>
+<div class="glossary-full" lang="en">Artificial Intelligence Management System</div>
+<div class="glossary-full" lang="es">Sistema de Gestion de Inteligencia Artificial</div>
+<div class="glossary-desc">
+<span lang="pt">Primeira norma ISO certificável especificamente para governança de IA. Funciona como um sistema de gestão que organiza precisam seguir para garantir que seus sistemas de IA sao desenvolvidos e operados de forma responsável, semelhante ao que a ISO 9001 faz para gestão de qualidade.</span>
+<span lang="en">First ISO standard specifically certifiable for AI governance. It functions as a management system that organizations must follow to ensure their AI systems are developed and operated responsibly, similar to what ISO 9001 does for quality management.</span>
+<span lang="es">Primera norma ISO certificable especificamente para gobernanza de IA. Funciona como un sistema de gestion que las organizaciones deben seguir para garantizar que sus sistemas de IA se desarrollan y operan de forma responsable, similar a lo que la ISO 9001 hace para la gestion de calidad.</span>
+</div>
+</div>
+
+<div class="glossary-entry">
+<div class="glossary-term">ISO/IEC 23894:2023</div>
+<div class="glossary-full" lang="pt">Diretrizes para Gestão de Risco em IA (Guidelines for Artificial Intelligence Risk Management)</div>
+<div class="glossary-full" lang="en">Guidelines for Artificial Intelligence Risk Management</div>
+<div class="glossary-full" lang="es">Directrices para la Gestion de Riesgos en IA</div>
+<div class="glossary-desc">
+<span lang="pt">Norma ISO que adapta os princípios de gestão de risco da ISO 31000 para o contexto especifico de IA. Ajuda organizações a identificar, avaliar e tratar riscos únicos de sistemas de inteligência artificial, incluindo riscos de viés, falhas e segurança.</span>
+<span lang="en">ISO standard that adapts the risk management principles of ISO 31000 for the specific context of AI. Helps organizations identify, assess, and treat unique risks of artificial intelligence systems, including bias, failures, and security risks.</span>
+<span lang="es">Norma ISO que adapta los princípios de gestion de riesgos de la ISO 31000 para el contexto especifico de IA. Ayuda a organizaciones a identificar, evaluar y tratar riesgos únicos de sistemas de inteligência artificial, incluyendo sesgos, fallos y seguridad.</span>
+</div>
+</div>
+
+<div class="glossary-entry">
+<div class="glossary-term">ISO 31000:2018</div>
+<div class="glossary-full" lang="pt">Diretrizes para Gestão de Risco (Risk Management Guidelines)</div>
+<div class="glossary-full" lang="en">Risk Management Guidelines</div>
+<div class="glossary-full" lang="es">Directrices para la Gestion de Riesgos</div>
+<div class="glossary-desc">
+<span lang="pt">Norma internacional que define um framework genérico para gerenciar riscos em qualquer tipo de organização. Nao e exclusiva para tecnologia ou IA — serve como base para outras normas especializadas, como a ISO 23894 (gestão de risco especificamente para IA).</span>
+<span lang="en">International standard that defines a generic framework for managing risks in any type of organization. It is not exclusive to technology or AI — it serves as a foundation for other specialized standards, such as ISO 23894 (risk management specifically for AI).</span>
+<span lang="es">Norma internacional que define un marco genérico para gestionar riesgos en cualquier tipo de organizacion. No es exclusiva para tecnologia o IA — sirve como base para otras normas especializadas, como la ISO 23894 (gestion de riesgos especificamente para IA).</span>
+</div>
+</div>
+
+<div class="glossary-entry">
+<div class="glossary-term">RTO</div>
+<div class="glossary-full" lang="pt">Recovery Time Objective (Tempo Maximo de Recuperacao)</div>
+<div class="glossary-full" lang="en">Recovery Time Objective</div>
+<div class="glossary-full" lang="es">Tiempo Maximo de Recuperacion</div>
+<div class="glossary-desc">
+<span lang="pt">Tempo máximo que uma organização aceita ficar sem um sistema crítico apos uma falha ou desastre. Por exemplo, se o RTO de um sistema e de 4 horas, a equipe tem 4 horas para restaura-lo antes que o impacto no negocio se torne inaceitável.</span>
+<span lang="en">Maximum time an organization accepts being without a crítical system after a failure or disaster. For example, if a system's RTO is 4 hours, the team has 4 hours to restore it before the business impact becomes unacceptable.</span>
+<span lang="es">Tiempo máximo que una organizacion acepta estar sin un sistema crítico despues de una falla o desastre. Por ejemplo, si el RTO de un sistema es de 4 horas, el equipo tiene 4 horas para restaurarlo antes de que el impacto en el negocio se vuelva inaceptable.</span>
+</div>
+</div>
+
+<div class="glossary-entry">
+<div class="glossary-term">RPO</div>
+<div class="glossary-full" lang="pt">Recovery Point Objective (Ponto Maximo de Recuperacao)</div>
+<div class="glossary-full" lang="en">Recovery Point Objective</div>
+<div class="glossary-full" lang="es">Punto Maximo de Recuperacion</div>
+<div class="glossary-desc">
+<span lang="pt">Quantidade maxima de dados que uma organização aceita perder em caso de desastre. Medido em tempo — por exemplo, um RPO de 24 horas significa que os dados devem ser copiados pelo menos uma vez por dia, e qualquer dado perdido alem desse período e considerado inaceitável.</span>
+<span lang="en">Maximum amount of data an organization accepts losing in case of disaster. Measured in time — for example, an RPO of 24 hours means data must be backed up at least once a day, and any data lost beyond that period is considered unacceptable.</span>
+<span lang="es">Cantidad maxima de datos que una organizacion acepta perder en caso de desastre. Medido en tiempo — por ejemplo, un RPO de 24 horas significa que los datos deben respaldarse al menos una vez por dia, y cualquier dato perdido mas alla de ese período se considera inaceptable.</span>
+</div>
+</div>
+
+<div class="glossary-entry">
+<div class="glossary-term">BIA</div>
+<div class="glossary-full" lang="pt">Business Impact Analysis (Analise de Impacto no Negocio)</div>
+<div class="glossary-full" lang="en">Business Impact Analysis</div>
+<div class="glossary-full" lang="es">Analisis de Impacto en el Negocio</div>
+<div class="glossary-desc">
+<span lang="pt">Metodologia que identifica e avalia quais processos de negocio sao críticos e qual seria o impacto financeiro e operacional se eles ficassem indisponíveis. E o passo inicial para criar planos de contingência e recuperaracao de desastres.</span>
+<span lang="en">Methodology that identifies and evaluates which business processes are crítical and what the financial and operational impact would be if they became unavailable. It is the initial step for creating contingency plans and disaster recovery.</span>
+<span lang="es">Metodologia que identifica y evalua cuales procesos de negocio son críticos y cual seria el impacto financiero y operativo si quedaran indisponibles. Es el paso inicial para crear planes de contingência y recuperacion de desastres.</span>
+</div>
+</div>
+
+<div class="glossary-entry">
+<div class="glossary-term">BCP</div>
+<div class="glossary-full" lang="pt">Business Continuity Plan (Plano de Continuidade de Negocios)</div>
+<div class="glossary-full" lang="en">Business Continuity Plan</div>
+<div class="glossary-full" lang="es">Plan de Continuidad de Negocios</div>
+<div class="glossary-desc">
+<span lang="pt">Estrategia global que define como uma organização continua operando durante e apos uma crise. Enquanto o plano de recuperacao de desastres (DR) foca em restaurar sistemas de TI, o BCP abrange toda a operação, incluindo pessoal, processos e instalações.</span>
+<span lang="en">Global strategy defining how an organization continues operating during and after a crisis. While the disaster recovery plan (DR) focuses on restoring IT systems, the BCP covers the entire operation, including personnel, processes, and fácilities.</span>
+<span lang="es">Estrategia global que define como una organizacion continua operando durante y despues de una crisis. Mientras el plan de recuperacion de desastres (DR) se enfoca en restaurar sistemas de TI, el BCP cubre toda la operacion, incluyendo personal, procesos e instalaciones.</span>
+</div>
+</div>
+
+<div class="glossary-entry">
+<div class="glossary-term">GPAI</div>
+<div class="glossary-full" lang="pt">General-Purpose AI (IA de Uso Geral)</div>
+<div class="glossary-full" lang="en">General-Purpose AI</div>
+<div class="glossary-full" lang="es">IA de Uso General</div>
+<div class="glossary-desc">
+<span lang="pt">Modelo de IA que pode realizar uma ampla variedade de tarefas sem ser projetado para uma função especifica. Exemplos incluem modelos de linguagem como GPT e Claude. O EU AI Act trata GPAI como categoria regulamentar especifica, com obrigações de transparência e documentação.</span>
+<span lang="en">AI model that can perform a wide variety of tasks without being designed for a specific function. Examples include language models like GPT and Claude. The EU AI Act treats GPAI as a specific regulatory category, with transparency and documentation obligations.</span>
+<span lang="es">Modelo de IA que puede realizar una amplia variedad de tareas sin ser disenado para una funcion especifica. Ejemplos incluyen modelos de lenguaje como GPT y Claude. El EU AI Act trata la GPAI como una categoria regulatoria especifica, con obligaciones de transparência y documentacion.</span>
+</div>
+</div>
+
+<div class="glossary-entry">
+<div class="glossary-term">DR</div>
+<div class="glossary-full" lang="pt">Disaster Recovery (Recuperacao de Desastres)</div>
+<div class="glossary-full" lang="en">Disaster Recovery</div>
+<div class="glossary-full" lang="es">Recuperacion de Desastres</div>
+<div class="glossary-desc">
+<span lang="pt">Plano especifico para restaurar sistemas, dados e infraestrutura de tecnologia apos uma catástrofe — como ataque hacker, falha de hardware ou desastre natural. Diferente do BCP, o DR foca exclusivamente na camada tecnológica da recuperacao.</span>
+<span lang="en">Specific plan to restore systems, data, and technology infrastructure after a catastrophe — such as a cyberattack, hardware failure, or natural disaster. Unlike BCP, DR focuses exclusively on the technológical layer of recovery.</span>
+<span lang="es">Plan especifico para restaurar sistemas, datos e infraestructura de tecnologia despues de una catástrofe — como un ciberataque, fallo de hardware o desastre natural. A diferencia del BCP, el DR se enfoca exclusivamente en la capa tecnológica de la recuperacion.</span>
+</div>
+</div>
+
+<div class="glossary-entry">
+<div class="glossary-term">DIKW</div>
+<div class="glossary-full" lang="pt">Data, Information, Knowledge, Wisdom (Dados, Informacao, Conhecimento, Sabedoria)</div>
+<div class="glossary-full" lang="en">Data, Information, Knowledge, Wisdom</div>
+<div class="glossary-full" lang="es">Datos, Informacion, Conocimiento, Sabiduria</div>
+<div class="glossary-desc">
+<span lang="pt">Hierarquia que representa como os dados brutos evoluem para tomar decisões sabias: Dados sao fatos brutos; Informacao sao dados organizados; Conhecimento e informação compreendida; Sabedoria e conhecimento aplicado com julgamento. Essa hierarquia e central no Hubstry Protocol para mapear como a IA transforma insumos em valor.</span>
+<span lang="en">Hierarchy representing how raw data evolves into wise decision-making: Data is raw facts; Information is organized data; Knowledge is understood information; Wisdom is knowledge applied with judgment. This hierarchy is central to the Hubstry Protocol for mapping how AI transforms inputs into value.</span>
+<span lang="es">Jerarquia que representa como los datos brutos evolucionan hacia decisiones sabias: Datos son hechos brutos; Informacion son datos organizados; Conocimiento es informacion comprendida; Sabiduria es conocimiento aplicado con juicio. Esta jerarquia es central en el Protocolo Hubstry para mapear como la IA transforma insumos en valor.</span>
+</div>
+</div>
+
+<div class="glossary-entry">
+<div class="glossary-term">Soberania Digital</div>
+<div class="glossary-full" lang="pt">Digital Sovereignty (Soberania Digital)</div>
+<div class="glossary-full" lang="en">Digital Sovereignty</div>
+<div class="glossary-full" lang="es">Soberania Digital</div>
+<div class="glossary-desc">
+<span lang="pt">Conceito que se refere a capacidade de uma organização ou pais de manter controle sobre seus dados, sistemas tecnológicos e infraestrutura digital, sem depender exclusivamente de provedores estrangeiros ou terceiros. No contexto do Hubstry Protocol, representa o nivel máximo de maturidade em governança de IA.</span>
+<span lang="en">Concept referring to an organization's or country's ability to maintain control over its data, technology systems, and digital infrastructure without depending exclusively on foreign providers or third parties. In the context of the Hubstry Protocol, it represents the maximum level of AI governance maturity.</span>
+<span lang="es">Concepto que se refiere a la capacidad de una organizacion o pais de mantener control sobre sus datos, sistemas tecnológicos e infraestructura digital, sin depender exclusivamente de proveedores extranjeros o terceros. En el contexto del Protocolo Hubstry, representa el nivel máximo de madurez en gobernanza de IA.</span>
+</div>
+</div>
+
+</div>
+</div>
+
+<!-- ==================== JAVASCRIPT ==================== -->
+<script>
+// ===== LANGUAGE TOGGLE =====
+function setLang(lang){
+  document.body.className='show-'+lang;
+  document.querySelectorAll('.lang-btn').forEach(function(b){
+    b.classList.toggle('active',b.getAttribute('data-lang')===lang);
+  });
+  document.documentElement.lang=lang;
+  if(quizStarted){
+    renderQuestion();
+  }
+}
+
+// ===== QUIZ DATA =====
+var DIMS=[
+  {
+    id:'D1',
+    key:'governança',
+    color:'#00d4d4',
+    label:{
+      pt:'D1 — Governanca e Lideranca',
+      en:'D1 — Governance & Leadership',
+      es:'D1 — Gobernanza y Liderazgo'
+    },
+    desc:{
+      pt:'Baseado em: EU AI Act (Seccoes 1, 2, 3), NIST AI RMF (Govern), ISO/IEC 42001 (Lideranca), ISO 31000, Hubstry Protocol (Camada Transversal Governanca)',
+      en:'Based on: EU AI Act (Sections 1, 2, 3), NIST AI RMF (Govern), ISO/IEC 42001 (Leadership), ISO 31000, Hubstry Protocol (Governance Transversal Layer)',
+      es:'Basado en: EU AI Act (Secciones 1, 2, 3), NIST AI RMF (Gobernar), ISO/IEC 42001 (Liderazgo), ISO 31000, Protocolo Hubstry (Capa Transversal Gobernanza)'
+    },
+    questions:[
+      {
+        pt:{
+          q:'Existe um comite ou responsável dedicado exclusivamente a governança de IA na organização?',
+          hint:'Inclui tanto um comite formal com membros designados quanto uma pessoa especifica cuja função principal e supervisionar a governança de IA, nao como atividade secundaria.',
+          opts:['Nao existe nenhum responsável por governança de IA','Existe alguém que cuida parcialmente, mas não é dedicado','Existe um responsável formal, mas sem comite de apoio','Existe um comite de governança de IA ativo com membros designados']
+        },
+        en:{
+          q:'Does the organization have a committee or person exclusively dedicated to AI governance?',
+          hint:'Includes both a formal committee with designated members and a specific person whose primary function is AI governance oversight, not as a secondary activity.',
+          opts:['No one is responsible for AI governance','Someone handles it partially, but not as a dedicated role','A formal responsible person exists, but without a supporting committee','An active AI governance committee exists with designated members']
+        },
+        es:{
+          q:'Existe un comite o responsable dedicado exclusivamente a la gobernanza de IA en la organizacion?',
+          hint:'Incluye tanto un comite formal con miembros designados como una persona especifica cuya funcion principal es supervisar la gobernanza de IA, no como actividad secundaria.',
+          opts:['Nadie es responsable de la gobernanza de IA','Alguien lo maneja parcialmente, pero no como rol dedicado','Existe un responsable formal, pero sin comite de apoyo','Existe un comite de gobernanza de IA activo con miembros designados']
+        }
+      },
+      {
+        pt:{
+          q:'A organização possui uma política de IA formalmente aprovada por um lider executivo (C-level)?',
+          hint:'Uma política de IA e um documento oficial que define diretrizes, princípios e regras para o uso de IA na empresa. Para ser "formalmente aprovada", precisa ter sido revisada e assinada por um executivo de nivel C (CEO, CTO, CIO, etc.).',
+          opts:['Nao existe política de IA','Existe um rascunho ou proposta informal','Existe uma política aprovada, mas nao por nivel C-level','Existe uma política formalmente aprovada por um executivo C-level']
+        },
+        en:{
+          q:'Does the organization have an AI policy formally approved by a C-level executive?',
+          hint:'An AI policy is an official document defining guidelines, principles, and rules for AI use in the company. To be "formally approved," it needs to have been reviewed and signed by a C-level executive (CEO, CTO, CIO, etc.).',
+          opts:['No AI policy exists','A draft or informal proposal exists','A policy exists but was not approved at C-level','A policy is formally approved by a C-level executive']
+        },
+        es:{
+          q:'La organizacion tiene una política de IA formalmente aprobada por un lider ejecutivo (C-level)?',
+          hint:'Una política de IA es un documento oficial que define directrices, princípios y reglas para el uso de IA en la empresa. Para ser "formalmente aprobada", necesita haber sido revisada y firmada por un ejecutivo de nivel C (CEO, CTO, CIO, etc.).',
+          opts:['No existe política de IA','Existe un borrador o propuesta informal','Existe una política pero no fue aprobada a nivel C-level','Existe una política formalmente aprobada por un ejecutivo C-level']
+        }
+      },
+      {
+        pt:{
+          q:'O risco de IA esta integrado ao sistema de gestão de riscos corporativo (GRC)?',
+          hint:'GRC e a sigla para Governance, Risk and Compliance (Governanca, Risco e Conformidade). Integrar risco de IA ao GRC significa que os riscos de IA sao tratados com a mesma seriedade e processos que os riscos financeiros, operacionais e de segurança da empresa.',
+          opts:['Riscos de IA não são discutidos na organização','Sao discutidos informalmente, mas fora do GRC','Estao parcialmente integrados ao GRC','Estao totalmente integrados ao GRC com processos e metricas definidas']
+        },
+        en:{
+          q:'Is AI risk integrated into the corporate risk management system (GRC)?',
+          hint:'GRC stands for Governance, Risk and Compliance. Integrating AI risk into GRC means AI risks are treated with the same rigor and processes as financial, operational, and security risks.',
+          opts:['AI risks are not discussed in the organization','They are discussed informally, outside GRC','They are partially integrated into GRC','They are fully integrated into GRC with defined processes and metrics']
+        },
+        es:{
+          q:'El riesgo de IA esta integrado en el sistema de gestion de riesgos corporativo (GRC)?',
+          hint:'GRC significa Governance, Risk and Compliance (Gobernanza, Riesgo y Cumplimiento). Integrar el riesgo de IA al GRC significa que los riesgos de IA se tratan con la misma seriedad y procesos que los riesgos financieros, operativos y de seguridad.',
+          opts:['Los riesgos de IA no se discuten en la organizacion','Se discuten informalmente, fuera del GRC','Estan parcialmente integrados en el GRC','Estan totalmente integrados en el GRC con procesos y metricas definidas']
+        }
+      }
+    ]
+  },
+  {
+    id:'D2',
+    key:'risco',
+    color:'#e06c00',
+    label:{
+      pt:'D2 — Risco e Classificacao',
+      en:'D2 — Risk & Classification',
+      es:'D2 — Riesgo y Clasificacion'
+    },
+    desc:{
+      pt:'Baseado em: EU AI Act (Secao 3 — Classificacao de Risco), NIST AI RMF (Map, Measure, Manage), ISO/IEC 23894 (Avaliacao de Risco), Hubstry Protocol (Pilar Digital + Camada 0)',
+      en:'Based on: EU AI Act (Section 3 — Risk Classification), NIST AI RMF (Map, Measure, Manage), ISO/IEC 23894 (Risk Assessment), Hubstry Protocol (Digital Pillar + Layer 0)',
+      es:'Basado en: EU AI Act (Seccion 3 — Clasificacion de Riesgo), NIST AI RMF (Mapear, Medir, Gestionar), ISO/IEC 23894 (Evaluacion de Riesgo), Protocolo Hubstry (Pilar Digital + Capa 0)'
+    },
+    questions:[
+      {
+        pt:{
+          q:'A organização possui uma metodologia formal para classificar o nivel de risco dos seus sistemas de IA?',
+          hint:'Uma metodologia de classificação define critérios claros para categorizar cada sistema de IA em niveis de risco (por exemplo: proibido, alto risco, medio risco, baixo risco), seguindo frameworks como o EU AI Act ou o NIST AI RMF.',
+          opts:['Nao existe nenhuma classificação de risco','Sistemas sao classificados de forma ad hoc (caso a caso)','Existe uma metodologia parcial ou informal','Existe uma metodologia formal documentada e aplicada a todos os sistemas']
+        },
+        en:{
+          q:'Does the organization have a formal methodology for classifying the risk level of its AI systems?',
+          hint:'A classification methodology defines clear criteria to categorize each AI system into risk levels (e.g., prohibited, high risk, medium risk, low risk), following frameworks like the EU AI Act or NIST AI RMF.',
+          opts:['No risk classification exists','Systems are classified ad hoc (case by case)','A partial or informal methodology exists','A formal documented methodology exists and is applied to all systems']
+        },
+        es:{
+          q:'La organizacion tiene una metodologia formal para clasificar el nivel de riesgo de sus sistemas de IA?',
+          hint:'Una metodologia de clasificacion define critérios claros para categorizar cada sistema de IA en niveles de riesgo (por ejemplo: prohibido, alto riesgo, medio riesgo, bajo riesgo), siguiendo marcos como el EU AI Act o el NIST AI RMF.',
+          opts:['No existe ninguna clasificacion de riesgo','Los sistemas se clasifican de forma ad hoc (caso por caso)','Existe una metodologia parcial o informal','Existe una metodologia formal documentada y aplicada a todos los sistemas']
+        }
+      },
+      {
+        pt:{
+          q:'Todos os sistemas de IA da organização estão catalogados e identificados?',
+          hint:'Catalogar sistemas de IA significa ter uma lista completa e atualizada de todos os sistemas de IA que a organização usa, desenvolve ou contrata de terceiros — incluindo ferramentas internas, APIs externas e modelos de linguagem generativa como ChatGPT.',
+          opts:['Nao existe inventario de sistemas de IA','Existe um inventario parcial ou desatualizado','Existe um inventario abrangendo maioria dos sistemas','Existe um inventario completo e atualizado, incluindo terceiros'
+        },
+        en:{
+          q:'Are all AI systems in the organization cataloged and identified?',
+          hint:'Cataloging AI systems means having a complete and updated list of all AI systems the organization uses, develops, or contracts from third parties — including internal tools, external APIs, and generative language models like ChatGPT.',
+          opts:['No AI system inventory exists','A partial or outdated inventory exists','An inventory covering most systems exists','A complete and updated inventory exists, including third-party systems']
+        },
+        es:{
+          q:'Todos los sistemas de IA de la organizacion estan catalogados e identificados?',
+          hint:'Catalogar sistemas de IA significa tener una lista completa y actualizada de todos los sistemas de IA que la organizacion usa, desarrolla o contrata de terceros — incluyendo herramientas internas, APIs externas y modelos de lenguaje generativo como ChatGPT.',
+          opts:['No existe inventario de sistemas de IA','Existe un inventario parcial o desactualizado','Existe un inventario que abarca la mayoria de los sistemas','Existe un inventario completo y actualizado, incluyendo terceros']
+        }
+      },
+      {
+        pt:{
+          q:'A organização identificou e excluiu usos de IA que sao proibidos por regulamentação?',
+          hint:'O EU AI Act proibe certos usos de IA, como sistemas de pontuação social, manipulação subliminar e reconhecimento facial em tempo real em espaços públicos. Identificar e excluir esses usos e o passo mais basico de conformidade.',
+          opts:['Nao ha conhecimento sobre proibicoes','Ha conhecimento, mas nenhuma analise foi feita','Uma analise parcial foi realizada','Todos os usos proibidos foram identificados e excluidos']
+        },
+        en:{
+          q:'Has the organization identified and excluded AI uses that are prohibited by regulation?',
+          hint:'The EU AI Act prohibits certain AI uses, such as social scoring, subliminal manipulation, and real-time facial recognition in public spaces. Identifying and excluding these uses is the most basic compliance step.',
+          opts:['No knowledge of prohibitions','Awareness exists, but no analysis performed','A partial analysis was performed','All prohibited uses have been identified and excluded']
+        },
+        es:{
+          q:'La organizacion ha identificado y excluido usos de IA que estan prohibidos por regulacion?',
+          hint:'El EU AI Act proibe ciertos usos de IA, como la puntuacion social, la manipulacion subliminal y el reconocimiento facial en tiempo real en espacios públicos. Identificar y excluir estos usos es el paso mas basico de cumplimiento.',
+          opts:['No hay conocimiento sobre prohibiciones','Hay conocimiento, pero no se realizo ningun analisis','Se realizo un analisis parcial','Todos los usos prohibidos han sido identificados y excluidos']
+        }
+      }
+    ]
+  },
+  {
+    id:'D3',
+    key:'dados',
+    color:'#c8a000',
+    label:{
+      pt:'D3 — Dados e Privacidade',
+      en:'D3 — Data & Privacy',
+      es:'D3 — Datos y Privacidad'
+    },
+    desc:{
+      pt:'Baseado em: EU AI Act (Secao 5 — Governanca de Dados), ISO/IEC 23894 (Fontes de Risco de Dados), Hubstry Protocol (Camada 0 — Campos de Agente), Deloitte (Data Trust)',
+      en:'Based on: EU AI Act (Section 5 — Data Governance), ISO/IEC 23894 (Data Risk Sources), Hubstry Protocol (Layer 0 — Agent Fields), Deloitte (Data Trust)',
+      es:'Basado en: EU AI Act (Seccion 5 — Gobernanza de Datos), ISO/IEC 23894 (Fuentes de Riesgo de Datos), Protocolo Hubstry (Capa 0 — Campos de Agente), Deloitte (Data Trust)'
+    },
+    questions:[
+      {
+        pt:{
+          q:'Os conjuntos de dados utilizados para treinar modelos de IA possuem documentação de origem e procedência?',
+          hint:'Procedencia de dados (data provenance) significa saber exatamente de onde cada dado veio, como foi coletado, quem produziu e quais transformações sofreu. E essencial para rastreabilidade, auditoria e conformidade regulamentar.',
+          opts:['Nao ha documentação de dados','Apenas dados basicos sao documentados','A maioria dos datasets possui documentação de procedência','Todos os datasets possuem documentação completa de origem e procedência']
+        },
+        en:{
+          q:'Do the datasets used to train AI models have documentation of origin and provenance?',
+          hint:'Data provenance means knowing exactly where each data point came from, how it was collected, who produced it, and what transformations it underwent. It is essential for traceability, auditing, and regulatory compliance.',
+          opts:['No data documentation exists','Only basic data is documented','Most datasets have provenance documentation','All datasets have complete documentation of origin and provenance']
+        },
+        es:{
+          q:'Los conjuntos de datos utilizados para entrenar modelos de IA tienen documentacion de origen y procedência?',
+          hint:'La procedência de datos significa saber exactamente de donde proviene cada dato, como fue recopilado, quien lo produjo y que transformaciones sufrio. Es esencial para trazabilidad, auditoria y cumplimiento regulatório.',
+          opts:['No existe documentacion de datos','Solo datos basicos estan documentados','La mayoria de los datasets tienen documentacion de procedência','Todos los datasets tienen documentacion completa de origen y procedência']
+        }
+      },
+      {
+        pt:{
+          q:'A organização realiza verificações regulares para detectar vies e discriminação nos dados e nos modelos de IA?',
+          hint:'Vies de IA (AI bias) ocorre quando um modelo de IA reproduz ou amplia preçonceitos presentes nos dados de treinamento — por exemplo, discriminando por genero, raca ou idade. Verificações regulares incluem testes estatísticos e auditorias algoritmicas.',
+          opts:['Nao sao realizadas verificações de vies','Sao realizadas pontualmente, sem regularidade','Existem verificações periodicas definidas','Existem verificações continuas com metricas e processos formalizados']
+        },
+        en:{
+          q:'Does the organization regularly check for bias and discrimination in AI data and models?',
+          hint:'AI bias occurs when an AI model reproduces or amplifies prejudices present in training data — for example, discriminating by gender, race, or age. Regular checks include statistical tests and algorithmic audits.',
+          opts:['No bias checks are performed','They are performed occasionally, without regularity','Periodic checks exist','Continuous checks exist with formalized metrics and processes']
+        },
+        es:{
+          q:'La organizacion realiza verificaciones regulares para detectar sesgos y discriminacion en los datos y modelos de IA?',
+          hint:'El sesgo de IA ocurre cuando un modelo de IA reproduce o amplifica prejuicios presentes en los datos de entrenamiento — por ejemplo, discriminando por genero, raza o edad. Las verificaciones regulares incluyen pruebas estadisticas y auditorias algoritmicas.',
+          opts:['No se realizan verificaciones de sesgo','Se realizan ocasionalmente, sin regularidad','Existen verificaciones periodicas definidas','Existen verificaciones continuas con metricas y procesos formalizados']
+        }
+      },
+      {
+        pt:{
+          q:'Dados pessoais utilizados em sistemas de IA estão mapeados e protegidos conforme a LGPD (Lei Geral de Protecao de Dados)?',
+          hint:'A LGPD — Lei Geral de Protecao de Dados (Lei 13.709/2018) — exige que empresas saibam quais dados pessoais possuem, onde estão armazenados, quem acessa e com qual finalidade. Mapear significa ter essa visibilidade completa e documentada.',
+          opts:['Dados pessoais nao estão mapeados','Estao parcialmente mapeados, sem processo formal','Estao mapeados com base legal definida','Estao mapeados com base legal, retention e direitos do titular implementados']
+        },
+        en:{
+          q:'Are personal data used in AI systems mapped and protected under LGPD (General Data Protection Law)?',
+          hint:'LGPD — Lei Geral de Protecao de Dados (Law 13.709/2018) — requires companies to know what personal data they have, where it is stored, who accesses it, and for what purpose. Mapping means having this visibility complete and documented.',
+          opts:['Personal data is not mapped','Partially mapped, without a formal process','Mapped with a defined legal basis','Mapped with legal basis, retention, and data subject rights implemented']
+        },
+        es:{
+          q:'Los datos personales utilizados en sistemas de IA estan mapeados y protegidos conforme la LGPD (Ley General de Proteccion de Datos)?',
+          hint:'La LGPD — Ley General de Proteccion de Datos (Ley 13.709/2018) — exige que las empresas sepan que datos personales tienen, donde estan almacenados, quien los accede y con que proposito. Mapear significa tener esta visibilidad completa y documentada.',
+          opts:['Los datos personales no estan mapeados','Parcialmente mapeados, sin proceso formal','Mapeados con base legal definida','Mapeados con base legal, retencion y derechos del titular implementados']
+        }
+      }
+    ]
+  },
+  {
+    id:'D4',
+    key:'sistemas',
+    color:'#00b884',
+    label:{
+      pt:'D4 — Sistemas de IA e Supervisao',
+      en:'D4 — AI Systems & Oversight',
+      es:'D4 — Sistemas de IA y Supervision'
+    },
+    desc:{
+      pt:'Baseado em: EU AI Act (Seccoes 4, 6, 10 — Supervisao Humana), NIST AI RMF (Manage, Evaluate), ISO/IEC 42001 (Operacao e Avaliacao), Hubstry Protocol (3 Pilares), Deloitte (Physical Agent Oversight)',
+      en:'Based on: EU AI Act (Sections 4, 6, 10 — Human Oversight), NIST AI RMF (Manage, Evaluate), ISO/IEC 42001 (Operation and Evaluation), Hubstry Protocol (3 Pillars), Deloitte (Physical Agent Oversight)',
+      es:'Basado en: EU AI Act (Secciones 4, 6, 10 — Supervision Humana), NIST AI RMF (Gestionar, Evaluar), ISO/IEC 42001 (Operacion y Evaluacion), Protocolo Hubstry (3 Pilares), Deloitte (Supervision de Agentes Fisicos)'
+    },
+    questions:[
+      {
+        pt:{
+          q:'Humanos podem intervir e sobrepor (reverter) decisões quando um sistema de IA apresenta resultados incorretos?',
+          hint:'Sobrescricao humana (human override) e a capacidade de uma pessoa intervir e corrigir ou cancelar uma decisão tomada por IA. Isso e especialmente crítico em sistemas de alto risco, como decisões de credito, diagnóstico medico ou selecao de candidatos.',
+          opts:['Nao e possível sobrepor decisões da IA','E possível em alguns casos, mas nao de forma sistematica','Existe um processo de sobrescricao para a maioria dos sistemas críticos','Sobrescricao humana esta implementada e testada para todos os sistemas de alto risco']
+        },
+        en:{
+          q:'Can humans intervene and override decisions when an AI system produces incorrect results?',
+          hint:'Human override is the ability of a person to intervene and correct or cancel an AI-made decision. This is especially crítical in high-risk systems, such as credit decisions, medical diagnosis, or candidate selection.',
+          opts:['It is not possible to override AI decisions','Possible in some cases, but not systematically','An override process exists for most crítical systems','Human override is implemented and tested for all high-risk systems']
+        },
+        es:{
+          q:'Los humanos pueden intervenir y revertir decisiones cuando un sistema de IA produce resultados incorrectos?',
+          hint:'La anulacion humana es la capacidad de una persona para intervenir y corregir o cancelar una decision tomada por IA. Esto es especialmente crítico en sistemas de alto riesgo, como decisiones de credito, diagnóstico medico o seleccion de candidatos.',
+          opts:['No es posible revertir decisiones de la IA','Es posible en algunos casos, pero no de forma sistematica','Existe un proceso de anulacion para la mayoria de los sistemas críticos','La anulacion humana esta implementada y probada para todos los sistemas de alto riesgo']
+        }
+      },
+      {
+        pt:{
+          q:'Os usuarios dos sistemas de IA recebem treinamento sobre as limitações da tecnologia?',
+          hint:'Treinamento sobre limitações significa que as pessoas que usam IA no dia a dia sabem o que a ferramenta pode e nao pode fazer, quando pode errar, e em quais situações nao devem confiar nela. Isso reduz riscos de uso inadequado e excesso de confiança.',
+          opts:['Nao existe treinamento sobre limitações da IA','Treinamento informal ou pontual existe','Treinamento periodico esta disponível para usuarios de IA','Programa de treinamento formalizado com atualizações regulares']
+        },
+        en:{
+          q:'Do AI system users receive training on the technology\'s limitations?',
+          hint:'Training on limitations means people who use AI daily know what the tool can and cannot do, when it can fail, and in which situations they should not trust it. This reduces risks of misuse and overconfidence.',
+          opts:['No training on AI limitations exists','Informal or occasional training exists','Periodic training is available for AI users','A formalized training program exists with regular updates']
+        },
+        es:{
+          q:'Los usuarios de sistemas de IA reciben capacitacion sobre las limitaciones de la tecnologia?',
+          hint:'La capacitacion sobre limitaciones significa que las personas que usan IA a diario saben que la herramienta puede y no puede hacer, cuando puede fallar, y en que situaciones no deben confiar en ella. Esto reduce riesgos de uso inadecuado y exceso de confianza.',
+          opts:['No existe capacitacion sobre limitaciones de la IA','Existe capacitacion informal u ocasional','Capacitacion periodica esta disponible para usuarios de IA','Existe un programa de capacitacion formalizado con actualizaciones regulares']
+        }
+      },
+      {
+        pt:{
+          q:'Havera revisão humana obrigatoria para decisões de alto impacto geradas por IA?',
+          hint:'Decisoes de alto impacto sao aquelas que afetam significativamente a vida de pessoas — como aprovacao de emprestimo, admissao/demissao, diagnóstico de saude ou decisões judiciais. Revisao obrigatoria significa que um humano sempre analisa e aprova a decisão antes que ela seja executada.',
+          opts:['Nao existe revisão humana obrigatoria','Existe para alguns casos, mas não é sistematica','Existe para a maioria das decisões de alto impacto','Existe para todas as decisões de alto impacto, com processo documentado']
+        },
+        en:{
+          q:'Is mandatory human review in place for high-impact decisions generated by AI?',
+          hint:'High-impact decisions are those that significantly affect people\'s lives — such as loan approval, hiring/firing, health diagnosis, or judicial decisions. Mandatory review means a human always analyzes and approves the decision before it is executed.',
+          opts:['No mandatory human review exists','It exists for some cases, but not systematically','It exists for most high-impact decisions','It exists for all high-impact decisions, with a documented process']
+        },
+        es:{
+          q:'Existe revision humana obligatoria para decisiones de alto impacto generadas por IA?',
+          hint:'Las decisiones de alto impacto son aquellas que afectan significativamente la vida de las personas — como aprobacion de prestamos, contratacion/despidos, diagnóstico de salud o decisiones judiciales. Revision obligatoria significa que un humano siempre analiza y aprueba la decision antes de que se ejecute.',
+          opts:['No existe revision humana obligatoria','Existe para algunos casos, pero no es sistematica','Existe para la mayoria de las decisiones de alto impacto','Existe para todas las decisiones de alto impacto, con proceso documentado']
+        }
+      }
+    ]
+  },
+  {
+    id:'D5',
+    key:'transparência',
+    color:'#8b5cf6',
+    label:{
+      pt:'D5 — Transparencia e Documentacao',
+      en:'D5 — Transparency & Documentation',
+      es:'D5 — Transparencia y Documentacion'
+    },
+    desc:{
+      pt:'Baseado em: EU AI Act (Seccoes 7, 8 — Transparencia e Documentacao Tecnica), NIST AI RMF (Govern), ISO/IEC 42001 (Suporte e Documentacao), Hubstry Protocol (Hierarquia DIKW), ISO/IEC TR 24028 (Trustworthiness)',
+      en:'Based on: EU AI Act (Sections 7, 8 — Transparency and Technical Documentation), NIST AI RMF (Govern), ISO/IEC 42001 (Support and Documentation), Hubstry Protocol (DIKW Hierarchy), ISO/IEC TR 24028 (Trustworthiness)',
+      es:'Basado en: EU AI Act (Secciones 7, 8 — Transparencia y Documentacion Tecnica), NIST AI RMF (Gobernar), ISO/IEC 42001 (Soporte y Documentacion), Protocolo Hubstry (Jerarquia DIKW), ISO/IEC TR 24028 (Trustworthiness)'
+    },
+    questions:[
+      {
+        pt:{
+          q:'Quando um usuario interage com um sistema de IA, ele e informado claramente disso?',
+          hint:'Transparencia basica significa que, quando você fala com um chatbot, recebe uma recomendação de produto ou tem um documento gerado por IA, a empresa deixa claro que IA foi usada. O EU AI Act exige isso para sistemas de risco limitado e alto risco.',
+          opts:['Usuarios nao sabem quando interagem com IA','A informação existe em algum lugar, mas não é clara','Existe aviso claro para a maioria das interações com IA','Todos os pontos de contato com IA possuem aviso claro e visível']
+        },
+        en:{
+          q:'When a user interacts with an AI system, are they clearly informed about it?',
+          hint:'Basic transparency means that when you talk to a chatbot, receive a product recommendation, or have a document generated by AI, the company clearly states that AI was used. The EU AI Act requires this for limited and high-risk systems.',
+          opts:['Users do not know when they interact with AI','The information exists somewhere, but is not clear','A clear notice exists for most AI interactions','All AI touchpoints have a clear and visible notice']
+        },
+        es:{
+          q:'Cuando un usuario interactua con un sistema de IA, esta claramente informado de ello?',
+          hint:'La transparência basica significa que cuando habla con un chatbot, recibe una recomendacion de producto o tiene un documento generado por IA, la empresa deja claro que se uso IA. El EU AI Act lo exige para sistemas de riesgo limitado y alto riesgo.',
+          opts:['Los usuarios no saben cuando interactuan con IA','La informacion existe en algun lugar, pero no es clara','Existe un aviso claro para la mayoria de las interacciones con IA','Todos los puntos de contacto con IA tienen un aviso claro y visible']
+        }
+      },
+      {
+        pt:{
+          q:'Conteudo gerado por IA (textos, imagens, codigo) e identificado e rotulado de forma visível?',
+          hint:'Rotular conteudo gerado por IA significa marcar claramente que um texto, imagem, vídeo ou codigo foi criado ou assistido por inteligência artificial. Isso ajuda a evitar desinformação e permite que o receptor saiba a origem do conteudo.',
+          opts:['Nao ha rotulação de conteudo gerado por IA','Rotulacao parcial ou inconsistente','A maioria do conteudo gerado por IA esta rotulado','Todo conteudo gerado por IA possui rotulação padrao e auditável']
+        },
+        en:{
+          q:'Is AI-generated content (text, images, code) identified and visibly labeled?',
+          hint:'Labeling AI-generated content means clearly marking that a text, image, vídeo, or code was created or assisted by artificial intelligence. This helps prevent disinformation and allows the recipient to know the content\'s origin.',
+          opts:['No labeling of AI-generated content exists','Partial or inconsistent labeling','Most AI-generated content is labeled','All AI-generated content has standardized and auditable labeling']
+        },
+        es:{
+          q:'El contenido generado por IA (textos, imagenes, codigo) esta identificado y etiquetado visiblemente?',
+          hint:'Etiquetar contenido generado por IA significa marcar claramente que un texto, imagen, vídeo o codigo fue creado o asistido por inteligência artificial. Esto ayuda a prevenir la desinformacion y permite que el receptor sepa el origen del contenido.',
+          opts:['No existe etiquetado de contenido generado por IA','Etiquetado parcial o inconsistente','La mayoria del contenido generado por IA esta etiquetado','Todo contenido generado por IA tiene etiquetado estandarizado y auditable']
+        }
+      },
+      {
+        pt:{
+          q:'A organização mantem documentação tecnica padronizada para todos os sistemas de IA ativos?',
+          hint:'Documentacao tecnica de IA inclui: qual modelo foi usado, como foi treinado, quais dados foram utilizados, quais metricas de desempenho foram medidas, quem e o responsável, e qual a versao atual. E como a ficha tecnica de cada sistema de IA.',
+          opts:['Nao existe documentação tecnica','Documentacao existe para alguns sistemas, sem padrao','Existe padrao, mas nao cobre todos os sistemas','Documentacao padronizada e completa para todos os sistemas, com controle de versao']
+        },
+        en:{
+          q:'Does the organization maintain standardized technical documentation for all active AI systems?',
+          hint:'AI technical documentation includes: which model was used, how it was trained, what data was used, what performance metrics were measured, who is responsible, and what the current version is. It is like a technical spec sheet for each AI system.',
+          opts:['No technical documentation exists','Documentation exists for some systems, without a standard','A standard exists, but does not cover all systems','Standardized and complete documentation for all systems, with version control']
+        },
+        es:{
+          q:'La organizacion mantiene documentacion tecnica estandarizada para todos los sistemas de IA activos?',
+          hint:'La documentacion tecnica de IA incluye: que modelo se uso, como fue entrenado, que datos se utilizaron, que metricas de desempeno se midieron, quien es responsable y cual es la version actual. Es como la ficha tecnica de cada sistema de IA.',
+          opts:['No existe documentacion tecnica','La documentacion existe para algunos sistemas, sin estandar','Existe un estandar, pero no cubre todos los sistemas','Documentacion estandarizada y completa para todos los sistemas, con control de versiones']
+        }
+      }
+    ]
+  },
+  {
+    id:'D6',
+    key:'segurança',
+    color:'#e05050',
+    label:{
+      pt:'D6 — Seguranca e Robustez',
+      en:'D6 — Security & Robustness',
+      es:'D6 — Seguridad y Robustez'
+    },
+    desc:{
+      pt:'Baseado em: EU AI Act (Secao 9 — Seguranca), NIST AI RMF (Manage), ISO/IEC 23894 (Tratamento de Risco), Hubstry Protocol (Pilar Digital + Soberania), ISO 27001 (Controles de Seguranca)',
+      en:'Based on: EU AI Act (Section 9 — Security), NIST AI RMF (Manage), ISO/IEC 23894 (Risk Treatment), Hubstry Protocol (Digital Pillar + Sovereignty), ISO 27001 (Security Controls)',
+      es:'Basado en: EU AI Act (Seccion 9 — Seguridad), NIST AI RMF (Gestionar), ISO/IEC 23894 (Tratamiento de Riesgo), Protocolo Hubstry (Pilar Digital + Soberania), ISO 27001 (Controles de Seguridad)'
+    },
+    questions:[
+      {
+        pt:{
+          q:'Os sistemas de IA da organização sao submetidos a testes de segurança regulares?',
+          hint:'Testes de segurança em IA incluem: tentativas simuladas de invasao (penetration testing), verificacao de vulnerabilidades no codigo e na infraestrutura, e testes de resistencia a ataques adversariais que tentam enganar o modelo.',
+          opts:['Nao sao realizados testes de segurança','Testes esporadicos, sem regularidade definida','Testes periodicos com escopo parcial','Testes regulares e abrangentes com metodologia formalizada']
+        },
+        en:{
+          q:'Are the organization\'s AI systems regularly subjected to security testing?',
+          hint:'AI security testing includes: simulated intrusion attempts (penetration testing), code and infrastructure vulnerability checks, and resilience tests against adversarial attacks that try to deceive the model.',
+          opts:['No security testing is performed','Sporadic tests, without a defined frequency','Periodic tests with partial scope','Regular and comprehensive tests with a formalized methodology']
+        },
+        es:{
+          q:'Los sistemas de IA de la organizacion son sometidos a pruebas de seguridad regulares?',
+          hint:'Las pruebas de seguridad en IA incluyen: intentos simulados de intrusion (pruebas de penetracion), verificacion de vulnerabilidades en el codigo y la infraestructura, y pruebas de resistencia contra ataques adversarios que intentan enganar al modelo.',
+          opts:['No se realizan pruebas de seguridad','Pruebas esporadicas, sin frecuencia definida','Pruebas periodicas con alcance parcial','Pruebas regulares y amplias con metodologia formalizada']
+        }
+      },
+      {
+        pt:{
+          q:'A organização avalia riscos de ataques adversariais (como injeção de comandos em modelos de linguagem)?',
+          hint:'Ataques adversariais sao tentativas deliberadas de manipular um sistema de IA para que se comporte de forma incorreta. Exemplos incluem: injeção de comandos (prompt injection), onde um usuario insere instrucoes maliciosas para fazer o modelo ignorar suas regras originais.',
+          opts:['Riscos adversariais não são avaliados','Avaliacao pontual ou superficial','Avaliacao periodica para os sistemas mais críticos','Avaliacao continua com red-team exercises e processo formalizado']
+        },
+        en:{
+          q:'Does the organization assess risks of adversarial attacks (such as command injection in language models)?',
+          hint:'Adversarial attacks are deliberate attempts to manipulate an AI system to behave incorrectly. Examples include: prompt injection, where a user inserts malicious instructions to make the model ignore its original rules.',
+          opts:['Adversarial risks are not assessed','Occasional or superficial assessment','Periodic assessment for the most crítical systems','Continuous assessment with red-team exercises and a formalized process']
+        },
+        es:{
+          q:'La organizacion evalua riesgos de ataques adversarios (como inyeccion de comandos en modelos de lenguaje)?',
+          hint:'Los ataques adversarios son intentos deliberados de manipular un sistema de IA para que se comporte de forma incorrecta. Ejemplos incluyen: inyeccion de prompts, donde un usuario inserta instrucciones maliciosas para hacer que el modelo ignore sus reglas originales.',
+          opts:['Los riesgos adversarios no son evaluados','Evaluacion ocasional o superficial','Evaluacion periodica para los sistemas mas críticos','Evaluacion continua con red-team exercises y proceso formalizado']
+        }
+      },
+      {
+        pt:{
+          q:'Existem mecanismos de contingência (plano B) caso um sistema de IA falhe de forma crítica?',
+          hint:'Um mecanismo de contingência para IA e um plano de emergencia que define o que fazer quando o sistema falha — por exemplo, desligar automaticamente, acionar processos manuais, ou redirecionar para um sistema backup. Diferente de um plano geral de TI, este e especifico para o comportamento da IA.',
+          opts:['Nao existem mecanismos de contingência','Existem para alguns sistemas, mas nao documentados','Existem para a maioria, com documentação parcial','Existem para todos, com testes regulares e documentação completa']
+        },
+        en:{
+          q:'Are there contingency mechanisms (Plan B) in case an AI system fails crítically?',
+          hint:'An AI contingency mechanism is an emergency plan defining what to do when the system fails — for example, automatically shutting down, activating manual processes, or redirecting to a backup system. Unlike a general IT plan, this one is specific to AI behavior.',
+          opts:['No contingency mechanisms exist','They exist for some systems, but undocumented','They exist for most, with partial documentation','They exist for all, with regular testing and complete documentation']
+        },
+        es:{
+          q:'Existen mecanismos de contingência (Plan B) en caso de que un sistema de IA falle de forma crítica?',
+          hint:'Un mecanismo de contingência para IA es un plan de emergencia que define que hacer cuando el sistema falla — por ejemplo, apagar automaticamente, activar procesos manuales o redirigir a un sistema de respaldo. A diferencia de un plan general de TI, este es especifico para el comportamiento de la IA.',
+          opts:['No existen mecanismos de contingência','Existen para algunos sistemas, pero no documentados','Existen para la mayoria, con documentacion parcial','Existen para todos, con pruebas regulares y documentacion completa']
+        }
+      }
+    ]
+  },
+  {
+    id:'D7',
+    key:'resiliência',
+    color:'#f59e0b',
+    label:{
+      pt:'D7 — Resiliencia e Contingencia',
+      en:'D7 — Resilience & Contingency',
+      es:'D7 — Resiliencia y Contingencia'
+    },
+    desc:{
+      pt:'Baseado em: PWS Cloud (Guia de DR/BCP — RTO/RPO/BIA), ISO/IEC 23894 (Monitoramento e Revisao), ISO 31000 (Gestão de Risco Generica), Hubstry Protocol (Camada 0 — Agentes Fisicos)',
+      en:'Based on: PWS Cloud (DR/BCP Guide — RTO/RPO/BIA), ISO/IEC 23894 (Monitoring and Review), ISO 31000 (Generic Risk Management), Hubstry Protocol (Layer 0 — Physical Agents)',
+      es:'Basado en: PWS Cloud (Guia DR/BCP — RTO/RPO/BIA), ISO/IEC 23894 (Monitoreo y Revision), ISO 31000 (Gestion de Riesgo Generica), Protocolo Hubstry (Capa 0 — Agentes Fisicos)'
+    },
+    questions:[
+      {
+        pt:{
+          q:'A organização possui uma Analise de Impacto no Negocio (BIA) que inclui sistemas críticos de IA?',
+          hint:'Uma Analise de Impacto no Negocio (BIA, da sigla em ingles Business Impact Analysis) identifica quais processos sao essenciais para a empresa e quanto dinheiro e tempo seriam perdidos se parassem de funcionar. Se um sistema de IA e crítico para o negocio, ele deve constar na BIA.',
+          opts:['Nao existe BIA ou IA não está incluida','BIA existe mas sistemas de IA nao estão contemplados','BIA inclui sistemas de IA de forma parcial','BIA completa com todos os sistemas de IA críticos mapeados e priorizados']
+        },
+        en:{
+          q:'Does the organization have a Business Impact Analysis (BIA) that includes crítical AI systems?',
+          hint:'A Business Impact Analysis (BIA) identifies which processes are essential to the company and how much money and time would be lost if they stopped functioning. If an AI system is crítical to the business, it should be included in the BIA.',
+          opts:['No BIA exists or AI is not included','BIA exists but AI systems are not covered','BIA includes AI systems partially','Complete BIA with all crítical AI systems mapped and prioritized']
+        },
+        es:{
+          q:'La organizacion tiene un Analisis de Impacto en el Negocio (BIA) que incluye sistemas críticos de IA?',
+          hint:'Un Analisis de Impacto en el Negocio (BIA) identifica cuales procesos son esenciales para la empresa y cuanto dinero y tiempo se perderian si dejaran de funcionar. Si un sistema de IA es crítico para el negocio, deberia estar incluido en el BIA.',
+          opts:['No existe BIA o la IA no esta incluida','BIA existe pero los sistemas de IA no estan contemplados','BIA incluye sistemas de IA de forma parcial','BIA completa con todos los sistemas de IA críticos mapeados y priorizados']
+        }
+      },
+      {
+        pt:{
+          q:'Os tempos máximos de recuperacao (RTO) e de perda de dados (RPO) estão definidos para sistemas de IA críticos?',
+          hint:'RTO (Tempo Maximo de Recuperacao, da sigla em ingles Recovery Time Objective) define quanto tempo a empresa tem para restaurar um sistema apos falha. RPO (Ponto Maximo de Recuperacao, da sigla em ingles Recovery Point Objective) define quantos dados a empresa aceita perder. Ambos devem ser definidos por sistema.',
+          opts:['RTO e RPO nao estão definidos','Definidos apenas para infraestrutura geral, nao para IA','Definidos para alguns sistemas de IA','Definidos para todos os sistemas de IA críticos, com testes de validação']
+        },
+        en:{
+          q:'Are maximum recovery time (RTO) and data loss (RPO) targets defined for crítical AI systems?',
+          hint:'RTO (Recovery Time Objective) defines how much time the company has to restore a system after failure. RPO (Recovery Point Objective) defines how much data the company accepts losing. Both should be defined per system.',
+          opts:['RTO and RPO are not defined','Defined only for general infrastructure, not for AI','Defined for some AI systems','Defined for all crítical AI systems, with validation tests']
+        },
+        es:{
+          q:'Estan definidos los tiempos máximos de recuperacion (RTO) y de perdida de datos (RPO) para sistemas de IA críticos?',
+          hint:'RTO (Tiempo Maximo de Recuperacion) define cuanto tiempo tiene la empresa para restaurar un sistema despues de una falla. RPO (Punto Maximo de Recuperacion) define cuantos datos la empresa acepta perder. Ambos deben definirse por sistema.',
+          opts:['RTO y RPO no estan definidos','Definidos solo para infraestructura general, no para IA','Definidos para algunos sistemas de IA','Definidos para todos los sistemas de IA críticos, con pruebas de validacion']
+        }
+      },
+      {
+        pt:{
+          q:'O plano de contingência de IA esta integrado ao plano geral de continuidade do negocio (BCP)?',
+          hint:'Um plano geral de continuidade do negocio (BCP, da sigla em ingles Business Continuity Plan) define como a empresa inteira continua operando durante crises. Se a IA e parte das operações, o plano de contingência de IA precisa estar conectado ao BCP, nao existindo de forma isolada.',
+          opts:['Nao existe BCP ou plano de contingência de IA','Existem separadamente, sem integracao','Estao parcialmente integrados','Totalmente integrados com testes conjuntos regulares']
+        },
+        en:{
+          q:'Is the AI contingency plan integrated into the overall business continuity plan (BCP)?',
+          hint:'An overall Business Continuity Plan (BCP) defines how the entire company continues operating during crises. If AI is part of operations, the AI contingency plan needs to be connected to the BCP, not existing in isolation.',
+          opts:['No BCP or AI contingency plan exists','They exist separately, without integration','They are partially integrated','Fully integrated with regular joint testing']
+        },
+        es:{
+          q:'El plan de contingência de IA esta integrado en el plan general de continuidad del negocio (BCP)?',
+          hint:'Un Plan General de Continuidad del Negocio (BCP) define como toda la empresa continua operando durante crisis. Si la IA es parte de las operaciones, el plan de contingência de IA necesita estar conectado al BCP, no existiendo de forma aislada.',
+          opts:['No existe BCP o plan de contingência de IA','Existen por separado, sin integracion','Estan parcialmente integrados','Totalmente integrados con pruebas conjuntas regulares']
+        }
+      }
+    ]
+  }
+];
+
+// Flatten questions
+var QUESTIONS=[];
+DIMS.forEach(function(d){
+  d.questions.forEach(function(q,i){
+    QUESTIONS.push({dim:d,dimIdx:i,qObj:q});
+  });
+});
+
+var LEVELS=[
+  {min:0,max:20,
+   name:{pt:'Exploratorio',en:'Exploratory',es:'Exploratorio'},
+   color:'#e05050',
+   desc:{
+     pt:'IA e experimento, sem governança formal. Os sistemas de IA existem de forma isolada, sem documentação, sem supervisão humana sistematica e sem integracao com a gestão de riscos corporativa. A organização esta exposta a riscos regulatórios, operacionais e reputacionais significativos.',
+     en:'AI is an experiment, without formal governance. AI systems exist in isolation, without documentation, without systematic human oversight, and without integration with corporate risk management. The organization is exposed to significant regulatory, operational, and reputational risks.',
+     es:'La IA es un experimento, sin gobernanza formal. Los sistemas de IA existen de forma aislada, sin documentacion, sin supervision humana sistematica y sin integracion con la gestion de riesgos corporativa. La organizacion esta expuesta a riesgos regulatórios, operativos y de reputacion significativos.'
+   }
+  },
+  {min:21,max:40,
+   name:{pt:'Estruturado',en:'Structured',es:'Estructurado'},
+   color:'#e06c00',
+   desc:{
+     pt:'Primeiras políticas e inventario parcial. A organização comecou a documentar seus sistemas de IA e estabelecer diretrizes basicas, mas ainda de forma incompleta ou inconsistente. Existem iniciativas isoladas, mas sem um processo unificado de governança.',
+     en:'Initial policies and partial inventory. The organization has started documenting its AI systems and establishing basic guidelines, but still incompletely or inconsistently. Isolated initiatives exist, but without a unified governance process.',
+     es:'Primeras políticas e inventario parcial. La organizacion ha comenzado a documentar sus sistemas de IA y establecer directrices basicas, pero aun de forma incompleta o inconsistente. Existen iniciativas aisladas, pero sin un proceso unificado de gobernanza.'
+   }
+  },
+  {min:41,max:60,
+   name:{pt:'Operacional',en:'Operational',es:'Operativo'},
+   color:'#c8a000',
+   desc:{
+     pt:'Governanca funcionando e compliance ativo. A organização possui políticas documentadas, inventario de sistemas, processos de classificação de risco e mecanismos de supervisão humana. O compliance com regulamentações esta em andamento e monitorado regularmente.',
+     en:'Governance functioning and active compliance. The organization has documented policies, system inventory, risk classification processes, and human oversight mechanisms. Regulatory compliance is underway and regularly monitored.',
+     es:'Gobernanza funcionando y cumplimiento activo. La organizacion tiene políticas documentadas, inventario de sistemas, procesos de clasificacion de riesgos y mecanismos de supervision humana. El cumplimiento regulatório esta en marcha y se monitorea regularmente.'
+   }
+  },
+  {min:61,max:80,
+   name:{pt:'Estrategico',en:'Strategic',es:'Estrategico'},
+   color:'#00b884',
+   desc:{
+     pt:'IA integrada a estratégia da organização, com mensuração continua. A governança de IA não é mais reativa — e proativa e integrada ao planejamento estratégico. Existem metricas de desempenho, auditorias regulares e melhoria continua dos processos.',
+     en:'AI integrated into the organization\'s strategy, with continuous measurement. AI governance is no longer reactive — it is proactive and integrated into strategic planning. Performance metrics, regular audits, and continuous process improvement exist.',
+     es:'IA integrada en la estratégia de la organizacion, con medicion continua. La gobernanza de IA ya no es reactiva — es proactiva e integrada en la planificacion estrategica. Existen metricas de desempeno, auditorias regulares y mejora continua de procesos.'
+   }
+  },
+  {min:81,max:100,
+   name:{pt:'Soberano',en:'Sovereign',es:'Soberano'},
+   color:'#00d4d4',
+   desc:{
+     pt:'Governanca madura, audit-ready, com soberania digital. Nivel máximo de maturidade. A organização nao apenas cumpre regulamentações — define melhores práticas. Sistemas de IA sao auditaveis a qualquer momento, com documentação completa, rastreabilidade total e controle sobre dados e infraestrutura. Este nivel e exclusivo do Hubstry Maturity Index.',
+     en:'Mature governance, audit-ready, with digital sovereignty. Maximum maturity level. The organization not only complies with regulations — it defines best practices. AI systems are auditable at any time, with complete documentation, full traceability, and control over data and infrastructure. This level is exclusive to the Hubstry Maturity Index.',
+     es:'Gobernanza madura, audit-ready, con soberania digital. Nivel máximo de madurez. La organizacion no solo cumple con regulaciones — define mejores practicas. Los sistemas de IA son auditables en cualquier momento, con documentacion completa, trazabilidad total y control sobre datos e infraestructura. Este nivel es exclusivo del Hubstry Maturity Index.'
+   }
+  }
+];
+
+// ===== STATE =====
+var quizStarted=false;
+var currentQ=0;
+var answers=new Array(QUESTIONS.length).fill(null);
+
+function startQuiz(){
+  quizStarted=true;
+  currentQ=0;
+  answers=new Array(QUESTIONS.length).fill(null);
+  document.getElementById('landing').style.display='none';
+  document.getElementById('results-section').style.display='none';
+  document.getElementById('quiz-section').style.display='block';
+  buildProgress();
+  renderQuestion();
+  window.scrollTo(0,0);
+}
+
+function buildProgress(){
+  var p=document.getElementById('quiz-progress');
+  p.innerHTML='';
+  for(var i=0;i<QUESTIONS.length;i++){
+    var bar=document.createElement('div');
+    bar.className='quiz-progress-bar';
+    bar.id='pbar-'+i;
+    p.appendChild(bar);
+  }
+}
+
+function updateProgress(){
+  for(var i=0;i<QUESTIONS.length;i++){
+    var bar=document.getElementById('pbar-'+i);
+    if(!bar) continue;
+    bar.className='quiz-progress-bar';
+    if(i<currentQ) bar.classList.add('filled');
+    else if(i===currentQ) bar.classList.add('current');
+  }
+  var curLang=document.documentElement.lang||'pt';
+  document.getElementById('quiz-counter').textContent=(currentQ+1)+' / '+QUESTIONS.length;
+}
+
+function renderQuestion(){
+  if(!quizStarted) return;
+  var qData=QUESTIONS[currentQ];
+  var dim=qData.dim;
+  var qObj=qData.qObj;
+  var lang=document.documentElement.lang||'pt';
+  var area=document.getElementById('quiz-question-area');
+  var hint=qObj[lang]?qObj[lang].hint:(qObj.pt?qObj.pt.hint:'');
+
+  var optsHTML='';
+  for(var i=0;i<4;i++){
+    var optText=qObj[lang]?qObj[lang].opts[i]:(qObj.pt?qObj.pt.opts[i]:'');
+    var sel=answers[currentQ]===i?' selected':'';
+    optsHTML+='<div class="quiz-option'+sel+'" onclick="selectAnswer('+i+')"><div class="quiz-option-dot"></div><span>'+optText+'</span></div>';
+  }
+
+  var qText=qObj[lang]?qObj[lang].q:(qObj.pt?qObj.pt.q:'');
+
+  area.innerHTML=
+    '<div class="quiz-dim-label">'+dim.label[lang]+'</div>'+
+    '<div class="quiz-question-num">'+dim.id+'.'+(qData.dimIdx+1)+'</div>'+
+    '<div class="quiz-question">'+qText+'</div>'+
+    '<div class="quiz-hint">'+hint+'</div>'+
+    '<div class="quiz-options">'+optsHTML+'</div>';
+
+  document.getElementById('quiz-prev').style.visibility=currentQ>0?'visible':'hidden';
+
+  var isLast=currentQ===QUESTIONS.length-1;
+  var nextBtn=document.getElementById('quiz-next');
+  if(isLast && answers[currentQ]!==null){
+    nextBtn.innerHTML='<span lang="pt">Ver Resultado &rarr;</span><span lang="en">See Results &rarr;</span><span lang="es">Ver Resultado &rarr;</span>';
+  } else {
+    nextBtn.innerHTML='<span lang="pt">Proximo &rarr;</span><span lang="en">Next &rarr;</span><span lang="es">Siguiente &rarr;</span>';
+  }
+
+  updateProgress();
+}
+
+function selectAnswer(idx){
+  answers[currentQ]=idx;
+  renderQuestion();
+}
+
+function nextQuestion(){
+  if(answers[currentQ]===null) return;
+  if(currentQ<QUESTIONS.length-1){
+    currentQ++;
+    renderQuestion();
+    window.scrollTo(0,0);
+  } else {
+    showResults();
+  }
+}
+
+function prevQuestion(){
+  if(currentQ>0){
+    currentQ--;
+    renderQuestion();
+    window.scrollTo(0,0);
+  }
+}
+
+function showResults(){
+  document.getElementById('quiz-section').style.display='none';
+  document.getElementById('results-section').style.display='block';
+  window.scrollTo(0,0);
+
+  // Calculate scores per dimension
+  var dimScores=DIMS.map(function(dim){
+    var total=0;
+    var maxPossible=0;
+    dim.questions.forEach(function(q,i){
+      var qIdx=null;
+      for(var j=0;j<QUESTIONS.length;j++){
+        if(QUESTIONS[j].dim===dim && QUESTIONS[j].dimIdx===i){qIdx=j;break;}
+      }
+      if(qIdx!==null && answers[qIdx]!==null){
+        total+=answers[qIdx]+1; // 1-4
+        maxPossible+=4;
+      } else {
+        maxPossible+=4;
+      }
+    });
+    return maxPossible>0?Math.round((total/maxPossible)*100):0;
+  });
+
+  // Overall score (simple average)
+  var overall=0;
+  dimScores.forEach(function(s){overall+=s;});
+  overall=Math.round(overall/dimScores.length);
+
+  // Find level
+  var level=LEVELS[0];
+  for(var i=0;i<LEVELS.length;i++){
+    if(overall>=LEVELS[i].min){level=LEVELS[i];}
+  }
+
+  var lang=document.documentElement.lang||'pt';
+
+  // Animate score
+  animateScore(overall,level,dimScores,lang);
+}
+
+function animateScore(target,level,dimScores,lang){
+  var el=document.getElementById('score-num');
+  var cur=0;
+  var step=Math.max(1,Math.ceil(target/40));
+  var interval=setInterval(function(){
+    cur+=step;
+    if(cur>=target){cur=target;clearInterval(interval);}
+    el.textContent=cur;
+    document.getElementById('score-circle').style.borderColor=level.color;
+  },30);
+
+  document.getElementById('level-name').textContent=level.name[lang];
+  document.getElementById('level-name').style.color=level.color;
+  document.getElementById('level-desc').textContent=level.desc[lang];
+
+  // Dimension bars
+  var dimsEl=document.getElementById('results-dims');
+  dimsEl.innerHTML='';
+  DIMS.forEach(function(dim,i){
+    var label=dim.label[lang];
+    var score=dimScores[i];
+    dimsEl.innerHTML+=
+      '<div class="dim-row">'+
+      '<div class="dim-label">'+label+'</div>'+
+      '<div class="dim-bar-wrap"><div class="dim-bar" style="width:0%;background:'+dim.color+'" id="dbar-'+i+'"></div></div>'+
+      '<div class="dim-val" style="color:'+dim.color+'">'+score+'%</div>'+
+      '</div>';
+  });
+
+  // Animate bars
+  setTimeout(function(){
+    DIMS.forEach(function(dim,i){
+      var bar=document.getElementById('dbar-'+i);
+      if(bar) bar.style.width=dimScores[i]+'%';
+    });
+  },200);
+
+  // Draw radar
+  setTimeout(function(){drawRadar(dimScores,lang);},300);
+}
+
+function drawRadar(scores,lang){
+  var canvas=document.getElementById('radar-canvas');
+  var ctx=canvas.getContext('2d');
+  var W=canvas.width;
+  var H=canvas.height;
+  var cx=W/2;
+  var cy=H/2;
+  var R=Math.min(W,H)/2-40;
+  var n=DIMS.length;
+  var step=Math.PI*2/n;
+  var startAngle=-Math.PI/2;
+
+  ctx.clearRect(0,0,W,H);
+
+  // Grid circles
+  for(var r=1;r<=4;r++){
+    ctx.beginPath();
+    var rr=R*(r/4);
+    for(var i=0;i<=n;i++){
+      var angle=startAngle+step*i;
+      var x=cx+rr*Math.cos(angle);
+      var y=cy+rr*Math.sin(angle);
+      if(i===0) ctx.moveTo(x,y);
+      else ctx.lineTo(x,y);
+    }
+    ctx.closePath();
+    ctx.strokeStyle='rgba(255,255,255,0.1)';
+    ctx.lineWidth=1;
+    ctx.stroke();
+  }
+
+  // Axis lines
+  for(var i=0;i<n;i++){
+    var angle=startAngle+step*i;
+    ctx.beginPath();
+    ctx.moveTo(cx,cy);
+    ctx.lineTo(cx+R*Math.cos(angle),cy+R*Math.sin(angle));
+    ctx.strokeStyle='rgba(255,255,255,0.1)';
+    ctx.stroke();
+  }
+
+  // Data polygon
+  ctx.beginPath();
+  for(var i=0;i<n;i++){
+    var angle=startAngle+step*i;
+    var val=scores[i]/100;
+    var x=cx+R*val*Math.cos(angle);
+    var y=cy+R*val*Math.sin(angle);
+    if(i===0) ctx.moveTo(x,y);
+    else ctx.lineTo(x,y);
+  }
+  ctx.closePath();
+  ctx.fillStyle='rgba(0,212,212,0.15)';
+  ctx.fill();
+  ctx.strokeStyle='#00d4d4';
+  ctx.lineWidth=2;
+  ctx.stroke();
+
+  // Data points
+  for(var i=0;i<n;i++){
+    var angle=startAngle+step*i;
+    var val=scores[i]/100;
+    var x=cx+R*val*Math.cos(angle);
+    var y=cy+R*val*Math.sin(angle);
+    ctx.beginPath();
+    ctx.arc(x,y,5,0,Math.PI*2);
+    ctx.fillStyle=DIMS[i].color;
+    ctx.fill();
+    ctx.strokeStyle='#0a0a0a';
+    ctx.lineWidth=2;
+    ctx.stroke();
+  }
+
+  // Labels
+  ctx.textAlign='center';
+  ctx.textBaseline='middle';
+  ctx.font='bold 11px Segoe UI, system-ui, sans-serif';
+  for(var i=0;i<n;i++){
+    var angle=startAngle+step*i;
+    var lx=cx+(R+28)*Math.cos(angle);
+    var ly=cy+(R+28)*Math.sin(angle);
+    var label=DIMS[i].id;
+    ctx.fillStyle=DIMS[i].color;
+    ctx.fillText(label,lx,ly);
+    // Score below
+    ctx.font='10px Segoe UI, system-ui, sans-serif';
+    ctx.fillStyle='#888';
+    ctx.fillText(scores[i]+'%',lx,ly+14);
+    ctx.font='bold 11px Segoe UI, system-ui, sans-serif';
+  }
+}
+
+function backToLanding(){
+  document.getElementById('results-section').style.display='none';
+  document.getElementById('quiz-section').style.display='none';
+  document.getElementById('landing').style.display='block';
+  quizStarted=false;
+  window.scrollTo(0,0);
+}
+
+function openGlossary(){
+  document.getElementById('glossary-overlay').classList.add('active');
+  document.body.style.overflow='hidden';
+}
+
+function closeGlossary(){
+  document.getElementById('glossary-overlay').classList.remove('active');
+  document.body.style.overflow='';
+}
+
+// Keyboard support
+document.addEventListener('keydown',function(e){
+  if(!quizStarted) return;
+  if(document.getElementById('glossary-overlay').classList.contains('active')) return;
+  if(e.key==='ArrowRight'||e.key==='Enter') nextQuestion();
+  if(e.key==='ArrowLeft') prevQuestion();
+  if(e.key>='1'&&e.key<='4') selectAnswer(parseInt(e.key)-1);
+});
+</script>
+
+</body>
+</html>
