@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HGCF Framework Completo — v1.1</title>
+<style>
+  :root {
+    --bg-deep: #050508;
+    --bg-panel: #0a0a14;
+    --bg-card: rgba(15,15,30,0.85);
+    --accent-cyan: #00f0ff;
+    --accent-rose: #ff2a6d;
+    --accent-gold: #ffd700;
+    --accent-violet: #7b2cbf;
+    --accent-green: #2a9d8f;
+    --accent-orange: #e76f51;
+    --text-primary: #e8e8f0;
+    --text-secondary: #8892b0;
+    --text-muted: #5a6078;
+    --border: rgba(0, 240, 255, 0.12);
+    --font-main: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--font-main);
+    background: var(--bg-deep);
+    color: var(--text-primary);
+    line-height: 1.65;
+    font-size: 15px;
+  }
+  a { color: var(--accent-cyan); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  nav {
+    position: fixed; top: 0; width: 100%;
+    background: rgba(5,5,8,0.92);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border);
+    z-index: 1000;
+    padding: 0.8rem 2rem;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .logo { font-weight: 800; font-size: 1.05rem; letter-spacing: -0.5px; }
+  .logo a { background: linear-gradient(90deg, var(--accent-cyan), var(--accent-violet)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .nav-links { display: flex; gap: 0.1rem; list-style: none; }
+  .nav-links a {
+    color: var(--text-secondary); text-decoration: none; font-size: 0.82rem; font-weight: 500;
+    transition: all 0.25s; text-transform: uppercase; letter-spacing: 0.5px;
+    padding: 0.5rem 0.9rem; border-radius: 6px;
+  }
+  .nav-links a:hover, .nav-links a.active { color: var(--accent-cyan); background: rgba(0,240,255,0.06); }
+  .menu-toggle { display: none; background: none; border: none; color: var(--text-primary); font-size: 1.4rem; cursor: pointer; }
+  .mobile-menu { display: none; position: fixed; top: 56px; right: 10px; background: var(--bg-panel); border: 1px solid var(--border); border-radius: 12px; padding: 0.5rem; z-index: 999; min-width: 200px; }
+  .mobile-menu.active { display: block; }
+  .mobile-menu a { display: block; padding: 0.6rem 1rem; color: var(--text-secondary); text-decoration: none; border-radius: 6px; font-size: 0.9rem; }
+  .mobile-menu a:hover { background: rgba(0,240,255,0.1); color: var(--accent-cyan); }
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem; }
+  .page-content { padding-top: 70px; min-height: 100vh; }
+  h1 { font-size: clamp(2.2rem, 5vw, 3.5rem); font-weight: 800; line-height: 1.1; margin-bottom: 1rem; }
+  h2 { font-size: clamp(1.6rem, 3.5vw, 2.4rem); font-weight: 700; margin: 2.5rem 0 1rem; color: #fff; }
+  h3 { font-size: 1.25rem; font-weight: 700; margin: 2rem 0 0.8rem; color: var(--accent-cyan); }
+  h4 { font-size: 1.1rem; font-weight: 600; margin: 1.5rem 0 0.6rem; color: var(--accent-gold); }
+  p { margin-bottom: 1rem; color: var(--text-secondary); }
+  ul, ol { margin: 1rem 0 1.5rem 1.5rem; color: var(--text-secondary); }
+  li { margin-bottom: 0.4rem; }
+  blockquote {
+    border-left: 3px solid var(--accent-cyan); padding: 1rem 1.5rem; margin: 1.5rem 0;
+    background: rgba(0,240,255,0.04); border-radius: 0 8px 8px 0; font-style: italic; color: var(--text-primary);
+  }
+  .btn {
+    padding: 0.8rem 1.8rem; border-radius: 8px; font-weight: 600; font-size: 0.92rem;
+    text-decoration: none; transition: all 0.3s; cursor: pointer; border: none; display: inline-flex; align-items: center; gap: 0.5rem;
+  }
+  .btn-primary { background: linear-gradient(135deg, var(--accent-cyan), var(--accent-violet)); color: #000; }
+  .btn-outline { background: transparent; color: var(--accent-cyan); border: 1px solid var(--accent-cyan); }
+  .tag {
+    display: inline-block; padding: 0.25rem 0.7rem; border: 1px solid var(--border);
+    border-radius: 100px; font-size: 0.72rem; color: var(--accent-cyan); text-transform: uppercase; letter-spacing: 1px; background: rgba(0,240,255,0.05); margin-bottom: 1rem;
+  }
+  .tag-rose { color: var(--accent-rose); border-color: rgba(255,42,109,0.3); background: rgba(255,42,109,0.05); }
+  .tag-gold { color: var(--accent-gold); border-color: rgba(255,215,0,0.3); background: rgba(255,215,0,0.05); }
+  .tag-green { color: var(--accent-green); border-color: rgba(42,157,143,0.3); background: rgba(42,157,143,0.05); }
+  .tag-orange { color: var(--accent-orange); border-color: rgba(231,111,81,0.3); background: rgba(231,111,81,0.05); }
+  .data-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.88rem; }
+  .data-table th, .data-table td { padding: 0.7rem 0.8rem; text-align: left; border-bottom: 1px solid var(--border); }
+  .data-table th { color: var(--accent-cyan); font-weight: 600; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.5px; }
+  .data-table td { color: var(--text-secondary); }
+  .data-table tr:hover td { color: var(--text-primary); background: rgba(0,240,255,0.03); }
+  .maturity-level { display: grid; grid-template-columns: 50px 1fr; gap: 1.2rem; align-items: center; padding: 1.2rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; margin-bottom: 0.8rem; }
+  .level-num { width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1rem; background: linear-gradient(135deg, var(--accent-violet), var(--accent-rose)); color: #fff; }
+  .highlight-box { background: rgba(0,240,255,0.04); border: 1px solid var(--border); border-radius: 10px; padding: 1.2rem; margin: 1.5rem 0; }
+  .highlight-box p { margin-bottom: 0; }
+  .diagram-section { background: linear-gradient(135deg, rgba(42,157,143,0.08), rgba(0,240,255,0.04)); border: 1px solid var(--border); border-radius: 20px; padding: 2.5rem; margin: 2rem 0; text-align: center; }
+  .diagram-section img { max-width: 100%; border-radius: 12px; border: 1px solid var(--border); }
+  .diagram-caption { margin-top: 1rem; font-size: 0.85rem; color: var(--text-muted); font-style: italic; }
+  .fw-section { border-bottom: 1px solid var(--border); padding: 3rem 0; }
+  .fw-section:last-child { border-bottom: none; }
+  .fw-section h2 { margin-top: 0; }
+  .fw-section h3 { color: var(--accent-green); }
+  .fw-section h4 { color: var(--accent-gold); }
+  .fw-meta { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+  .fw-meta span { font-size: 0.8rem; color: var(--text-muted); }
+  .page-header { padding: 6rem 0 3rem; text-align: center; border-bottom: 1px solid var(--border); margin-bottom: 2rem; }
+  .page-header h1 { background: linear-gradient(135deg, #fff, var(--accent-cyan)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .page-header p { max-width: 700px; margin: 0 auto; font-size: 1.1rem; }
+  footer { padding: 2.5rem 1.5rem; text-align: center; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 0.82rem; margin-top: 3rem; }
+  footer .footer-meta { display: flex; justify-content: center; gap: 1.2rem; flex-wrap: wrap; margin-bottom: 0.8rem; }
+  .reveal { opacity: 0; transform: translateY(25px); transition: all 0.7s ease; }
+  .reveal.active { opacity: 1; transform: translateY(0); }
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .menu-toggle { display: block; }
+    .maturity-level { grid-template-columns: 1fr; text-align: center; }
+    .level-num { margin: 0 auto; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo"><a href="index.html">◈ HGCF v1.1</a></div>
+  <ul class="nav-links">
+    <li><a href="index.html">Início</a></li>
+    <li><a href="framework.html">Framework Completo</a></li>
+    <li><a href="integracao.html">Integração</a></li>
+    <li><a href="ecossistema.html">Ecossistema</a></li>
+  </ul>
+  <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html" onclick="toggleMenu()">Início</a>
+    <a href="framework.html" onclick="toggleMenu()">Framework Completo</a>
+    <a href="integracao.html" onclick="toggleMenu()">Integração</a>
+    <a href="ecossistema.html" onclick="toggleMenu()">Ecossistema</a>
+  </div>
+</nav>
+
+<div class="page-content">
+
+<div class="page-header">
+  <div class="container">
+    <div class="tag">Documento Proprietário</div>
+    <h1>Hubstry Governance & Compliance Framework</h1>
+    <p>Metodologia de Analogia Heurística Funcional/Homológica — v1.1 · 19 de junho de 2026</p>
+    <div class="fw-meta" style="justify-content: center; margin-top: 1.5rem;">
+      <span>Guilherme Gonçalves Machado</span>
+      <span>ORCID 0009-0008-1083-0784</span>
+      <span>Hubstry Deep Tech</span>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+
+<div class="fw-section reveal">
+  <div class="tag">Nota de Versão</div>
+  <p>Esta versão integra material externo do guia <em>Responsible Horizons</em> publicado pelo CESAR em junho de 2026. As adições são: (1) Seção 1.3 — Product Liability Directive UE, AB 316 Califórnia, Texas/Utah; (2) Seção 1.5 — convergência CESAR/Claudia Cunha → Substrato Ω.3; (3) Camada 1 — Descrição de Função Digital para agentes não-humanos; (4) Camada 2 — Cláusula de Compliance Agêntica; (5) Linhagem Intelectual e Metadados atualizados.</p>
+  <p><strong>Nota de escopo:</strong> O HGCF estrutura a conformidade interna dentro dos limites do ordenamento jurídico externo vigente. Não substitui LGPD, CLT, Código Civil, Lei Anticorrupção ou qualquer outra norma. Os instrumentos contratuais devem ser implementados com revisão jurídica independente.</p>
+</div>
+
+<div class="fw-section reveal">
+  <div class="tag tag-rose">Fundamento</div>
+  <h2>Substrato Ω — Norma Operacional de Conduta na Era da IA</h2>
+  <p>Carta de Cultura Bildung H2Hcy — base doutrinária do framework.</p>
+  <p>O Substrato Ω não é uma camada operacional — é o pressuposto que condiciona todas as camadas. Um framework de governança sem substrato doutrinário é norma sem sistema nervoso: funciona sob coerção, falha sob ambiguidade.</p>
+  
+  <h3>Os Cinco Princípios Operativos</h3>
+  
+  <h4>Ω.1 — O laço da confiança é exclusivamente humano (H2H)</h4>
+  <p>Confiança se constrói entre pessoas. A IA potencializa, acelera e instrumenta — não substitui o vínculo. Decisões sobre pessoas, responsabilização e relações com clientes são domínio humano incondicional.</p>
+  
+  <h4>Ω.2 — O laço da cognição é cyborg (cy)</h4>
+  <p>O pensamento, a pesquisa e a produção se dão em acoplamento humano-máquina. Quem não acopla opera abaixo da capacidade; quem acopla sem ancoragem humana viola Ω.1.</p>
+  <blockquote>Definição canônica do eixo cy: "inflexão do pensamento humano incidindo sobre o conjunto-universo dos fenômenos, instanciando-se em série e/ou paralelo em múltiplas áreas do conhecimento, em interação e iteração com a máquina, em comparação e contraste sistemáticos operados pela analogia — heurística, funcional ou homológica — num fluxo contínuo de pesquisa, estudo, criação, ensino e produção." (IMIP/TICA — Hubstry Deep Tech)</blockquote>
+  
+  <h4>Ω.3 — Cultura é prática revelada, não texto declarado</h4>
+  <p>O documento registra a intenção; a cultura é o comportamento. A consequência contratual vale pelo que se faz, não pelo que está escrito.</p>
+  
+  <h4>Ω.4 — A cultura decide onde o manual silencia</h4>
+  <p>Na era da IA, a velocidade de decisão supera a documentação. O Substrato Ω é o sistema operacional da ambiguidade.</p>
+  
+  <h4>Ω.5 — A cultura prova-se sob pressão</h4>
+  <p>Mede-se uma cultura na turbulência. Sustentar o princípio quando custa caro é o único teste que conta.</p>
+  
+  <h3>Relação com a Posição Ética da Hubstry</h3>
+  <p>A Hubstry mantém posição incondicional contra o licenciamento de suas tecnologias para armas autônomas e sistemas de vigilância de cidadãos. Se a máquina não entra no laço da confiança nem decide sobre o humano, ela não pode ser instrumento de coerção sobre o humano.</p>
+</div>
+
+<div class="fw-section reveal">
+  <div class="tag tag-gold">1. Fundamento Teórico</div>
+  <h2>1. Fundamento Teórico</h2>
+  
+  <h3>1.1 Premissa Jurídica</h3>
+  <p>Segundo Norberto Bobbio, normas jurídicas são aquelas cuja execução é garantida por sanção externa e institucionalizada.</p>
+  <p><strong>Analogia heurística funcional:</strong> Normas de governança corporativa são aquelas cuja execução é garantida por consequências contratuais institucionalizadas pela firma — externas ao agente, internas à organização, formalizadas via contrato, Substrato Ω e tecnologia audítavel.</p>
+  
+  <h3>1.2 Fundamentação Complementar</h3>
+  <ul>
+    <li><strong>Santi Romano</strong> (Institucionalismo): toda instituição gera seu próprio ordenamento. A empresa é ordenamento.</li>
+    <li><strong>Oliver Williamson</strong> (Teoria da Firma): a firma é estrutura de governança e adjudicação interna.</li>
+    <li><strong>Bildung H2Hcy</strong> (IMIP, TICA, TATS, ProCP): o Substrato Ω que faz a norma operar de dentro pra fora.</li>
+  </ul>
+  
+  <h3>1.3 Arquitetura Legal de Transmissão de Risco</h3>
+  <table class="data-table">
+    <thead><tr><th>Norma</th><th>Mecanismo</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr><td>LGPD Art. 42</td><td>Controlador responde pelo operador</td><td>Vigente</td></tr>
+      <tr><td>Lei Anticorrupção 12.846/2013</td><td>Responsabilidade objetiva da PJ</td><td>Vigente</td></tr>
+      <tr><td>CC — culpa in vigilando</td><td>Contratante responde por quem contratou</td><td>Vigente</td></tr>
+      <tr><td>CLT Art. 482 + Súmula 331 TST</td><td>Escada disciplinar + responsabilidade subsidiária</td><td>Vigente</td></tr>
+      <tr><td>NR-1 (mai/2026)</td><td>Risco psicossocial como obrigação do empregador</td><td>Em adaptação</td></tr>
+      <tr><td>PL 2338/2023</td><td>Responsabilidade para sistemas automatizados</td><td>Em tramitação</td></tr>
+      <tr><td>Product Liability Directive UE</td><td>Trata IA como produto; responsabilidade objetiva</td><td>Até 9/dez/2026</td></tr>
+      <tr><td>AB 316 Califórnia</td><td>Derruba defesa de "o sistema agiu por conta própria"</td><td>Vigente jan/2026</td></tr>
+      <tr><td>Texas e Utah</td><td>Responsabilizam empresas por atos de IA</td><td>Vigentes</td></tr>
+    </tbody>
+  </table>
+  <p>CESAR (2026, p. 5): <em>cláusulas para software passivo não cobrem perdas de sistemas agênticos.</em></p>
+  
+  <h3>1.4 Cadeia de Responsabilidade</h3>
+  <table class="data-table">
+    <thead><tr><th>Nível</th><th>Ator</th><th>Exposição</th></tr></thead>
+    <tbody>
+      <tr><td>Desenvolvedor frontier</td><td>OpenAI, Google, Anthropic, Microsoft</td><td>Regulação direta</td></tr>
+      <tr><td>Integrador enterprise</td><td>Constrói produto sobre API de IA</td><td>LGPD Art. 42</td></tr>
+      <tr><td>Operador PME</td><td>Usa ferramenta de IA em operação</td><td>Culpa in vigilando</td></tr>
+      <tr><td>Profissional liberal/PJ</td><td>Advogado, consultor com ChatGPT</td><td>Responsabilidade civil pelo output</td></tr>
+      <tr><td>Escritório/empresa</td><td>Assina o parecer gerado com IA</td><td>Sem governança = exposição total</td></tr>
+    </tbody>
+  </table>
+  <p><strong>Caso do Pará (maio 2026):</strong> Primeiro prompt injection documentado em tribunal brasileiro. Dois advogados inseriram comando oculto (texto branco sobre fundo branco) no sistema Galileu do TST. Multa de 10% do valor da causa e encaminhamento à OAB.</p>
+  
+  <h3>1.5 Convergência com Frameworks Internacionais</h3>
+  <table class="data-table">
+    <thead><tr><th>Princípio HGCF</th><th>Convergência</th><th>Fonte</th></tr></thead>
+    <tbody>
+      <tr><td>Risk ownership por nó</td><td>Corporate officer primarily accountable</td><td>Anthropic AAF, p. 5</td></tr>
+      <tr><td>Consequência contratual (Ω)</td><td>Certificação anual com penalidades civis</td><td>Anthropic AAF, pp. 7–8</td></tr>
+      <tr><td>Canal de reporte</td><td>Whistleblower channels anônimos</td><td>Anthropic AAF, p. 11</td></tr>
+      <tr><td>Auditabilidade técnica</td><td>CESAR (2026, p. 7) — Claudia Cunha</td><td>Validação regional</td></tr>
+      <tr><td>Ω.3 — Cultura é prática</td><td>"IA responsável é postura, não caixa de conformidade"</td><td>CESAR (2026, p. 7)</td></tr>
+      <tr><td>Risk ownership com pessoa nomeada</td><td>"O sinal de maturidade raramente é um documento. É um nome."</td><td>CESAR (2026, p. 8)</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="fw-section reveal">
+  <div class="tag tag-green">2. Arquitetura</div>
+  <h2>2. Arquitetura do Framework — 5 Camadas</h2>
+  
+  <div class="highlight-box">
+    <p style="font-family: monospace; font-size: 0.85rem; line-height: 1.8;">
+    SUBSTRATO Ω (5 princípios · condiciona tudo)<br>
+    ↓<br>
+    CAMADA 0 — Diagnóstico de Maturidade (HMI)<br>
+    ↓<br>
+    CAMADA 1 — Clareza Edge-to-Edge<br>
+    ↓<br>
+    CAMADA 2 — Institucionalização Contratual<br>
+    ↓<br>
+    CAMADA 3 — Operacionalização Contínua<br>
+    ↓<br>
+    CAMADA 4 — Auditabilidade Técnica
+    </p>
+  </div>
+  
+  <h3>CAMADA 0 — Diagnóstico</h3>
+  <p><strong>Ferramenta:</strong> Hubstry Maturity Index. <strong>Output:</strong> Mapa de maturidade em IA e governança.</p>
+  
+  <h3>CAMADA 1 — Clareza Edge-to-Edge</h3>
+  <p>6 componentes: Mapeamento da Cadeia de Decisão; Atribuição de Escopo Normativo; Risk Ownership por Nó; Duty of Care Escopada; Mínima Autorização; Trilha de Accountability.</p>
+  <h4>v1.1 — Descrição de Função Digital (agente não-humano)</h4>
+  <p>4 elementos obrigatórios: (1) Escopo de autoridade; (2) Lista de restrição; (3) Identidade de serviço com privilégio mínimo; (4) Limite de escalonamento.</p>
+  <blockquote>"Cada agente recebe um escopo documentado, uma lista de restrições, uma identidade e um ponto em que uma pessoa assume." (CESAR, 2026, p. 14)</blockquote>
+  
+  <h3>CAMADA 2 — Institucionalização Contratual</h3>
+  <p>5 componentes: Cláusula de Compliance; Manual de Conduta; Termo de Adesão ao Substrato Ω; Política de Regresso; Cláusula de Compliance Agêntica (v1.1).</p>
+  <h4>Cláusula de Compliance Agêntica — 5 provisões mínimas:</h4>
+  <ol>
+    <li>Descrição de função digital obrigatória por escrito antes de ativação</li>
+    <li>Disjuntor operacional contratualmente exigido (gastos, abuso, proxy)</li>
+    <li>Renegociação do teto de responsabilidade (proporcional ao volume de ações)</li>
+    <li>Distinção explícita Deployer/Developer (AI Act UE 2024/1689)</li>
+    <li>Lista priorizada para renegociação trimestral por exposição</li>
+  </ol>
+  
+  <h3>CAMADA 3 — Operacionalização Contínua</h3>
+  <p>Onboarding; Treinamento Contínuo; Canal de Reporte Anônimo; KPIs de Compliance; Checkpoint Jurídico; Stress Test Cultural (Ω.5).</p>
+  <h4>Stress Test — 5 cenários:</h4>
+  <table class="data-table">
+    <thead><tr><th>Cenário</th><th>Rubrica</th></tr></thead>
+    <tbody>
+      <tr><td>Vazamento de dados</td><td>Verde: &lt;24h espontâneo. Vermelho: &gt;72h ou ocultamento.</td></tr>
+      <tr><td>Denúncia anônima</td><td>Verde: &lt;10 dias úteis. Vermelho: retaliação.</td></tr>
+      <tr><td>Falha de IA com dano</td><td>Verde: rastreamento + comunicação proativa. Vermelho: sem rastreamento.</td></tr>
+      <tr><td>Pressão de mercado</td><td>Verde: recusa documentada. Vermelho: cedência.</td></tr>
+      <tr><td>Agente fora do escopo (v1.1)</td><td>Verde: disjuntor automático + notificação. Vermelho: sem detecção.</td></tr>
+    </tbody>
+  </table>
+  
+  <h3>CAMADA 4 — Auditabilidade Técnica</h3>
+  <ul>
+    <li><strong>IPII Engine</strong> — scoring de conformidade normativa</li>
+    <li><strong>Lex-IO-Graph</strong> — grafo de normas e relações regulatórias</li>
+    <li><strong>GuruDev®</strong> — semântica audítavel para decisões de IA</li>
+    <li><strong>Hubstry Maturity Index</strong> — reavaliação contínua</li>
+    <li><strong>Protocolo Geral v.04.2</strong> — governança de IA e agentes integrada</li>
+  </ul>
+</div>
+
+<div class="fw-section reveal">
+  <div class="tag tag-rose">3. Modelo de Responsabilidade</div>
+  <h2>3. Modelo de Responsabilidade Compartilhada</h2>
+  
+  <h3>3.1 Lógica Edge-to-Edge</h3>
+  <p>Sem vácuo (mapeamento completo); sem superposição confusa (escopo normativo); sem juiz em causa própria (canal anônimo); proporcionalidade obrigatória (escada disciplinar).</p>
+  
+  <h3>3.2 Business Judgment Rule</h3>
+  <p>O HGCF documenta os 4 requisitos da regra: boa-fé (Ω.1); informação adequada (Camadas 1+4); interesse da empresa; racionalidade negocial. Reduz exposição pessoal do administrador.</p>
+  
+  <h3>3.3 Quando o nó é não-humano</h3>
+  <p>(1) Risk Owner permanece humano — Ω.1. (2) Descrição de Função Digital define o escopo do agente. Violação ativa: regresso contra fornecedor (Cláusula Agêntica); responsabilização do Risk Owner; comunicação ao titular (LGPD Art. 48).</p>
+</div>
+
+<div class="fw-section reveal">
+  <div class="tag tag-green">4. Maturidade</div>
+  <h2>4. Aplicação por Perfil de Maturidade</h2>
+  <div class="maturity-level reveal"><div class="level-num">0</div><div><h4 style="margin:0;color:#fff;">Ausente</h4><p style="margin:0;">Sem governança. Recomendação: Camadas 0+1.</p></div></div>
+  <div class="maturity-level reveal"><div class="level-num">1</div><div><h4 style="margin:0;color:#fff;">Baixa</h4><p style="margin:0;">Governança fragmentada. Recomendação: Camada 3 + IPII Engine.</p></div></div>
+  <div class="maturity-level reveal"><div class="level-num">2</div><div><h4 style="margin:0;color:#fff;">Média</h4><p style="margin:0;">Camadas 1-2 implementadas. Recomendação: Camada 2 essencial.</p></div></div>
+  <div class="maturity-level reveal"><div class="level-num">3</div><div><h4 style="margin:0;color:#fff;">Alta</h4><p style="margin:0;">Camadas 1-3 maduras. Recomendação: Camada 4 + stress test.</p></div></div>
+  <div class="maturity-level reveal"><div class="level-num">4</div><div><h4 style="margin:0;color:#fff;">Madura</h4><p style="margin:0;">HGCF completo. Cláusula Agêntica em todos os contratos de IA.</p></div></div>
+  <p><strong>Trajetória:</strong> 0 → 1 → 2 → 3 → 4 em ciclos de 6-18 meses. Saltos geram dívida operacional.</p>
+</div>
+
+<div class="fw-section reveal" id="pricing">
+  <div class="tag tag-gold">5. Pricing</div>
+  <h2>5. Pricing e Módulos Licenciáveis</h2>
+  <table class="data-table">
+    <thead><tr><th>Módulo</th><th>Conteúdo</th><th>Preço base</th></tr></thead>
+    <tbody>
+      <tr><td>Ω</td><td>Substrato Ω, Carta Bildung H2Hcy, Termo de Adesão, Workshop</td><td>R$ 4,8k/ano</td></tr>
+      <tr><td>0</td><td>Diagnóstico de Maturidade, HMI, Relatório</td><td>R$ 6k/ano</td></tr>
+      <tr><td>Core</td><td>Camadas 1-2, Mapa de Responsabilidade, Cláusulas (incl. Agêntica)</td><td>R$ 12k/ano</td></tr>
+      <tr><td>Full Stack</td><td>Camadas 3-4, IPII Engine, Lex-IO-Graph, Stress test anual</td><td>R$ 18k/ano</td></tr>
+    </tbody>
+  </table>
+  <p>Pacote completo: Micro R$28k | Pequena R$60k | Média R$120k | Grande R$240k+ | Enterprise R$480k+</p>
+</div>
+
+<div class="fw-section reveal">
+  <div class="tag tag-rose">6. Proposta de Valor</div>
+  <h2>6. Proposta de Valor por Perfil</h2>
+  <p><strong>CEO:</strong> Business judgment rule documentada; redução de exposição pessoal.</p>
+  <p><strong>CCO/Jurídico:</strong> Framework traduzido para LGPD, CLT, CC, NR-1; cláusulas prontas.</p>
+  <p><strong>CTO/COO:</strong> Integração com Protocolo v.04.2; inventário vivo; disjuntor operacional.</p>
+  <p><strong>Investidor:</strong> HGCF como item de due diligence; perfil de risco mensurável.</p>
+  <p><strong>RH/CHO:</strong> Substrato Ω como cultura audítavel; KPIs comportamentais para NR-1.</p>
+</div>
+
+<div class="fw-section reveal">
+  <div class="tag">7. Metadados</div>
+  <h2>7. Metadados do Documento</h2>
+  <p><strong>Título:</strong> Hubstry Governance & Compliance Framework (HGCF) | <strong>Versão:</strong> v1.1 | <strong>Data:</strong> 19 de junho de 2026 | <strong>Autor:</strong> Guilherme Gonçalves Machado | <strong>ORCID:</strong> 0009-0008-1083-0784 | <strong>Organização:</strong> Hubstry Deep Tech | <strong>Instituição:</strong> Instituto PCIH³ | <strong>Licença:</strong> Documento Proprietário | <strong>Status:</strong> Operacional ativo</p>
+</div>
+
+<div class="fw-section reveal">
+  <div class="tag tag-violet">8. Linhagem</div>
+  <h2>8. Linhagem Intelectual</h2>
+  <p><strong>Jurídico:</strong> Bobbio, Santi Romano, Williamson, CLT Art. 482, CC culpa in vigilando.</p>
+  <p><strong>Cultural:</strong> Schein (Organizational Culture), Argyris & Schön (Theory in Practice), Humboldt (Bildung).</p>
+  <p><strong>Hubstry:</strong> IMIP, TICA, TATS, ProCP, GuruDev®.</p>
+  <p><strong>Validação:</strong> Anthropic AAF (jun/2026), CESAR Responsible Horizons (jun/2026), NIST AI RMF, ISO/IEC 42001, AI Act UE.</p>
+  <p><strong>Referências ABNT NBR 6023:</strong> CESAR (2026), Anthropic (2026), Bobbio (1999), Romano (1946), Schein (2017), Argyris & Schön (1974), Williamson (1975).</p>
+</div>
+
+<div class="fw-section reveal">
+  <div class="tag tag-orange">9. Changelog</div>
+  <h2>9. Changelog v1.0 → v1.1</h2>
+  <p>22 itens: adições de Product Liability Directive, AB 316, TX/UT; convergência CESAR; Descrição de Função Digital; Cláusula de Compliance Agêntica; cenário "Agente fora do escopo" no Stress Test; KPI de disjuntor operacional; subseção 3.3 (nó não-humano); atualização de Metadados e Linhagem.</p>
+</div>
+
+<div class="fw-section reveal">
+  <div class="tag tag-green">Diagrama</div>
+  <h2>Protocolo de 7 Camadas — Diagrama Visual</h2>
+  <div class="diagram-section">
+    <img src="https://raw.githubusercontent.com/guilherme-machado-ceo/hubstry-hgcf-site/main/diagrama_7_camadas_bilingue_v3.png" alt="Diagrama 7 Camadas" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+    <div style="display:none; padding:2rem; background:var(--bg-card); border-radius:12px; border:1px dashed var(--border);">
+      <p style="text-align:center; color:var(--text-muted); margin:0;">📎 Adicione o arquivo <code>diagrama_7_camadas_bilingue_v3.png</code> na raiz do repo e atualize o src.</p>
+    </div>
+    <p class="diagram-caption">Protocolo de 7 Camadas Hubstry — Bilingue v3.0 · 2026</p>
+    <p style="font-size:0.85rem; color:var(--text-muted); text-align:center;">
+      Governança nas Camadas 1-4 · Engenharia nas Camadas 5-7<br>
+      Síntese: para 82% de agentes shadow, não há orçamento controlado, identidade mapeada nem fallback. A governança é o elo que falta.
+    </p>
+  </div>
+</div>
+
+</div>
+
+<footer>
+  <div class="footer-meta">
+    <span>Hubstry Deep Tech / Instituto PCIH³</span>
+    <span>ORCID 0009-0008-1083-0784</span>
+    <span>v1.1 · 19 de junho de 2026</span>
+  </div>
+  <p>Documento Proprietário · Versão canônica: Português (Brasil)</p>
+  <p style="margin-top:0.4rem; opacity:0.6;">© 2026 Guilherme Gonçalves Machado</p>
+</footer>
+
+</div>
+
+<script>
+function toggleMenu() { document.getElementById('mobileMenu').classList.toggle('active'); }
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
+}, { threshold: 0.08 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
