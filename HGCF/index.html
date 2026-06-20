@@ -3,66 +3,176 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HGCF — Ecossistema Hubstry</title>
+<title>HGCF — Hubstry Governance & Compliance Framework v1.1</title>
+<meta name="description" content="Framework de governança de IA com substrato doutrinário, arquitetura de responsabilidade compartilhada e auditabilidade técnica.">
 <style>
   :root {
-    --bg-deep: #050508; --bg-panel: #0a0a14; --bg-card: rgba(15,15,30,0.85);
-    --accent-cyan: #00f0ff; --accent-rose: #ff2a6d; --accent-gold: #ffd700;
-    --accent-violet: #7b2cbf; --accent-green: #2a9d8f; --accent-orange: #e76f51;
-    --text-primary: #e8e8f0; --text-secondary: #8892b0; --text-muted: #5a6078;
-    --border: rgba(0, 240, 255, 0.12); --font-main: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    --bg-deep: #050508;
+    --bg-panel: #0a0a14;
+    --bg-card: rgba(15,15,30,0.85);
+    --accent-cyan: #00f0ff;
+    --accent-rose: #ff2a6d;
+    --accent-gold: #ffd700;
+    --accent-violet: #7b2cbf;
+    --accent-green: #2a9d8f;
+    --accent-orange: #e76f51;
+    --text-primary: #e8e8f0;
+    --text-secondary: #8892b0;
+    --text-muted: #5a6078;
+    --border: rgba(0, 240, 255, 0.12);
+    --font-main: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html { scroll-behavior: smooth; }
-  body { font-family: var(--font-main); background: var(--bg-deep); color: var(--text-primary); line-height: 1.65; font-size: 15px; }
+  body {
+    font-family: var(--font-main);
+    background: var(--bg-deep);
+    color: var(--text-primary);
+    line-height: 1.65;
+    font-size: 15px;
+  }
   a { color: var(--accent-cyan); text-decoration: none; }
   a:hover { text-decoration: underline; }
-  nav { position: fixed; top: 0; width: 100%; background: rgba(5,5,8,0.92); backdrop-filter: blur(14px); border-bottom: 1px solid var(--border); z-index: 1000; padding: 0.8rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+  nav {
+    position: fixed; top: 0; width: 100%;
+    background: rgba(5,5,8,0.92);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border);
+    z-index: 1000;
+    padding: 0.8rem 2rem;
+    display: flex; justify-content: space-between; align-items: center;
+  }
   .logo { font-weight: 800; font-size: 1.05rem; letter-spacing: -0.5px; }
   .logo a { background: linear-gradient(90deg, var(--accent-cyan), var(--accent-violet)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
   .nav-links { display: flex; gap: 0.1rem; list-style: none; }
-  .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 0.82rem; font-weight: 500; transition: all 0.25s; text-transform: uppercase; letter-spacing: 0.5px; padding: 0.5rem 0.9rem; border-radius: 6px; }
-  .nav-links a:hover { color: var(--accent-cyan); background: rgba(0,240,255,0.06); }
+  .nav-links a {
+    color: var(--text-secondary); text-decoration: none; font-size: 0.82rem; font-weight: 500;
+    transition: all 0.25s; text-transform: uppercase; letter-spacing: 0.5px;
+    padding: 0.5rem 0.9rem; border-radius: 6px;
+  }
+  .nav-links a:hover, .nav-links a.active { color: var(--accent-cyan); background: rgba(0,240,255,0.06); }
   .menu-toggle { display: none; background: none; border: none; color: var(--text-primary); font-size: 1.4rem; cursor: pointer; }
   .mobile-menu { display: none; position: fixed; top: 56px; right: 10px; background: var(--bg-panel); border: 1px solid var(--border); border-radius: 12px; padding: 0.5rem; z-index: 999; min-width: 200px; }
   .mobile-menu.active { display: block; }
   .mobile-menu a { display: block; padding: 0.6rem 1rem; color: var(--text-secondary); text-decoration: none; border-radius: 6px; font-size: 0.9rem; }
   .mobile-menu a:hover { background: rgba(0,240,255,0.1); color: var(--accent-cyan); }
   .container { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem; }
+  section { padding: 5rem 0 3rem; }
   .page-content { padding-top: 70px; min-height: 100vh; }
   h1 { font-size: clamp(2.2rem, 5vw, 3.5rem); font-weight: 800; line-height: 1.1; margin-bottom: 1rem; }
   h2 { font-size: clamp(1.6rem, 3.5vw, 2.4rem); font-weight: 700; margin: 2.5rem 0 1rem; color: #fff; }
   h3 { font-size: 1.25rem; font-weight: 700; margin: 2rem 0 0.8rem; color: var(--accent-cyan); }
+  h4 { font-size: 1.1rem; font-weight: 600; margin: 1.5rem 0 0.6rem; color: var(--accent-gold); }
   p { margin-bottom: 1rem; color: var(--text-secondary); }
-  .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; padding: 1.8rem; transition: all 0.3s; }
+  ul, ol { margin: 1rem 0 1.5rem 1.5rem; color: var(--text-secondary); }
+  li { margin-bottom: 0.4rem; }
+  blockquote {
+    border-left: 3px solid var(--accent-cyan); padding: 1rem 1.5rem; margin: 1.5rem 0;
+    background: rgba(0,240,255,0.04); border-radius: 0 8px 8px 0; font-style: italic; color: var(--text-primary);
+  }
+  .card {
+    background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px;
+    padding: 1.8rem; transition: all 0.3s; backdrop-filter: blur(8px);
+  }
   .card:hover { border-color: rgba(0,240,255,0.3); transform: translateY(-3px); }
-  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
-  .btn { padding: 0.8rem 1.8rem; border-radius: 8px; font-weight: 600; font-size: 0.92rem; text-decoration: none; transition: all 0.3s; cursor: pointer; border: none; display: inline-flex; align-items: center; gap: 0.5rem; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.2rem; }
+  .grid-2 { grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
+  .grid-3 { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+  .btn {
+    padding: 0.8rem 1.8rem; border-radius: 8px; font-weight: 600; font-size: 0.92rem;
+    text-decoration: none; transition: all 0.3s; cursor: pointer; border: none; display: inline-flex; align-items: center; gap: 0.5rem;
+  }
   .btn-primary { background: linear-gradient(135deg, var(--accent-cyan), var(--accent-violet)); color: #000; }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 25px rgba(0,240,255,0.25); }
   .btn-outline { background: transparent; color: var(--accent-cyan); border: 1px solid var(--accent-cyan); }
-  .tag { display: inline-block; padding: 0.25rem 0.7rem; border: 1px solid var(--border); border-radius: 100px; font-size: 0.72rem; color: var(--accent-cyan); text-transform: uppercase; letter-spacing: 1px; background: rgba(0,240,255,0.05); margin-bottom: 1rem; }
-  .ecosystem-card { background: linear-gradient(135deg, rgba(0,240,255,0.04), rgba(123,44,191,0.04)); border: 1px solid var(--border); border-radius: 18px; padding: 2.5rem; text-align: center; transition: all 0.3s; }
+  .btn-outline:hover { background: rgba(0,240,255,0.08); }
+  .tag {
+    display: inline-block; padding: 0.25rem 0.7rem; border: 1px solid var(--border);
+    border-radius: 100px; font-size: 0.72rem; color: var(--accent-cyan); text-transform: uppercase; letter-spacing: 1px; background: rgba(0,240,255,0.05); margin-bottom: 1rem;
+  }
+  .tag-rose { color: var(--accent-rose); border-color: rgba(255,42,109,0.3); background: rgba(255,42,109,0.05); }
+  .tag-gold { color: var(--accent-gold); border-color: rgba(255,215,0,0.3); background: rgba(255,215,0,0.05); }
+  .tag-green { color: var(--accent-green); border-color: rgba(42,157,143,0.3); background: rgba(42,157,143,0.05); }
+  .tag-orange { color: var(--accent-orange); border-color: rgba(231,111,81,0.3); background: rgba(231,111,81,0.05); }
+  .data-table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.88rem; }
+  .data-table th, .data-table td { padding: 0.7rem 0.8rem; text-align: left; border-bottom: 1px solid var(--border); }
+  .data-table th { color: var(--accent-cyan); font-weight: 600; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.5px; }
+  .data-table td { color: var(--text-secondary); }
+  .data-table tr:hover td { color: var(--text-primary); background: rgba(0,240,255,0.03); }
+  .timeline { position: relative; padding-left: 2rem; border-left: 2px solid var(--border); margin-left: 0.5rem; }
+  .timeline-item { position: relative; padding: 1.5rem; margin-bottom: 1.5rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; }
+  .timeline-item::before { content: ''; position: absolute; left: -2.35rem; top: 2rem; width: 12px; height: 12px; border-radius: 50%; background: var(--accent-cyan); box-shadow: 0 0 0 4px rgba(0,240,255,0.15); }
+  .timeline-item .layer-num { position: absolute; top: -10px; left: 16px; background: var(--bg-deep); border: 1px solid var(--border); padding: 0.15rem 0.6rem; border-radius: 100px; font-size: 0.7rem; color: var(--accent-cyan); font-weight: 700; }
+  .maturity-level { display: grid; grid-template-columns: 50px 1fr; gap: 1.2rem; align-items: center; padding: 1.2rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; margin-bottom: 0.8rem; transition: all 0.3s; }
+  .maturity-level:hover { border-color: var(--accent-cyan); }
+  .level-num { width: 42px; height: 42px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1rem; background: linear-gradient(135deg, var(--accent-violet), var(--accent-rose)); color: #fff; }
+  .pricing-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 18px; padding: 2rem 1.5rem; text-align: center; transition: all 0.3s; }
+  .pricing-card:hover { transform: translateY(-6px); border-color: var(--accent-cyan); }
+  .pricing-card.featured { border-color: var(--accent-cyan); box-shadow: 0 0 30px rgba(0,240,255,0.1); position: relative; }
+  .pricing-card.featured::after { content: 'RECOMENDADO'; position: absolute; top: -8px; left: 50%; transform: translateX(-50%); background: var(--accent-cyan); color: #000; font-size: 0.65rem; font-weight: 700; padding: 0.25rem 0.8rem; border-radius: 100px; }
+  .pricing-card .price { font-size: 2.2rem; font-weight: 800; color: var(--accent-cyan); margin: 0.8rem 0; }
+  .pricing-card .price span { font-size: 0.85rem; color: var(--text-secondary); font-weight: 400; }
+  .pricing-card ul { list-style: none; text-align: left; margin: 1.2rem 0; padding: 0; }
+  .pricing-card li { padding: 0.35rem 0; color: var(--text-secondary); font-size: 0.88rem; border-bottom: 1px solid rgba(255,255,255,0.04); }
+  .pricing-card li::before { content: '✓'; color: var(--accent-cyan); margin-right: 0.5rem; font-weight: 700; }
+  .ecosystem-card { background: linear-gradient(135deg, rgba(0,240,255,0.04), rgba(123,44,191,0.04)); border: 1px solid var(--border); border-radius: 18px; padding: 2rem; text-align: center; transition: all 0.3s; }
   .ecosystem-card:hover { transform: translateY(-4px); border-color: var(--accent-cyan); box-shadow: 0 15px 40px rgba(0,240,255,0.08); }
-  .ecosystem-card .ecosystem-icon { font-size: 3rem; margin-bottom: 1.2rem; }
-  .ecosystem-card h3 { font-size: 1.3rem; margin-bottom: 0.8rem; color: #fff; }
-  .ecosystem-card p { font-size: 0.95rem; margin-bottom: 1.5rem; }
-  .link-arrow { color: var(--accent-cyan); font-weight: 600; font-size: 0.95rem; display: inline-flex; align-items: center; gap: 0.4rem; }
+  .ecosystem-card .ecosystem-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+  .ecosystem-card h3 { font-size: 1.2rem; margin-bottom: 0.6rem; color: #fff; }
+  .ecosystem-card p { font-size: 0.9rem; margin-bottom: 1.2rem; }
+  .link-arrow { color: var(--accent-cyan); font-weight: 600; font-size: 0.9rem; display: inline-flex; align-items: center; gap: 0.4rem; }
   .link-arrow:hover { gap: 0.8rem; }
-  .status-badge { display: inline-block; padding: 0.2rem 0.6rem; border-radius: 100px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; margin-top: 0.5rem; }
-  .status-live { background: rgba(42,157,143,0.15); color: var(--accent-green); border: 1px solid rgba(42,157,143,0.3); }
-  .status-soon { background: rgba(255,215,0,0.1); color: var(--accent-gold); border: 1px solid rgba(255,215,0,0.3); }
+  .pipeline-step { display: flex; gap: 1.5rem; margin-bottom: 1.5rem; align-items: flex-start; }
+  .pipeline-num { min-width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, var(--accent-cyan), var(--accent-violet)); color: #000; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.9rem; flex-shrink: 0; }
+  .pipeline-content { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; flex: 1; }
+  .pipeline-content h4 { margin-top: 0; }
+  .pipeline-arrow { text-align: center; font-size: 1.5rem; color: var(--accent-cyan); margin: -0.5rem 0 0.5rem 2.5rem; }
   footer { padding: 2.5rem 1.5rem; text-align: center; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 0.82rem; margin-top: 3rem; }
   footer .footer-meta { display: flex; justify-content: center; gap: 1.2rem; flex-wrap: wrap; margin-bottom: 0.8rem; }
   .reveal { opacity: 0; transform: translateY(25px); transition: all 0.7s ease; }
   .reveal.active { opacity: 1; transform: translateY(0); }
-  @media (max-width: 768px) { .nav-links { display: none; } .menu-toggle { display: block; } }
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .menu-toggle { display: block; }
+    section { padding: 4rem 0 2rem; }
+    .timeline { padding-left: 1.2rem; }
+    .timeline-item::before { left: -1.85rem; }
+    .maturity-level { grid-template-columns: 1fr; text-align: center; }
+    .level-num { margin: 0 auto; }
+    .pipeline-step { flex-direction: column; }
+    .pipeline-arrow { margin-left: 0; }
+  }
   .page-header { padding: 6rem 0 3rem; text-align: center; border-bottom: 1px solid var(--border); margin-bottom: 2rem; }
   .page-header h1 { background: linear-gradient(135deg, #fff, var(--accent-cyan)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
   .page-header p { max-width: 700px; margin: 0 auto; font-size: 1.1rem; }
+  .fw-section { border-bottom: 1px solid var(--border); padding: 3rem 0; }
+  .fw-section:last-child { border-bottom: none; }
+  .fw-section h2 { margin-top: 0; }
+  .fw-section h3 { color: var(--accent-green); }
+  .fw-section h4 { color: var(--accent-gold); }
+  .fw-meta { display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.5rem; }
+  .fw-meta span { font-size: 0.8rem; color: var(--text-muted); }
+  .highlight-box { background: rgba(0,240,255,0.04); border: 1px solid var(--border); border-radius: 10px; padding: 1.2rem; margin: 1.5rem 0; }
+  .highlight-box p { margin-bottom: 0; }
+  .diagram-section { background: linear-gradient(135deg, rgba(42,157,143,0.08), rgba(0,240,255,0.04)); border: 1px solid var(--border); border-radius: 20px; padding: 2.5rem; margin: 2rem 0; text-align: center; }
+  .diagram-section img { max-width: 100%; border-radius: 12px; border: 1px solid var(--border); }
+  .diagram-caption { margin-top: 1rem; font-size: 0.85rem; color: var(--text-muted); font-style: italic; }
+  .pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; margin-top: 2rem; }
+  .pillar { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 2rem; text-align: center; transition: all 0.3s; }
+  .pillar:hover { border-color: var(--accent-rose); transform: translateY(-5px); }
+  .pillar .p-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+  .pillar h4 { color: #fff; margin-bottom: 0.5rem; font-size: 1.1rem; }
+  .pillar p { color: var(--text-secondary); font-size: 0.9rem; }
+  @media (max-width: 768px) { .pillars { grid-template-columns: 1fr; } }
+  .seven-layers { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 0.8rem; margin-top: 2rem; }
+  .layer-box { background: rgba(0,240,255,0.05); border: 1px solid var(--border); border-radius: 10px; padding: 1.2rem 0.8rem; text-align: center; transition: all 0.3s; }
+  .layer-box:hover { background: rgba(0,240,255,0.1); border-color: var(--accent-cyan); }
+  .layer-box .ln { font-size: 1.5rem; font-weight: 800; color: var(--accent-cyan); display: block; margin-bottom: 0.3rem; }
+  .layer-box .lt { font-size: 0.8rem; color: var(--text-secondary); line-height: 1.3; }
 </style>
+<base target="_blank">
 </head>
 <body>
-
 <nav>
   <div class="logo"><a href="index.html">◈ HGCF v1.1</a></div>
   <ul class="nav-links">
@@ -82,75 +192,154 @@
 
 <div class="page-content">
 
-<div class="page-header">
+<section style="padding-top: 7rem; text-align: center;">
   <div class="container">
-    <div class="tag">Hubstry Deep Tech</div>
-    <h1>Ecossistema Integrado</h1>
-    <p>O HGCF conecta-se nativamente aos demais produtos da arquitetura Hubstry.</p>
+    <div class="tag reveal">Documento Operacional Ativo · v1.1 · Junho 2026</div>
+    <h1 class="reveal" style="margin-bottom: 1.2rem;">Governança de IA<br>com Substrato Doutrinário</h1>
+    <p class="reveal" style="font-size: 1.15rem; max-width: 680px; margin: 0 auto 2rem; color: var(--text-secondary);">
+      Hubstry Governance & Compliance Framework — arquitetura jurídica, responsabilidade compartilhada e auditabilidade técnica para organizações na era da inteligência artificial.
+    </p>
+    <div class="reveal" style="display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; margin-bottom: 2.5rem; font-size: 0.85rem; color: var(--text-muted);">
+      <span>◈ 5 Camadas</span>
+      <span>◈ 5 Princípios Ω</span>
+      <span>◈ 7 Camadas de Segurança</span>
+      <span>◈ 3 Pilares de Domínio</span>
+    </div>
+    <div class="reveal" style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+      <a href="framework.html" class="btn btn-primary">Ler Framework Completo</a>
+      <a href="integracao.html" class="btn btn-outline">Ver Integração</a>
+    </div>
   </div>
-</div>
-
-<div class="container">
+</section>
 
 <section>
-  <div class="grid">
-    <div class="ecosystem-card reveal">
-      <div class="ecosystem-icon">📜</div>
-      <h3>Protocolo de Tecnologia Geral</h3>
-      <p>Framework de governança por camada de segurança, camada de dados e pilares de domínio para tecnologia com IA. v.04.2 ativo.</p>
-      <span class="status-badge status-live">● Ao Vivo</span><br><br>
-      <a href="https://protocolo-hubstry-tecnologia.netlify.app/" target="_blank" class="link-arrow">Acessar Protocolo →</a>
+  <div class="container">
+    <div style="text-align: center; margin-bottom: 3rem;" class="reveal">
+      <div class="tag">Diferenciais</div>
+      <h2 style="margin-top: 0.5rem;">Por que o HGCF?</h2>
     </div>
-    <div class="ecosystem-card reveal">
-      <div class="ecosystem-icon">📊</div>
-      <h3>Hubstry Maturity Index</h3>
-      <p>Ferramenta de diagnóstico de maturidade em IA e governança. Output: mapa de posicionamento com trajetória recomendada.</p>
-      <span class="status-badge status-live">● Ao Vivo</span><br><br>
-      <a href="https://hubstry-maturity-index.netlify.app/" target="_blank" class="link-arrow">Acessar HMI →</a>
-    </div>
-    <div class="ecosystem-card reveal">
-      <div class="ecosystem-icon">🛡</div>
-      <h3>Hubstry Security Platform</h3>
-      <p>Criptografia PQC, auditoria de agentes e stack de segurança para infraestrutura crítica.</p>
-      <span class="status-badge status-soon">◈ Em Breve</span><br><br>
-      <span class="link-arrow" style="opacity:0.5; cursor:default;">Em desenvolvimento</span>
-    </div>
-    <div class="ecosystem-card reveal">
-      <div class="ecosystem-icon">🧠</div>
-      <h3>GuruDev® Core</h3>
-      <p>Protocolo semântico audítavel para decisões de IA. Interface clássico-quântica com 228 testes automatizados.</p>
-      <span class="status-badge status-soon">◈ Em Breve</span><br><br>
-      <span class="link-arrow" style="opacity:0.5; cursor:default;">Em desenvolvimento</span>
-    </div>
-    <div class="ecosystem-card reveal">
-      <div class="ecosystem-icon">⚖</div>
-      <h3>Gonçalves et Alii</h3>
-      <p>Regulação, PPPs e estruturação jurídica para projetos de soberania digital e infraestrutura crítica.</p>
-      <span class="status-badge status-soon">◈ Em Breve</span><br><br>
-      <span class="link-arrow" style="opacity:0.5; cursor:default;">Em desenvolvimento</span>
-    </div>
-    <div class="ecosystem-card reveal">
-      <div class="ecosystem-icon">🌍</div>
-      <h3>Overall 720°</h3>
-      <p>Inteligência geopolítica como dado processado: ciclo completo captura → processamento → produto.</p>
-      <span class="status-badge status-soon">◈ Em Breve</span><br><br>
-      <span class="link-arrow" style="opacity:0.5; cursor:default;">Em desenvolvimento</span>
+    <div class="grid grid-3">
+      <div class="card reveal">
+        <h3 style="color: var(--accent-cyan); margin-top: 0;">⚖ Substrato Jurídico</h3>
+        <p>Fundamentado em Bobbio, Santi Romano e Oliver Williamson. Convergência validada com Anthropic Advanced AI Framework e CESAR Responsible Horizons.</p>
+      </div>
+      <div class="card reveal">
+        <h3 style="color: var(--accent-rose); margin-top: 0;">🔗 Responsabilidade Edge-to-Edge</h3>
+        <p>Cada elo da cadeia responde pelo seu escopo. Sem vácuo, sem superposição confusa. Do desenvolvedor frontier ao freela PJ.</p>
+      </div>
+      <div class="card reveal">
+        <h3 style="color: var(--accent-gold); margin-top: 0;">🔍 Auditabilidade Técnica</h3>
+        <p>IPII Engine, Lex-IO-Graph e GuruDev® para rastreabilidade de conformidade normativa e decisões de IA.</p>
+      </div>
+      <div class="card reveal">
+        <h3 style="color: var(--accent-green); margin-top: 0;">🤖 Agente Não-Humano</h3>
+        <p>Descrição de Função Digital, Disjuntor Operacional e Cláusula de Compliance Agêntica para fornecedores de IA.</p>
+      </div>
+      <div class="card reveal">
+        <h3 style="color: var(--accent-violet); margin-top: 0;">📜 Conformidade Antecipada</h3>
+        <p>Preparação para PL 2338/2023, AI Act UE, Product Liability Directive, AB 316 CA e leis TX/UT desde o primeiro dia.</p>
+      </div>
+      <div class="card reveal">
+        <h3 style="color: var(--accent-orange); margin-top: 0;">🌍 Soberania Digital</h3>
+        <p>Framework B2G para governos, PPPs e infraestrutura crítica. Modelo Visiona como referência de recuperação.</p>
+      </div>
     </div>
   </div>
 </section>
 
-<section style="margin-top: 4rem; text-align: center;">
-  <div class="reveal">
-    <h2 style="margin-bottom: 1rem;">Arquitetura do Ecossistema</h2>
-    <p style="max-width: 700px; margin: 0 auto 2rem;">Cada produto opera em sua camada, mas todos conversam através do Substrato Ω e do pipeline de governança integrado.</p>
-    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-      <a href="integracao.html" class="btn btn-primary">Ver Pipeline de Integração</a>
-      <a href="index.html" class="btn btn-outline">Voltar à Landing</a>
+<section style="background: linear-gradient(180deg, transparent, rgba(0,240,255,0.03), transparent);">
+  <div class="container">
+    <div style="text-align: center; margin-bottom: 3rem;" class="reveal">
+      <div class="tag">Público-Alvo</div>
+      <h2 style="margin-top: 0.5rem;">Para quem é o HGCF?</h2>
+    </div>
+    <div class="grid grid-2">
+      <div class="card reveal">
+        <h4 style="color: var(--accent-cyan); margin-top: 0;">👔 CEO / Fundador</h4>
+        <p><strong>Dor:</strong> Exposição pessoal em ações judiciais e processos regulatórios; risco reputacional.</p>
+        <p><strong>Valor:</strong> Business judgment rule documentada; redução de exposição pessoal; vantagem competitiva em vendas enterprise.</p>
+        <p style="margin-bottom: 0; font-size: 0.85rem; color: var(--text-muted);">KPI: Taxa de aprovação em due diligences</p>
+      </div>
+      <div class="card reveal">
+        <h4 style="color: var(--accent-rose); margin-top: 0;">⚖ CCO / Jurídico / Compliance</h4>
+        <p><strong>Dor:</strong> Frameworks internacionais abstratos; cláusulas padrão insuficientes para IA agêntica.</p>
+        <p><strong>Valor:</strong> Traduzido para LGPD, CLT, CC, Lei Anticorrupção, NR-1; cláusulas prontas (incl. Agêntica v1.1).</p>
+        <p style="margin-bottom: 0; font-size: 0.85rem; color: var(--text-muted);">KPI: Tempo de fechamento de cláusula contratual</p>
+      </div>
+      <div class="card reveal">
+        <h4 style="color: var(--accent-gold); margin-top: 0;">💻 CTO / COO</h4>
+        <p><strong>Dor:</strong> Agentes shadow em produção; ausência de inventário; descontinuidade política-operacional.</p>
+        <p><strong>Valor:</strong> Integração nativa com Protocolo v.04.2; inventário vivo por exposição; disjuntor operacional.</p>
+        <p style="margin-bottom: 0; font-size: 0.85rem; color: var(--text-muted);">KPI: Cobertura 100% dos agentes mapeados</p>
+      </div>
+      <div class="card reveal">
+        <h4 style="color: var(--accent-violet); margin-top: 0;">💰 Investidor</h4>
+        <p><strong>Dor:</strong> Risco oculto de exposição regulatória em empresas investidas; impacto sobre valuation.</p>
+        <p><strong>Valor:</strong> HGCF como item de due diligence; perfil de risco mensurável e audítavel.</p>
+        <p style="margin-bottom: 0; font-size: 0.85rem; color: var(--text-muted);">KPI: Adesão ao HGCF em board reports</p>
+      </div>
     </div>
   </div>
 </section>
 
-</div>
+<section>
+  <div class="container">
+    <div style="text-align: center; margin-bottom: 3rem;" class="reveal">
+      <div class="tag">Comercial</div>
+      <h2 style="margin-top: 0.5rem;">Módulos Licenciáveis</h2>
+      <p style="color: var(--text-secondary);">Estrutura modular combinável conforme perfil de maturidade e porte.</p>
+    </div>
+    <div class="grid">
+      <div class="pricing-card reveal">
+        <h3>Módulo Ω</h3>
+        <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.5rem;">Cultura & Substrato</p>
+        <div class="price">R$ 4,8k <span>/ano</span></div>
+        <ul><li>Substrato Ω completo</li><li>Carta de Cultura Bildung H2Hcy</li><li>Termo de Adesão</li><li>Workshop introdutório</li></ul>
+      </div>
+      <div class="pricing-card reveal">
+        <h3>Módulo 0</h3>
+        <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.5rem;">Diagnóstico</p>
+        <div class="price">R$ 6k <span>/ano</span></div>
+        <ul><li>Diagnóstico de Maturidade</li><li>Hubstry Maturity Index</li><li>Relatório de posicionamento</li><li>Entrada técnica dos demais módulos</li></ul>
+      </div>
+      <div class="pricing-card featured reveal">
+        <h3>Módulo Core</h3>
+        <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.5rem;">Núcleo Operacional</p>
+        <div class="price">R$ 12k <span>/ano</span></div>
+        <ul><li>Camadas 1 e 2 completas</li><li>Mapa de Responsabilidade</li><li>Cláusulas contratuais (incl. Agêntica)</li><li>Treinamento de gestores</li><li>Diagnóstico incluso</li></ul>
+      </div>
+      <div class="pricing-card reveal">
+        <h3>Módulo Full Stack</h3>
+        <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.5rem;">Maturidade Alta</p>
+        <div class="price">R$ 18k <span>/ano</span></div>
+        <ul><li>Camadas 3 e 4 completas</li><li>IPII Engine + Lex-IO-Graph</li><li>Integração Protocolo v.04.2</li><li>Stress test cultural anual</li><li>Operacionalização contínua</li></ul>
+      </div>
+    </div>
+    <div class="reveal" style="text-align: center; margin-top: 2rem;">
+      <a href="framework.html#pricing" class="btn btn-outline">Ver Tabela Completa por Porte</a>
+    </div>
+  </div>
+</section>
+
+<section style="background: linear-gradient(180deg, transparent, rgba(0,240,255,0.05), transparent);">
+  <div class="container" style="text-align: center;">
+    <div class="reveal">
+      <h2 style="font-size: clamp(1.8rem, 4vw, 2.8rem); margin-bottom: 1rem;">Implemente o HGCF na sua Organização</h2>
+      <p style="color: var(--text-secondary); max-width: 600px; margin: 0 auto 2rem; font-size: 1.05rem;">
+        Framework técnico-jurídico-cultural para governança de IA com substrato doutrinário, arquitetura de responsabilidade compartilhada e auditabilidade técnica.
+      </p>
+      <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-bottom: 2rem;">
+        <a href="mailto:guilhermemachado.ceo@hubstry.dev" class="btn btn-primary">Falar com Especialista</a>
+        <a href="framework.html" class="btn btn-outline">Explorar Framework</a>
+      </div>
+      <div style="display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; font-size: 0.85rem; color: var(--text-muted);">
+        <span>📧 guilhermemachado.ceo@hubstry.dev</span>
+        <span>🌐 hubstry.dev</span>
+        <span>📍 Rio de Janeiro, Brasil</span>
+      </div>
+    </div>
+  </div>
+</section>
 
 <footer>
   <div class="footer-meta">
@@ -161,7 +350,6 @@
   <p>Documento Proprietário · Versão canônica: Português (Brasil)</p>
   <p style="margin-top:0.4rem; opacity:0.6;">© 2026 Guilherme Gonçalves Machado</p>
 </footer>
-
 </div>
 
 <script>
