@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HGCF — Integração Conceitual e Pipeline</title>
+<style>
+  :root {
+    --bg-deep: #050508; --bg-panel: #0a0a14; --bg-card: rgba(15,15,30,0.85);
+    --accent-cyan: #00f0ff; --accent-rose: #ff2a6d; --accent-gold: #ffd700;
+    --accent-violet: #7b2cbf; --accent-green: #2a9d8f; --accent-orange: #e76f51;
+    --text-primary: #e8e8f0; --text-secondary: #8892b0; --text-muted: #5a6078;
+    --border: rgba(0, 240, 255, 0.12); --font-main: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--font-main); background: var(--bg-deep); color: var(--text-primary); line-height: 1.65; font-size: 15px; }
+  a { color: var(--accent-cyan); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  nav { position: fixed; top: 0; width: 100%; background: rgba(5,5,8,0.92); backdrop-filter: blur(14px); border-bottom: 1px solid var(--border); z-index: 1000; padding: 0.8rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+  .logo { font-weight: 800; font-size: 1.05rem; letter-spacing: -0.5px; }
+  .logo a { background: linear-gradient(90deg, var(--accent-cyan), var(--accent-violet)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .nav-links { display: flex; gap: 0.1rem; list-style: none; }
+  .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 0.82rem; font-weight: 500; transition: all 0.25s; text-transform: uppercase; letter-spacing: 0.5px; padding: 0.5rem 0.9rem; border-radius: 6px; }
+  .nav-links a:hover { color: var(--accent-cyan); background: rgba(0,240,255,0.06); }
+  .menu-toggle { display: none; background: none; border: none; color: var(--text-primary); font-size: 1.4rem; cursor: pointer; }
+  .mobile-menu { display: none; position: fixed; top: 56px; right: 10px; background: var(--bg-panel); border: 1px solid var(--border); border-radius: 12px; padding: 0.5rem; z-index: 999; min-width: 200px; }
+  .mobile-menu.active { display: block; }
+  .mobile-menu a { display: block; padding: 0.6rem 1rem; color: var(--text-secondary); text-decoration: none; border-radius: 6px; font-size: 0.9rem; }
+  .mobile-menu a:hover { background: rgba(0,240,255,0.1); color: var(--accent-cyan); }
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem; }
+  .page-content { padding-top: 70px; min-height: 100vh; }
+  h1 { font-size: clamp(2.2rem, 5vw, 3.5rem); font-weight: 800; line-height: 1.1; margin-bottom: 1rem; }
+  h2 { font-size: clamp(1.6rem, 3.5vw, 2.4rem); font-weight: 700; margin: 2.5rem 0 1rem; color: #fff; }
+  h3 { font-size: 1.25rem; font-weight: 700; margin: 2rem 0 0.8rem; color: var(--accent-cyan); }
+  h4 { font-size: 1.1rem; font-weight: 600; margin: 1.5rem 0 0.6rem; color: var(--accent-gold); }
+  p { margin-bottom: 1rem; color: var(--text-secondary); }
+  ul, ol { margin: 1rem 0 1.5rem 1.5rem; color: var(--text-secondary); }
+  li { margin-bottom: 0.4rem; }
+  .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; padding: 1.8rem; transition: all 0.3s; }
+  .card:hover { border-color: rgba(0,240,255,0.3); transform: translateY(-3px); }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.2rem; }
+  .btn { padding: 0.8rem 1.8rem; border-radius: 8px; font-weight: 600; font-size: 0.92rem; text-decoration: none; transition: all 0.3s; cursor: pointer; border: none; display: inline-flex; align-items: center; gap: 0.5rem; }
+  .btn-primary { background: linear-gradient(135deg, var(--accent-cyan), var(--accent-violet)); color: #000; }
+  .btn-outline { background: transparent; color: var(--accent-cyan); border: 1px solid var(--accent-cyan); }
+  .tag { display: inline-block; padding: 0.25rem 0.7rem; border: 1px solid var(--border); border-radius: 100px; font-size: 0.72rem; color: var(--accent-cyan); text-transform: uppercase; letter-spacing: 1px; background: rgba(0,240,255,0.05); margin-bottom: 1rem; }
+  .tag-green { color: var(--accent-green); border-color: rgba(42,157,143,0.3); background: rgba(42,157,143,0.05); }
+  .tag-gold { color: var(--accent-gold); border-color: rgba(255,215,0,0.3); background: rgba(255,215,0,0.05); }
+  .tag-rose { color: var(--accent-rose); border-color: rgba(255,42,109,0.3); background: rgba(255,42,109,0.05); }
+  .pipeline-step { display: flex; gap: 1.5rem; margin-bottom: 1.5rem; align-items: flex-start; }
+  .pipeline-num { min-width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, var(--accent-cyan), var(--accent-violet)); color: #000; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.9rem; flex-shrink: 0; }
+  .pipeline-content { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; flex: 1; }
+  .pipeline-content h4 { margin-top: 0; }
+  .pipeline-arrow { text-align: center; font-size: 1.5rem; color: var(--accent-cyan); margin: -0.5rem 0 0.5rem 2.5rem; }
+  .highlight-box { background: rgba(0,240,255,0.04); border: 1px solid var(--border); border-radius: 10px; padding: 1.2rem; margin: 1.5rem 0; }
+  .highlight-box p { margin-bottom: 0; }
+  footer { padding: 2.5rem 1.5rem; text-align: center; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 0.82rem; margin-top: 3rem; }
+  footer .footer-meta { display: flex; justify-content: center; gap: 1.2rem; flex-wrap: wrap; margin-bottom: 0.8rem; }
+  .reveal { opacity: 0; transform: translateY(25px); transition: all 0.7s ease; }
+  .reveal.active { opacity: 1; transform: translateY(0); }
+  @media (max-width: 768px) {
+    .nav-links { display: none; } .menu-toggle { display: block; }
+    .pipeline-step { flex-direction: column; } .pipeline-arrow { margin-left: 0; }
+  }
+  .page-header { padding: 6rem 0 3rem; text-align: center; border-bottom: 1px solid var(--border); margin-bottom: 2rem; }
+  .page-header h1 { background: linear-gradient(135deg, #fff, var(--accent-cyan)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .page-header p { max-width: 700px; margin: 0 auto; font-size: 1.1rem; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo"><a href="index.html">◈ HGCF v1.1</a></div>
+  <ul class="nav-links">
+    <li><a href="index.html">Início</a></li>
+    <li><a href="framework.html">Framework Completo</a></li>
+    <li><a href="integracao.html">Integração</a></li>
+    <li><a href="ecossistema.html">Ecossistema</a></li>
+  </ul>
+  <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html" onclick="toggleMenu()">Início</a>
+    <a href="framework.html" onclick="toggleMenu()">Framework Completo</a>
+    <a href="integracao.html" onclick="toggleMenu()">Integração</a>
+    <a href="ecossistema.html" onclick="toggleMenu()">Ecossistema</a>
+  </div>
+</nav>
+
+<div class="page-content">
+
+<div class="page-header">
+  <div class="container">
+    <div class="tag">Arquitetura Integrada</div>
+    <h1>Integração Conceitual e Pipeline</h1>
+    <p>Como o HGCF, o Protocolo de Tecnologia Geral e o Hubstry Maturity Index operam como sistema único de governança.</p>
+  </div>
+</div>
+
+<div class="container">
+
+<section class="reveal">
+  <div class="tag tag-green">Visão Sistêmica</div>
+  <h2>O Tripé da Governança Hubstry</h2>
+  <p>Os três produtos não são isolados. Formam um pipeline contínuo de diagnóstico → arquitetura → operação, onde cada camada alimenta a seguinte e a retroalimenta por auditoria.</p>
+  
+  <div class="grid" style="margin-top: 2rem;">
+    <div class="card reveal">
+      <h3 style="color: var(--accent-green); margin-top: 0;">📊 HMI — Hubstry Maturity Index</h3>
+      <p><strong>Função:</strong> Diagnóstico e posicionamento. Responde: "Onde estamos?"</p>
+      <p>Output: mapa de maturidade com nível 0-4, gaps priorizados e trajetória recomendada. Alimenta a Camada 0 do HGCF.</p>
+    </div>
+    <div class="card reveal">
+      <h3 style="color: var(--accent-cyan); margin-top: 0;">📜 HGCF — Governance & Compliance</h3>
+      <p><strong>Função:</strong> Arquitetura de responsabilidade. Responde: "Quem responde pelo quê?"</p>
+      <p>5 Camadas (0-4) de diagnóstico → clareza → contrato → operação → auditoria. Substrato Ω como sistema nervoso.</p>
+    </div>
+    <div class="card reveal">
+      <h3 style="color: var(--accent-rose); margin-top: 0;">⚙ Protocolo de Tecnologia Geral v.04.2</h3>
+      <p><strong>Função:</strong> Execução técnica. Responde: "Como implementar segurança?"</p>
+      <p>3 Pilares (Quântico, Analógico-Físico, Digital) + 7 Camadas de Segurança para Agentes de IA. Implementa os requisitos da Camada 4 do HGCF.</p>
+    </div>
+  </div>
+</section>
+
+<section class="reveal">
+  <div class="tag tag-gold">Pipeline Operacional</div>
+  <h2>Pipeline de Implementação</h2>
+  <p>Fluxo sequencial de entrada a governança soberana, com feedback loops entre cada etapa.</p>
+  
+  <div style="margin-top: 2rem;">
+    <div class="pipeline-step reveal">
+      <div class="pipeline-num">1</div>
+      <div class="pipeline-content">
+        <h4>Diagnóstico — HMI</h4>
+        <p>Escaneamento da operação via Analogia Heurística Funcional/Homológica. Identifica instâncias de IA, agentes shadow, gaps de compliance e posiciona no nível 0-4.</p>
+        <p style="margin-bottom: 0;"><strong>Output:</strong> Relatório de posicionamento + recomendação de módulos HGCF.</p>
+      </div>
+    </div>
+    <div class="pipeline-arrow">↓</div>
+    
+    <div class="pipeline-step reveal">
+      <div class="pipeline-num">2</div>
+      <div class="pipeline-content">
+        <h4>Arquitetura — HGCF Camadas 0-2</h4>
+        <p>Construção do Mapa de Responsabilidade Compartilhada. Descrição de Função Digital para agentes. Cláusulas contratuais (incluindo Agêntica). Substrato Ω como condição de onboarding.</p>
+        <p style="margin-bottom: 0;"><strong>Output:</strong> Contratos revisados, Risk Owners nomeados, agentes documentados.</p>
+      </div>
+    </div>
+    <div class="pipeline-arrow">↓</div>
+    
+    <div class="pipeline-step reveal">
+      <div class="pipeline-num">3</div>
+      <div class="pipeline-content">
+        <h4>Execução Técnica — Protocolo v.04.2</h4>
+        <p>Implementação das 7 Camadas de Segurança nos agentes de IA. Privacy by Design. OWASP GenAI. Disjuntor operacional. CBOM e crypto-agility no Pilar Quântico.</p>
+        <p style="margin-bottom: 0;"><strong>Output:</strong> Agentes em produção com governança técnica ativa.</p>
+      </div>
+    </div>
+    <div class="pipeline-arrow">↓</div>
+    
+    <div class="pipeline-step reveal">
+      <div class="pipeline-num">4</div>
+      <div class="pipeline-content">
+        <h4>Operação Contínua — HGCF Camada 3</h4>
+        <p>Onboarding estruturado. Treinamento por área de risco. Canal de reporte anônimo. KPIs de compliance. Stress test cultural anual.</p>
+        <p style="margin-bottom: 0;"><strong>Output:</strong> Comportamento real alinhado ao Substrato Ω.</p>
+      </div>
+    </div>
+    <div class="pipeline-arrow">↓</div>
+    
+    <div class="pipeline-step reveal">
+      <div class="pipeline-num">5</div>
+      <div class="pipeline-content">
+        <h4>Auditoria — HGCF Camada 4 + HMI Reavaliação</h4>
+        <p>IPII Engine scoring de conformidade. Lex-IO-Graph rastreabilidade normativa. Reavaliação HMI para medir evolução de maturidade. Fechamento do loop de feedback.</p>
+        <p style="margin-bottom: 0;"><strong>Output:</strong> Relatório de auditoria + novo ciclo de diagnóstico.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="reveal">
+  <div class="tag tag-rose">Papéis e Interfaces</div>
+  <h2>Papel de Cada Produto no Pipeline</h2>
+  
+  <h3>Hubstry Maturity Index (HMI)</h3>
+  <ul>
+    <li><strong>Entrada:</strong> Qualquer organização que use IA (mesmo sem saber).</li>
+    <li><strong>Processo:</strong> Questionário estruturado + entrevistas + scan de agentes shadow.</li>
+    <li><strong>Saída:</strong> Nível de maturidade (0-4), heatmap de riscos, roadmap de 6-18 meses.</li>
+    <li><strong>Interface com HGCF:</strong> Define qual módulo (Ω, 0, Core, Full Stack) é recomendado.</li>
+    <li><strong>Interface com Protocolo:</strong> Identifica quais pilares (Quântico, Analógico, Digital) precisam de atenção prioritária.</li>
+  </ul>
+  
+  <h3>HGCF — Governance & Compliance Framework</h3>
+  <ul>
+    <li><strong>Entrada:</strong> Organização com diagnóstico HMI (mínimo nível 0).</li>
+    <li><strong>Processo:</strong> 5 Camadas de implementação progressiva.</li>
+    <li><strong>Saída:</strong> Governança institucionalizada com accountability edge-to-edge.</li>
+    <li><strong>Interface com HMI:</strong> Reavaliação periódica valida evolução de maturidade.</li>
+    <li><strong>Interface com Protocolo:</strong> Especifica requisitos técnicos que o Protocolo implementa (7 Camadas, Descrição de Função Digital, Disjuntor).</li>
+  </ul>
+  
+  <h3>Protocolo de Tecnologia Geral v.04.2</h3>
+  <ul>
+    <li><strong>Entrada:</strong> Requisitos técnicos do HGCF (especialmente Camada 4).</li>
+    <li><strong>Processo:</strong> 3 Pilares de domínio + 7 Camadas de segurança para agentes.</li>
+    <li><strong>Saída:</strong> Stack técnico audítavel com conformidade regulatória.</li>
+    <li><strong>Interface com HGCF:</strong> Fornece os artefatos técnicos (Agent Profile Card, Disjuntor, AI BOM) que a Camada 2 do HGCF exige contratualmente.</li>
+    <li><strong>Interface com HMI:</strong> Métricas técnicas (cobertura de agentes, taxa de disjuntor) alimentam o reescore de maturidade.</li>
+  </ul>
+</section>
+
+<section class="reveal">
+  <div class="tag tag-green">Feedback Loops</div>
+  <h2>Ciclos de Retroalimentação</h2>
+  <p>A arquitetura não é linear — é cíclica. Três loops de feedback garantem evolução contínua:</p>
+  
+  <div class="highlight-box">
+    <p><strong>Loop 1 — HMI → HGCF:</strong> Reavaliação HMI a cada 6 meses valida se a implementação das Camadas HGCF subiu o nível de maturidade. Se não subiu, diagnóstico aprofundado identifica resistência cultural ou gap técnico.</p>
+  </div>
+  <div class="highlight-box">
+    <p><strong>Loop 2 — HGCF → Protocolo:</strong> Novos requisitos regulatórios (ex: PL 2338 sancionado) atualizam a Camada 2 do HGCF, que exige novos controles técnicos no Protocolo (ex: registro de delegações entre agentes).</p>
+  </div>
+  <div class="highlight-box">
+    <p><strong>Loop 3 — Protocolo → HMI:</strong> Métricas técnicas (cobertura de inventário, taxa de acionamento do disjuntor, tempo de resposta a incidente) são inputs para o scoring de maturidade do HMI. Evolução técnica demonstrada = nível de maturidade mais alto.</p>
+  </div>
+</section>
+
+<section class="reveal">
+  <div class="tag">Resumo Executivo</div>
+  <h2>Em Uma Frase</h2>
+  <p style="font-size: 1.1rem; color: var(--text-primary); text-align: center; max-width: 800px; margin: 2rem auto;">
+    <em>"O HMI diz onde você está, o HGCF diz o que fazer e quem responde, e o Protocolo diz como fazer com segurança técnica — em um ciclo contínuo de diagnóstico, governança, execução e auditoria."</em>
+  </p>
+  <div style="text-align: center; margin-top: 2rem;">
+    <a href="ecossistema.html" class="btn btn-primary">Ver Ecossistema Completo</a>
+    <a href="framework.html" class="btn btn-outline" style="margin-left: 1rem;">Voltar ao Framework</a>
+  </div>
+</section>
+
+</div>
+
+<footer>
+  <div class="footer-meta">
+    <span>Hubstry Deep Tech / Instituto PCIH³</span>
+    <span>ORCID 0009-0008-1083-0784</span>
+    <span>v1.1 · 19 de junho de 2026</span>
+  </div>
+  <p>Documento Proprietário · Versão canônica: Português (Brasil)</p>
+  <p style="margin-top:0.4rem; opacity:0.6;">© 2026 Guilherme Gonçalves Machado</p>
+</footer>
+
+</div>
+
+<script>
+function toggleMenu() { document.getElementById('mobileMenu').classList.toggle('active'); }
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
+}, { threshold: 0.08 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
