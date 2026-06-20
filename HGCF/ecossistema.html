@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HGCF — Ecossistema Hubstry</title>
+<style>
+  :root {
+    --bg-deep: #050508; --bg-panel: #0a0a14; --bg-card: rgba(15,15,30,0.85);
+    --accent-cyan: #00f0ff; --accent-rose: #ff2a6d; --accent-gold: #ffd700;
+    --accent-violet: #7b2cbf; --accent-green: #2a9d8f; --accent-orange: #e76f51;
+    --text-primary: #e8e8f0; --text-secondary: #8892b0; --text-muted: #5a6078;
+    --border: rgba(0, 240, 255, 0.12); --font-main: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--font-main); background: var(--bg-deep); color: var(--text-primary); line-height: 1.65; font-size: 15px; }
+  a { color: var(--accent-cyan); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  nav { position: fixed; top: 0; width: 100%; background: rgba(5,5,8,0.92); backdrop-filter: blur(14px); border-bottom: 1px solid var(--border); z-index: 1000; padding: 0.8rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+  .logo { font-weight: 800; font-size: 1.05rem; letter-spacing: -0.5px; }
+  .logo a { background: linear-gradient(90deg, var(--accent-cyan), var(--accent-violet)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .nav-links { display: flex; gap: 0.1rem; list-style: none; }
+  .nav-links a { color: var(--text-secondary); text-decoration: none; font-size: 0.82rem; font-weight: 500; transition: all 0.25s; text-transform: uppercase; letter-spacing: 0.5px; padding: 0.5rem 0.9rem; border-radius: 6px; }
+  .nav-links a:hover { color: var(--accent-cyan); background: rgba(0,240,255,0.06); }
+  .menu-toggle { display: none; background: none; border: none; color: var(--text-primary); font-size: 1.4rem; cursor: pointer; }
+  .mobile-menu { display: none; position: fixed; top: 56px; right: 10px; background: var(--bg-panel); border: 1px solid var(--border); border-radius: 12px; padding: 0.5rem; z-index: 999; min-width: 200px; }
+  .mobile-menu.active { display: block; }
+  .mobile-menu a { display: block; padding: 0.6rem 1rem; color: var(--text-secondary); text-decoration: none; border-radius: 6px; font-size: 0.9rem; }
+  .mobile-menu a:hover { background: rgba(0,240,255,0.1); color: var(--accent-cyan); }
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem; }
+  .page-content { padding-top: 70px; min-height: 100vh; }
+  h1 { font-size: clamp(2.2rem, 5vw, 3.5rem); font-weight: 800; line-height: 1.1; margin-bottom: 1rem; }
+  h2 { font-size: clamp(1.6rem, 3.5vw, 2.4rem); font-weight: 700; margin: 2.5rem 0 1rem; color: #fff; }
+  h3 { font-size: 1.25rem; font-weight: 700; margin: 2rem 0 0.8rem; color: var(--accent-cyan); }
+  p { margin-bottom: 1rem; color: var(--text-secondary); }
+  .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; padding: 1.8rem; transition: all 0.3s; }
+  .card:hover { border-color: rgba(0,240,255,0.3); transform: translateY(-3px); }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+  .btn { padding: 0.8rem 1.8rem; border-radius: 8px; font-weight: 600; font-size: 0.92rem; text-decoration: none; transition: all 0.3s; cursor: pointer; border: none; display: inline-flex; align-items: center; gap: 0.5rem; }
+  .btn-primary { background: linear-gradient(135deg, var(--accent-cyan), var(--accent-violet)); color: #000; }
+  .btn-outline { background: transparent; color: var(--accent-cyan); border: 1px solid var(--accent-cyan); }
+  .tag { display: inline-block; padding: 0.25rem 0.7rem; border: 1px solid var(--border); border-radius: 100px; font-size: 0.72rem; color: var(--accent-cyan); text-transform: uppercase; letter-spacing: 1px; background: rgba(0,240,255,0.05); margin-bottom: 1rem; }
+  .ecosystem-card { background: linear-gradient(135deg, rgba(0,240,255,0.04), rgba(123,44,191,0.04)); border: 1px solid var(--border); border-radius: 18px; padding: 2.5rem; text-align: center; transition: all 0.3s; }
+  .ecosystem-card:hover { transform: translateY(-4px); border-color: var(--accent-cyan); box-shadow: 0 15px 40px rgba(0,240,255,0.08); }
+  .ecosystem-card .ecosystem-icon { font-size: 3rem; margin-bottom: 1.2rem; }
+  .ecosystem-card h3 { font-size: 1.3rem; margin-bottom: 0.8rem; color: #fff; }
+  .ecosystem-card p { font-size: 0.95rem; margin-bottom: 1.5rem; }
+  .link-arrow { color: var(--accent-cyan); font-weight: 600; font-size: 0.95rem; display: inline-flex; align-items: center; gap: 0.4rem; }
+  .link-arrow:hover { gap: 0.8rem; }
+  .status-badge { display: inline-block; padding: 0.2rem 0.6rem; border-radius: 100px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; margin-top: 0.5rem; }
+  .status-live { background: rgba(42,157,143,0.15); color: var(--accent-green); border: 1px solid rgba(42,157,143,0.3); }
+  .status-soon { background: rgba(255,215,0,0.1); color: var(--accent-gold); border: 1px solid rgba(255,215,0,0.3); }
+  footer { padding: 2.5rem 1.5rem; text-align: center; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 0.82rem; margin-top: 3rem; }
+  footer .footer-meta { display: flex; justify-content: center; gap: 1.2rem; flex-wrap: wrap; margin-bottom: 0.8rem; }
+  .reveal { opacity: 0; transform: translateY(25px); transition: all 0.7s ease; }
+  .reveal.active { opacity: 1; transform: translateY(0); }
+  @media (max-width: 768px) { .nav-links { display: none; } .menu-toggle { display: block; } }
+  .page-header { padding: 6rem 0 3rem; text-align: center; border-bottom: 1px solid var(--border); margin-bottom: 2rem; }
+  .page-header h1 { background: linear-gradient(135deg, #fff, var(--accent-cyan)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .page-header p { max-width: 700px; margin: 0 auto; font-size: 1.1rem; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo"><a href="index.html">◈ HGCF v1.1</a></div>
+  <ul class="nav-links">
+    <li><a href="index.html">Início</a></li>
+    <li><a href="framework.html">Framework Completo</a></li>
+    <li><a href="integracao.html">Integração</a></li>
+    <li><a href="ecossistema.html">Ecossistema</a></li>
+  </ul>
+  <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html" onclick="toggleMenu()">Início</a>
+    <a href="framework.html" onclick="toggleMenu()">Framework Completo</a>
+    <a href="integracao.html" onclick="toggleMenu()">Integração</a>
+    <a href="ecossistema.html" onclick="toggleMenu()">Ecossistema</a>
+  </div>
+</nav>
+
+<div class="page-content">
+
+<div class="page-header">
+  <div class="container">
+    <div class="tag">Hubstry Deep Tech</div>
+    <h1>Ecossistema Integrado</h1>
+    <p>O HGCF conecta-se nativamente aos demais produtos da arquitetura Hubstry.</p>
+  </div>
+</div>
+
+<div class="container">
+
+<section>
+  <div class="grid">
+    <div class="ecosystem-card reveal">
+      <div class="ecosystem-icon">📜</div>
+      <h3>Protocolo de Tecnologia Geral</h3>
+      <p>Framework de governança por camada de segurança, camada de dados e pilares de domínio para tecnologia com IA. v.04.2 ativo.</p>
+      <span class="status-badge status-live">● Ao Vivo</span><br><br>
+      <a href="https://protocolo-hubstry-tecnologia.netlify.app/" target="_blank" class="link-arrow">Acessar Protocolo →</a>
+    </div>
+    <div class="ecosystem-card reveal">
+      <div class="ecosystem-icon">📊</div>
+      <h3>Hubstry Maturity Index</h3>
+      <p>Ferramenta de diagnóstico de maturidade em IA e governança. Output: mapa de posicionamento com trajetória recomendada.</p>
+      <span class="status-badge status-live">● Ao Vivo</span><br><br>
+      <a href="https://hubstry-maturity-index.netlify.app/" target="_blank" class="link-arrow">Acessar HMI →</a>
+    </div>
+    <div class="ecosystem-card reveal">
+      <div class="ecosystem-icon">🛡</div>
+      <h3>Hubstry Security Platform</h3>
+      <p>Criptografia PQC, auditoria de agentes e stack de segurança para infraestrutura crítica.</p>
+      <span class="status-badge status-soon">◈ Em Breve</span><br><br>
+      <span class="link-arrow" style="opacity:0.5; cursor:default;">Em desenvolvimento</span>
+    </div>
+    <div class="ecosystem-card reveal">
+      <div class="ecosystem-icon">🧠</div>
+      <h3>GuruDev® Core</h3>
+      <p>Protocolo semântico audítavel para decisões de IA. Interface clássico-quântica com 228 testes automatizados.</p>
+      <span class="status-badge status-soon">◈ Em Breve</span><br><br>
+      <span class="link-arrow" style="opacity:0.5; cursor:default;">Em desenvolvimento</span>
+    </div>
+    <div class="ecosystem-card reveal">
+      <div class="ecosystem-icon">⚖</div>
+      <h3>Gonçalves et Alii</h3>
+      <p>Regulação, PPPs e estruturação jurídica para projetos de soberania digital e infraestrutura crítica.</p>
+      <span class="status-badge status-soon">◈ Em Breve</span><br><br>
+      <span class="link-arrow" style="opacity:0.5; cursor:default;">Em desenvolvimento</span>
+    </div>
+    <div class="ecosystem-card reveal">
+      <div class="ecosystem-icon">🌍</div>
+      <h3>Overall 720°</h3>
+      <p>Inteligência geopolítica como dado processado: ciclo completo captura → processamento → produto.</p>
+      <span class="status-badge status-soon">◈ Em Breve</span><br><br>
+      <span class="link-arrow" style="opacity:0.5; cursor:default;">Em desenvolvimento</span>
+    </div>
+  </div>
+</section>
+
+<section style="margin-top: 4rem; text-align: center;">
+  <div class="reveal">
+    <h2 style="margin-bottom: 1rem;">Arquitetura do Ecossistema</h2>
+    <p style="max-width: 700px; margin: 0 auto 2rem;">Cada produto opera em sua camada, mas todos conversam através do Substrato Ω e do pipeline de governança integrado.</p>
+    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+      <a href="integracao.html" class="btn btn-primary">Ver Pipeline de Integração</a>
+      <a href="index.html" class="btn btn-outline">Voltar à Landing</a>
+    </div>
+  </div>
+</section>
+
+</div>
+
+<footer>
+  <div class="footer-meta">
+    <span>Hubstry Deep Tech / Instituto PCIH³</span>
+    <span>ORCID 0009-0008-1083-0784</span>
+    <span>v1.1 · 19 de junho de 2026</span>
+  </div>
+  <p>Documento Proprietário · Versão canônica: Português (Brasil)</p>
+  <p style="margin-top:0.4rem; opacity:0.6;">© 2026 Guilherme Gonçalves Machado</p>
+</footer>
+
+</div>
+
+<script>
+function toggleMenu() { document.getElementById('mobileMenu').classList.toggle('active'); }
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('active'); });
+}, { threshold: 0.08 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
